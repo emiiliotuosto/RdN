@@ -41,44 +41,7 @@
 
 \input{macros_util}
 \input{macros}
-\renewcommand{\al}{\ae}
-\renewcommand{\lset}{\events}
-\newcounter{myfact}[section]
-\newenvironment{fact}[1][]{\refstepcounter{myfact}\par\medskip
-  \noindent \textbf{Fact~\themyfact. #1} \it}{\smallskip}
-% \pagestyle{plain}
 
-\newcommand{\keywords}[1]{\par\addvspace\baselineskip
-  \noindent\keywordname\enspace\ignorespaces#1
-}
-
-\newcommand{\proj}[2]{(#1)\downarrow_{#2}}
-\newcommand{\mproj}[2]{(#1)\lightning_{#2}}
-
-% Adrian's shortand macros
-
-%% Generic shorthand
-\newcommand{\naive}{na\"{\i}ve\xspace}
-\newcommand{\Naive}{Na\"{\i}ve\xspace}
-% \newcommand{\ie}{\textsl{i.e.,}\xspace}
-% \newcommand{\eg}{\textsl{e.g.,}\xspace}
-\newcommand{\Eg}{\textsl{E.g.,}\xspace}
-% \newcommand{\cf}{\textsl{cf.}\xspace}
-\newcommand{\etc}{\textsl{etc.}\xspace}
-\newcommand{\wrt}{with respect to\xspace}
-% {\textsl{wrt.}\xspace}
-\newcommand{\etal}{\textsl{et~al.}\xspace}
-\newcommand{\envs}{\textsl{Env.}\xspace}
-%\newcommand{\resp}{respectively\xspace}{\textsl{resp.,}\xspace}
-\newcommand{\pg}{\textsl{p.g.}\xspace}
-\newcommand{\sth}{\textsl{s.t.}\xspace}
-
-
-
-% Comments macros
-
-\newcommand{\af}[1]{\textbf{\textcolor{cyan}{{\scriptsize A: #1} }}}   % Adrian's comments
-\newcommand{\cam}[1]{\textbf{\textcolor{blue}{{\scriptsize C: #1} }}}   % Claudio's comments
 \newcommand{\et}[1]{\textbf{\textcolor{red}{{\scriptsize E: #1} }}}   % Emilio's comments
 
 
