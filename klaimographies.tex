@@ -50,7 +50,7 @@ and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
 $\arole, \arole_1, \ldots$) where $\unknownstar$ and $\unknown$ are
 `wildcards' accounting for some flexibility when implementing
 multiroles: an action involving a $\unknownstar$ role can be
-optionally executed by an implementation of role $\arole$, while
+optionally executed by an implementation of role $\amulti P$, while
 $\unknown$ establishes that exactly one implementor must execute that
 action.
 %
@@ -109,10 +109,8 @@ $\selectors \aL = \cup_{i\in I}{\{\arole_i\}}$.
 %
 Moreover, we assume
 \begin{itemize}
-\item $\aL_i \neq\aLsum[j][J]$, for all $i \in I$
-\item either $| \selectors \aL| = 1$ or there exists $\amulti
-  P\in\multiroles$ s.t. $\selectors \aL \subseteq \{\amulti P,
-  \unknownstar, \unknown\}$
+\item $\aL_i \neq\aLsum[j][J]$, for all $i \in I$.
+\item $\arole_i \eqR \arole_j$ for all $i,j \in I$.
 \end{itemize}
 
 The projection $\proj$ of a global type $\aK$ on a role $\arole \in \participants \cup \multiroles$ is
