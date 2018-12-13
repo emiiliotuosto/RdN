@@ -20,11 +20,15 @@
 \newcommand{\clashes}{\sharp}
 \newcommand{\matches}{\bowtie}
 \newcommand{\arole}{\rho}
+\newcommand{\ptp}[1]{{\mathsf{\MakeLowercase{#1}}}}
+\newcommand{\amulti}[1]{{\mathsf{\MakeUppercase{#1}}}}
 \newcommand{\roleset}{\mathcal{R}}
-\newcommand{\unitroles}{\mathcal{U}}
+\newcommand{\participants}{\mathcal{P}}
 \newcommand{\multiroles}{\mathcal{M}}
-\newcommand{\unknownstar}{\mkop{\ast}}
-\newcommand{\unknown}{\mkop{\textbf{?}}}
+%\newcommand{\unknownstar}{\mkop{\ast}}
+%\newcommand{\unknown}{\mkop{\textbf{?}}}
+\newcommandx{\unknownstar}[1][1=P]{{\amulti {#1}}^{\mkop{\ast}}}
+\newcommandx{\unknown}[1][1= P]{{\amulti {#1}}^{\mkop{\textbf{?}}}}
 \newcommand{\aK}[1][K]{\texttt{\textcolor{blue}#1}}
 \newcommand{\aL}[1][L]{\texttt{\textcolor{orange}#1}}
 \newcommandx{\proj}[2][1=\aK,2=\arole,usedefault=@]{
@@ -61,6 +65,12 @@
 \newcommandx{\arec}[2][1=X,2=\aK,usedefault=@]{
   \rec\ #1 \mkop{.} #2
 }
+\newcommandx{\aLsum}[4][1=i,2=I,3=\arole,4=\aL,usedefault=@]{
+    \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{#3_{#1} : {#4_{#1}}}
+}
+
+
+\newcommand{\sumRoles}[1]{\it{roles}(#1)}
 
 
 %%% Local Variables:

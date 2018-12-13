@@ -6,8 +6,10 @@ $\asort[str]$, etc.
 Tuple types have the following syntax:
 \begin{eqnarray*}
   \atuple & \bnfdef & \asort \bnfmid
-                      \nu \aloc \bnfmid
                       x : \asort \bnfmid
+                      x  \bnfmid
+                      \nu \aloc \bnfmid
+                      \aloc \bnfmid
                       \atuple \cdot \atuple \bnfmid
                       \wildcard \bnfmid
 \end{eqnarray*}
@@ -16,7 +18,9 @@ Tuple types \emph{match} according to the relation $\_ \matches \_$ defined as
 \[
   \atuple \matches \atuple' \iff
   \begin{cases}
-    \atuple = \atuple'  & \text{if $\atuple$ and $\atuple'$ are sorts}
+    \atuple = \atuple'  
+    & 
+    \text{if $\atuple\in\{\asort, x : \asort, x, \nu \aloc, \aloc\}$}
     \\
     \atuple_1 \matches \atuple'_1
     \land \atuple_2 \matches \atuple'_2  & \text{if } \atuple = \atuple_1 \cdot \atuple_2 \text{ and }  \atuple' = \atuple'_1 \cdot \atuple'_2
@@ -25,21 +29,25 @@ Tuple types \emph{match} according to the relation $\_ \matches \_$ defined as
   \end{cases}
 \]
 
-We define
-\[
-  \atuple \clashes \atuple' \iff \exists \atuple'' \qst \atuple'' \matches \atuple \land \atuple'' \matches \atuple'
-\]
+%We define
+%\[
+%  \atuple \clashes \atuple' \iff \exists \atuple'' \qst \atuple'' \matches \atuple \land \atuple'' \matches \atuple'
+%\]
 %
-and say that $\atuple$ and $\atuple'$ \emph{are in conflict} when
-$\atuple \clashes \atuple'$.
+%and say that $\atuple$ and $\atuple'$ \emph{are in conflict} when
+%$\atuple \clashes \atuple'$.
 
-We fix two disjoint sets $\unitroles$ and $\multiroles$, respectively
-of \emph{unique} and \emph{multiple} roles, and define the set of
+We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$ and 
+$\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively
+of \emph{participants} and \emph{multiple} roles, and define the set of
 \emph{roles}
-$\roleset = \unitroles \cup \multiroles \cup \{\unknownstar,
-\unknown\}$ (ranged over by $\arole, \arole', \ldots$) where
-$\unknownstar$ and $\unknown$ are 'wildcards' representing any roles
-and at least one role.
+$\roleset = \participants \cup \multiroles \cup \{\unknownstar,
+\unknown\ |\ \amulti\in\multiroles\}$ (ranged over by $\arole, \arole', \ldots$) where
+$\unknownstar$ and $\unknown$ are `wildcards' accounting 
+for some flexibility when implementing multiroles:  an action involving a $\unknownstar$ 
+role can be optionally executed by an implementation of role  $\rho$,
+ while $\unknown$ establishes 
+that exactly one implementor must execute that action. 
 %
 We conventionally write multiroles with initial uppercase letter and
 unique roles with initial lowercase letter.
@@ -59,18 +67,27 @@ Global types $\aK$ have the following syntax
                          \apref[\arole][\arole'][@][\aloc][.]
 \end{eqnarray*}
 where $I$ is a finite set of indexes and $\aloc \in \locset$ is a
-locality.
+locality. We write  $\nil$ for $\asum$ when $I = \emptyset$.
 
 Local types $\aL$ have the following syntax
 \begin{eqnarray*}
   \aL & \bnfdef & \nil \bnfmid
-                  \aL \chop \aL \bnfmid
+                  %\aL \chop \aL \bnfmid
+                  \aLsum \bnfmid
                   \aout[].\aL \bnfmid
                   \ain[].\aL \bnfmid
                   \ard[].\aL \bnfmid
                   X \bnfmid
                   \arec[@][\aL]
 \end{eqnarray*}
+
+For a local type $\aL = \aLsum$, we write $\sumRoles \aL$ for the set of roles in the 
+choice, i.e., $\sumRoles \aL = \cup_{i\in I}{\{\arole_i\}}$. Moreover, we assume
+\begin{itemize}
+\item $\aL_i \neq\aLsum[j][J]$, for all $i \in I$
+\item either $| \sumRoles \aL| = 1$ or   
+	there exists $\amulti P\in\multiroles$ s.t. $\sumRoles \aL \subseteq \{\amulti P, \unknownstar, \unknown\}$
+\end{itemize}
 
 The projection $\proj$ of a global type $\aK$ on a role $\arole$ is
 defined as
