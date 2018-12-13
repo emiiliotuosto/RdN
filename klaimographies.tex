@@ -13,6 +13,7 @@ Tuple types have the following syntax:
                       \atuple \cdot \atuple \bnfmid
                       \wildcard \bnfmid
 \end{eqnarray*}
+Names $x : \asort$ and $\nu \aloc$ act as binders for the names $x$ and $\aloc$ at type level. 
 %
 Tuple types \emph{match} according to the relation $\_ \matches \_$
 defined as
@@ -45,22 +46,26 @@ We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$
 and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
 \emph{participants} and \emph{multiple} roles, and define the set of
 \emph{roles} $\roleset = \participants \cup \multiroles \cup
-\{\unknownstar, \unknown\ |\ \amulti\in\multiroles\}$ (ranged over by
-$\arole, \arole', \ldots$) where $\unknownstar$ and $\unknown$ are
+\{\unknownstar, \unknown\ |\ \amulti P \in\multiroles\}$ (ranged over by
+$\arole, \arole_1, \ldots$) where $\unknownstar$ and $\unknown$ are
 `wildcards' accounting for some flexibility when implementing
 multiroles: an action involving a $\unknownstar$ role can be
-optionally executed by an implementation of role $\rho$, while
+optionally executed by an implementation of role $\arole$, while
 $\unknown$ establishes that exactly one implementor must execute that
 action.
 %
 We conventionally write multiroles with initial uppercase letter and
-unique roles with initial lowercase letter.
+unique roles with initial lowercase letter. We write $\eqR$ for the 
+least equivalence relation on $\roleset$ satisfying 
+\[\amulti P \eqR \unknownstar \hspace{2cm} \amulti P \eqR \unknown\]
+
+
 
 Global types $\aK$ have the following syntax
-\eMnote{non e' chiaro se vogliamo $\aK \parop \aK $}
+%\eMnote{non e' chiaro se vogliamo $\aK \parop \aK $}
 \begin{eqnarray*}
   \aK & \bnfdef & \asum \bnfmid
-                  \aK \parop \aK \bnfmid
+%                  \aK \parop \aK \bnfmid
                   X \bnfmid
                   \arec
   \\
@@ -72,6 +77,20 @@ Global types $\aK$ have the following syntax
 \end{eqnarray*}
 where $I$ is a finite set of indexes and $\aloc \in \locset$ is a
 locality. We write $\nil$ for $\asum$ when $I = \emptyset$.
+
+We write $\roles \aK \subseteq \participants \cup \multiroles$ for the set of roles in $\aK$. 
+TBC: 
+
+Well-formedness (TBC): Besides the usual conditions about single selector and knowledge of 
+choices,  we assume the following conditions hold in any $\aK$.
+
+\begin{itemize}
+%	\item $\roles {\aK_1} \cap \roles {\aK_2} = \emptyset$ if $\aK = \aK_1 \parop \aK_2$
+	\item $\neg (\arole \eqR \arole')$ in $\apref[\arole][\arole']$ and $\apref[\arole][\arole'][@][\aloc][.]$.
+	\item 
+\end{itemize}
+
+
 
 Local types $\aL$ have the following syntax
 \begin{eqnarray*}
@@ -85,43 +104,67 @@ Local types $\aL$ have the following syntax
                   \arec[@][\aL]
 \end{eqnarray*}
 
-For a local type $\aL = \aLsum$, we write $\sumRoles \aL$ for the set
-of roles in the choice, i.e.,
-$\sumRoles \aL = \cup_{i\in I}{\{\arole_i\}}$.
+For a local type $\aL = \aLsum$, we write $\selectors \aL$ for the selecting roles in a choice, i.e.,
+$\selectors \aL = \cup_{i\in I}{\{\arole_i\}}$.
 %
 Moreover, we assume
 \begin{itemize}
 \item $\aL_i \neq\aLsum[j][J]$, for all $i \in I$
-\item either $| \sumRoles \aL| = 1$ or there exists $\amulti
-  P\in\multiroles$ s.t. $\sumRoles \aL \subseteq \{\amulti P,
+\item either $| \selectors \aL| = 1$ or there exists $\amulti
+  P\in\multiroles$ s.t. $\selectors \aL \subseteq \{\amulti P,
   \unknownstar, \unknown\}$
 \end{itemize}
 
-The projection $\proj$ of a global type $\aK$ on a role $\arole$ is
+The projection $\proj$ of a global type $\aK$ on a role $\arole \in \participants \cup \multiroles$ is
 defined as
 \[
   \proj =
   \begin{cases}
-    \arole' : \aout[].\proj[\aK_1] +\  \proj[\aK_2]  
+    \nil   
     & \text{if } 
-        \aK = \apref[\arole'].\aK_1 + \aK_2  \ \text{ and }
-        (\arole = \arole' \text{ or } \arole' \in \{\unknownstar[\arole],\unknown[\arole]\})
+        \arole \not \in \roles \aK  
     \\
-    \arole : \ain[].\proj[\aK_1] +\  \proj[\aK_2]  
+    \proj[\aK_1] +\ \proj[\aK_2]   
     & \text{if } 
-    \apref[{}][\arole].\aK_1 + \aK_2
+        \aK = \aK_1 +\  \aK_2  
     \\
+    \arole_1 : \aout[].\proj[\aK_1]   
     & \text{if } 
-    \apref[{}][\arole][@][@][.].\aK_1 + \aK_2
+        \arole \eqR \arole_1\  \text{ and }\ \aK = \apref[\arole_1].\aK_1  
     \\
+    \arole_1 : \ain[].\proj[\aK_1]
     & \text{if } 
-    \apref[\arole][\arole'].\aK_1 + \aK_2 
+      	\arole \eqR \arole_1\  \text{ and }\ \aK = \apref[{}][\arole_1].\aK_1  \ \text{ and }
     \\
+    \arole_1 : \ard[].\proj[\aK_1]
     & \text{if } 
-    \apref[\arole][\arole'][@][\aloc][.]
+    	\arole \eqR \arole_1\  \text{ and }\ \aK = \apref[{}][\arole_1][@][@][.].\aK_1
     \\
+    \arole_1 : \aout[].\proj[\aK_1]   
+    & \text{if } 
+    \arole \eqR \arole_1\  \text{ and either}\  
+    \aK = \apref[\arole_1][\arole_2].\aK_1 \text{ or }\ \aK = \apref[\arole_1][\arole_2][@][\aloc][.].\aK_1
+     \\
+    \arole_2 : \ain[].\proj[\aK_1]   
+    & \text{if } 
+    \arole \eqR \arole_2\  \text{ and }\  
+    \aK = \apref[\arole_1][\arole_2].\aK_1
+    \\
+    \arole_2 : \ard[].\proj[\aK_1]   
+    & \text{if } 
+    \arole \eqR \arole_2\  \text{ and }\  
+    \aK = \apref[\arole_1][\arole_2][@][\aloc][.].\aK_1
+    \\
+    \proj[\aK_1]   
+    & \text{if } \aK = \apref.\aK_1
+    \text{ and the previous ones do not apply}
+%    \\
+%    \proj[\aK_1]   
+%    & \text{if } \aK = \aK_1 \parop \aK_2 
+%    \text{ and } \arole \not\eqR \roles {\aK_2}
+   \\
     X & \text{if } \aK = X \\
-    \arec[@][{\proj[\aK']}] & \text{if } \aK = \arec[@][\aK']
+    \arec[@][{\proj[\aK_1]}] & \text{if } \aK = \arec[@][\aK_1]
   \end{cases}
 \]
 
