@@ -1,0 +1,92 @@
+%
+Let $\locset$ be a set of \emph{localities} and $\asort$ range over
+basic sorts which include $\asort[int]$, $\asort[bool]$,
+$\asort[str]$, etc.
+%
+Tuple types have the following syntax:
+\begin{eqnarray*}
+  \atuple & \bnfdef & \asort \bnfmid
+                      \nu \aloc \bnfmid
+                      x : \asort \bnfmid
+                      \atuple \cdot \atuple \bnfmid
+                      \wildcard \bnfmid
+\end{eqnarray*}
+%
+Tuple types \emph{match} according to the relation $\_ \matches \_$ defined as
+\[
+  \atuple \matches \atuple' \iff
+  \begin{cases}
+    \atuple = \atuple'  & \text{if $\atuple$ and $\atuple'$ are sorts}
+    \\
+    \atuple_1 \matches \atuple'_1
+    \land \atuple_2 \matches \atuple'_2  & \text{if } \atuple = \atuple_1 \cdot \atuple_2 \text{ and }  \atuple' = \atuple'_1 \cdot \atuple'_2
+    \\
+    \atuple = \wildcard \vee \atuple' = \wildcard & \text{otherwise}
+  \end{cases}
+\]
+
+We define
+\[
+  \atuple \clashes \atuple' \iff \exists \atuple'' \qst \atuple'' \matches \atuple \land \atuple'' \matches \atuple'
+\]
+%
+and say that $\atuple$ and $\atuple'$ \emph{are in conflict} when
+$\atuple \clashes \atuple'$.
+
+We fix two disjoint sets $\unitroles$ and $\multiroles$, respectively
+of \emph{unique} and \emph{multiple} roles, and define the set of
+\emph{roles}
+$\roleset = \unitroles \cup \multiroles \cup \{\unknownstar,
+\unknown\}$ (ranged over by $\arole, \arole', \ldots$) where
+$\unknownstar$ and $\unknown$ are 'wildcards' representing any roles
+and at least one role.
+%
+We conventionally write multiroles with initial uppercase letter and
+unique roles with initial lowercase letter.
+
+Global types $\aK$ have the following syntax
+\eMnote{non e' chiaro se vogliamo $\aK \parop \aK $}
+\begin{eqnarray*}
+  \aK & \bnfdef & \asum \bnfmid
+                  \aK \parop \aK \bnfmid
+                  X \bnfmid
+                  \arec
+  \\
+  \apref & \bnfdef & \apref[\arole] \bnfmid
+                         \apref[{}][\arole] \bnfmid
+                         \apref[{}][\arole][@][@][.] \bnfmid
+                         \apref[\arole][\arole'] \bnfmid
+                         \apref[\arole][\arole'][@][\aloc][.]
+\end{eqnarray*}
+where $I$ is a finite set of indexes and $\aloc \in \locset$ is a
+locality.
+
+Local types $\aL$ have the following syntax
+\begin{eqnarray*}
+  \aL & \bnfdef & \nil \bnfmid
+                  \aL \chop \aL \bnfmid
+                  \aout[].\aL \bnfmid
+                  \ain[].\aL \bnfmid
+                  \ard[].\aL \bnfmid
+                  X \bnfmid
+                  \arec[@][\aL]
+\end{eqnarray*}
+
+The projection $\proj$ of a global type $\aK$ on a role $\arole$ is
+defined as
+\[
+  \proj =
+  \begin{cases}
+    & \text{if } \\
+    & \text{if } \\
+    & \text{if } \\
+    X & \text{if } \aK = X \\
+    \arec[@][{\proj[\aK']}] & \text{if } \aK = \arec[@][\aK']
+  \end{cases}
+\]
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
