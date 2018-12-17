@@ -3,8 +3,8 @@
 
 \newcommandx{\asort}[1][1 = s, usedefault=@]{\mathbf{#1}}
 \newcommand{\wildcard}{\star}
-\newcommand{\atuple}{\texttt{t}}
-\newcommand{\aloc}[1][l]{\texttt{\color{blue}l}}
+\newcommandx{\atuple}[1][1 = t]{\texttt{#1}}
+\newcommandx{\aloc}[1][1=l]{\texttt{\color{blue}#1}}
 \newcommand{\locset}{\mathcal{L}}
 \newcommand{\mkop}[1]{\textcolor{ForestGreen}{#1}}
 \newcommand{\at}{\mkop{\tiny @}}
@@ -16,7 +16,7 @@
 \newcommand{\rec}{\mkop{rec}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
 \newcommandx{\atupleat}[3][1={}, 2=\atuple, 3=\aloc, usedefault=@]{
-  \ifempty{#1}{({#2}) \at {#3}}{{#2} \at {#3}}
+  \ifempty{#1}{{#2} \at {#3}}{{#2} \at {#3}}
 }
 \newcommand{\clashes}{\sharp}
 \newcommand{\matches}{\bowtie}
@@ -73,6 +73,28 @@
 \newcommand{\selectors}[1]{\it{sel}(#1)}
 \newcommand{\roles}[1]{\it{roles}(#1)}
 \newcommand{\eqR}{\sim}
+
+\newcommand{\irule}[2]{\frac{\textstyle\rule[-1.3ex]{0cm}{3ex}#1}{\textstyle\rule[-.5ex]{0cm}{3ex}#2}}
+
+
+\def \mathaxiom #1#2{
+  \begin{array}{l}%
+    \ifempty{#2}{}{\hspace{0em}\mbox{\footnotesize$\mathsf{[#2]}$}\\}
+    {#1}
+  \end{array}
+}
+
+\def \mathrule #1#2#3{
+  \begin{array}{l}%
+    \ifempty{#3}{}{\hspace{0em}\mbox{\footnotesize$\mathsf{[#3]}$}\\}
+    \irule{#1}{#2}
+  \end{array}
+}
+
+\newcommand{\envmv}{\textcolor{cyan}{\Delta}}
+\newcommand{\envtuple}{\textcolor{cyan}{\Gamma}}
+
+\newcommandx{\red}[1][1={}]{\xlongrightarrow{#1}}
 
 %%% Local Variables:
 %%% mode: latex

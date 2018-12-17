@@ -77,7 +77,96 @@ Global types $\aK$ have the following syntax
                          \apref[\arole][\arole'][@][\aloc][.]
 \end{eqnarray*}
 where $I$ is a finite set of indexes and $\aloc \in \locset$ is a
-locality. We write $\nil$ for $\asum$ when $I = \emptyset$.
+locality. We write $\nil$ for $\asum$ when $I = \emptyset$. 
+We write $\apref_i.\aK_i$ instead of $\asum$ when $I = \{i\}$.
+ 
+
+\begin{example}[Auction]
+
+\[
+  \begin{array}{l}
+  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
+  \\  	
+  \apref[\amulti {Seller}][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu \aloc}}][{\aloc[c]}][.].
+  \\
+  \arec[@][\left({
+    	\begin{array}{l}
+	\apref[][\amulti {Buyer}][{i:{\asort[str]} \cdot p:{\asort[int]} \cdot \aloc[o]}][{\aloc[c]}][].
+	\\
+	\apref[\amulti {Buyer}][\amulti {Buyer}][{i \cdot {\asort[booked]}}][{\aloc[c]}][.].
+	\\
+	\arec[Y][\left({
+    	\begin{array}{l}
+	\apref[\amulti {Buyer}][\amulti {Seller}][{i \cdot {\asort[offer]} \cdot {\asort[int]}}][{\aloc[o]}][.].
+	\\
+	\apref[][\amulti {Seller}][{i \cdot \asort[offer]} \cdot  {\asort[int]}][{\aloc[o]}][].
+	\\
+	\qquad 
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot \asort[sold]}][{\aloc[c]}][.].
+	\\
+	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+	X
+	\\
+	\qquad
+	+
+	\\
+	\qquad
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot {\asort[request]}  \cdot \asort[int]}][{\aloc[o]}][.]. 
+	\\
+	\qquad
+	\apref[][\amulti {Buyer}][i \cdot {\asort[request]} \cdot {\asort[int]}][{\aloc[o]}][].
+	\\
+	\qquad\qquad	
+	Y
+	\\
+	\qquad\qquad	
+	+
+	\\ 
+	\qquad\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+	\\
+	\qquad\qquad
+	\apref[\amulti {Buyer}][\amulti {Seller}][{i\cdot {\asort[quit]}}][{\aloc[o]}][.]. 
+	\\
+	\qquad\qquad
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc[l]}}][{\aloc[c]}][.].X
+	\\
+	\qquad
+	+
+	\\
+	\qquad
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[refused]}}][{\aloc[o]}][.]. 
+	\\
+	\qquad
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc[l]}}][{\aloc[c]}][.].
+	\\
+	\qquad
+	\apref[][\amulti {Buyer}][{i \cdot \asort[refused]}][{\aloc[o]}][].
+	\\
+	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+	X
+	\end{array}
+	}\right)]
+	\\
+	+
+	\\
+	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[booked]}}][{\aloc[c]}][.]. 
+	X
+	\\
+	+
+	\\
+	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[sold]}}][{\aloc[c]}][.]. 
+	X
+	\\
+	+
+	\\
+	\nil
+  	\end{array}
+  }\right)]
+  \\
+  \end{array}
+\]
+\finex
+\end{example}
 
 We write $\roles \aK \subseteq \participants \cup \multiroles$ for the set of roles in $\aK$. 
 TBC: 
@@ -95,17 +184,18 @@ choices,  we assume the following conditions hold in any $\aK$.
 
 Local types $\aL$ have the following syntax
 \begin{eqnarray*}
-  \aL & \bnfdef & \nil \bnfmid
-                  %\aL \chop \aL \bnfmid
-                  \aLsum \bnfmid
+  \aL & \bnfdef & %\nil \bnfmid
                   \aout[].\aL \bnfmid
                   \ain[].\aL \bnfmid
                   \ard[].\aL \bnfmid
+                  %\aL \chop \aL \bnfmid
+                  \aLsum \bnfmid
                   X \bnfmid
                   \arec[@][\aL]
 \end{eqnarray*}
+As for global types, we write $\nil$ for a sum with an empty set $I$ of branches. 
 
-For a local type $\aL = \aLsum$, we write $\selectors \aL$ for the selecting roles in a choice, i.e.,
+For a local type $\aL = \aLsum$, we write $\selectors \aL$ for the selecting roles the choice, i.e.,
 $\selectors \aL = \cup_{i\in I}{\{\arole_i\}}$.
 %
 Moreover, we assume
@@ -142,7 +232,8 @@ defined as
     \arole_1 : \aout[].\proj[\aK_1]   
     & \text{if } 
     \arole \eqR \arole_1\  \text{ and either}\  
-    \aK = \apref[\arole_1][\arole_2].\aK_1 \text{ or }\ \aK = \apref[\arole_1][\arole_2][@][\aloc][.].\aK_1
+    \aK = \apref[\arole_1][\arole_2].\aK_1 
+    \\ & \hspace{2.5cm}\text{ or }\ \aK = \apref[\arole_1][\arole_2][@][\aloc][.].\aK_1
      \\
     \arole_2 : \ain[].\proj[\aK_1]   
     & \text{if } 
@@ -167,6 +258,8 @@ defined as
   \end{cases}
 \]
 
+
+\input{semanticslocal}
 
 %%% Local Variables:
 %%% mode: latex

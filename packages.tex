@@ -20,6 +20,7 @@
 \usepackage{etoolbox}
 \usepackage{bussproofs}
 \usepackage{etoolbox}
+\usepackage{extarrows}
 %\usepackage{minted}
 %\AtBeginEnvironment{minted}{\fontsize{7.1}{7.1}\selectfont}
 \usepackage{wrapfig}
@@ -28,3 +29,21 @@
 \usepackage{xspace}
 
 \usepackage[inline]{enumitem}
+
+% managing draft and final version (uncomment finaltrue to get final)
+\newif\iffinal
+%\finaltrue
+
+\usepackage[textsize=tiny%
+\iffinal
+,disable%
+\fi
+]{todonotes}
+
+\iffinal
+\else
+% for todo notes
+\setlength{\marginparwidth}{2.2cm}
+\fi
+
+
