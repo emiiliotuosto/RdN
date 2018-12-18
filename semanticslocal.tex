@@ -1,0 +1,49 @@
+\subsection{Semantics of Local types}
+
+We consider the following syntax for run-time semantics of a set of local types and tuple spaces, 
+called {\em specification}.
+
+\begin{eqnarray*}
+  \envmv & \bnfdef & \emptyset \bnfmid
+                  \envmv, \arole :  \aL \bnfmid
+                  \envmv, \atupleat
+\end{eqnarray*}
+
+In $\arole :  \aL$  we assume
+$\arole \in \participants \cup \multiroles$  and $\arole \eqR \arole'$ for any $\arole'$
+occurring in $\aL$.
+%
+We write $\envtuple$ for a specification that only contains terms of the form $\atupleat$. 
+ 
+\[
+\begin{array}{l@{\hspace{1cm}}l}
+\mathaxiom
+	{\envmv, \arole : \aout[].\aL 
+	 \red[\arole : {\aout[]}]
+	 \envmv, \arole : \aL , \aout[]}
+	{LOut}
+&
+\mathrule
+	{\atuple \matches \atuple'}
+	{\envmv, \arole : \ain[].\aL, \aout[][\atuple'] 
+	 \red[\arole : {\ain[][\atuple']}]
+	 \envmv, \arole : \aL}
+	{LIn}
+\\[25pt]
+\mathrule
+	{\atuple \matches \atuple'}
+	{\envmv, \arole : \ard[].\aL, \aout[][\atuple'] 
+	 \red[\arole : {\ard[][\atuple']}]
+	 \envmv, \arole : \aL,  \aout[][\atuple'] }
+	{LRd}
+&
+\mathrule
+	{\envtuple, \arole_i : \aL_i \red[\alpha] \envmv'}
+	{\envmv, \envtuple, \arole : \aLsum
+	 \red[\alpha]
+	 \envmv,\envmv'}
+	{LSum}
+\end{array}
+\]
+\todo{not sure which decoration do we want in LSum $\arole$ or $\arole_i$.}
+
