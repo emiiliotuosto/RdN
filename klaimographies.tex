@@ -178,74 +178,48 @@ We omit trailing occurrences of $\nil$.
 \begin{example}[Auction]
 \[
   \begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
-  \\  	
-  \apref[\amulti {Seller}][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]}}][{\aloc[c]}][.].
-  \\
-  \arec[@][\left({
-    	\begin{array}{l}
-	\apref[][\amulti {Buyer}][{i:{\asort[str]} \cdot p:{\asort[int]}}][{\aloc[c]}][].
+    \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
+    \\  	
+    \arec[Z][\left({
+    \begin{array}{l}
+      \apref[\amulti{Seller}][\amulti {Buyer}][s:{\asort[seller]} \cdot {i:{\asort[str]} \cdot p:{\asort[int]}}][{\aloc[m]}].
+      \\\qquad
+      \apref[\amulti {Buyer}][\amulti {Buyer}][{s \cdot i \cdot p}][{\aloc[m]}][.]. Z
+      \\\qquad
+      \chop
+      \\\qquad
+      \apref[\amulti {Buyer}][\amulti {Seller}][s \cdot i \cdot {\asort[offer]} \cdot \nu \aloc][{\aloc[m]}][.].
+      \\\qquad
+      \arec[Y][\left({
+      \begin{array}{l}
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][\aloc].
 	\\\qquad
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i \cdot {\asort[offer]}  \cdot {\nu \aloc}}][{\aloc[c]}].
-	\\\qquad
-	\apref[\amulti {Buyer}][\amulti {Buyer}][{i \cdot {\asort[booked]} \cdot \aloc}][{\aloc[c]}][.].
-	\\\qquad
-	\arec[Y][\left({
-    	\begin{array}{l}
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot \asort[sold]}][\aloc].
+	\apref[\amulti {Seller}][][s \cdot i \cdot p][{\aloc[m]}].
+        \\
+        \qquad
+        Z
+        \\
+        \chop
 	\\
-          \qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]} \cdot \aloc][{\aloc[c]}].
-          \\
-          \qquad\apref[\amulti {Buyer}][\amulti {Buyer}][i \cdot {\asort[sold]} \cdot \nu \aloc][{\aloc[c]}][.].
-          \\
-          \qquad X
+        \apref[\amulti{Seller}][\amulti {Buyer}][{\asort[sold]}][\aloc].
+        \\
+        \qquad
+        Z
 	\\
-	+
+	\qquad
+        \chop
 	\\
-          \apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot {\asort[request]}}][\aloc].
-          \\
-          \qquad\apref[\amulti {Buyer}][][i \cdot {\asort[offer]}][{\aloc}][.].
+        \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][\aloc].
+        \\
+        \qquad\apref[\amulti {Buyer}][\amulti {Seller}][{\asort[offer]}][{\aloc}][].
 	\\
         \qquad	
 	Y
-	\\
-	+
-	\\ 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[quit]}}][{\aloc[l]}]. 
-	\\
-        \qquad
-          \apref[][\amulti {Buyer}][i \cdot {\asort[booked]} \cdot \aloc][{\aloc[c]}].
-	\\
-        \qquad
-          \apref[\amulti{buyer}][\amulti {Buyer}][i \cdot {\asort[released]} \cdot \nu \aloc][{\aloc[c]}][.].
-          \\ \qquad
-        \apref[\amulti {Seller}][\amulti {Buyer}][i \cdot p][{\aloc[c]}][.].
-          \\\qquad
-          X
-	\end{array}
-	}\right)]
-	\\
-	+
-	\\
-	\apref[][\amulti {Buyer}][{i \cdot {\asort[booked]} \cdot \wildcard}][{\aloc[c]}][.]. 
-          X
-          \\
-	+
-	\\
-	\apref[][\amulti {Buyer}][{i \cdot {\asort[released]} \cdot \wildcard}][{\aloc[c]}][.]. 
-	X
-	\\
-	+
-	\\
-	\apref[][\amulti {Buyer}][{i \cdot {\asort[sold]} \cdot \wildcard}][{\aloc[c]}][.]. 
-	X
-	\\
-	+
-	\\
-	\nil
-  	\end{array}
-  }\right)]
-  \\
+      \end{array}
+      } \right)]
+    \end{array}
+    }\right)]
+    \\
   \end{array}
 \]
 \finex
