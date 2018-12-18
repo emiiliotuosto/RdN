@@ -56,8 +56,10 @@ $\unknown$ establishes that exactly one implementor must execute that
 action.
 %
 We conventionally write multiroles with initial uppercase letter and
-unique roles with initial lowercase letter. We write $\eqR$ for the 
-least equivalence relation on $\roleset$ satisfying 
+unique roles with initial lowercase letter.
+%
+We write $\eqR$ for the least equivalence relation on $\roleset$
+satisfying
 \[\amulti P \eqR \unknownstar \hspace{2cm} \amulti P \eqR \unknown\]
 
 
@@ -77,8 +79,12 @@ Global types $\aK$ have the following syntax
                          \apref[\arole][\arole'][@][\aloc][.]
 \end{eqnarray*}
 where $I$ is a finite set of indexes and $\aloc \in \locset$ is a
-locality. We write $\nil$ for $\asum$ when $I = \emptyset$. 
-We write $\apref_i.\aK_i$ instead of $\asum$ when $I = \{i\}$.
+locality.
+%
+We write $\nil$ for $\asum$ when $I = \emptyset$ and
+$\apref_j.\aK_j$ instead of $\asum$ when $I = \{j\}$.
+%
+We omit trailing occurrences of $\nil$.
  
 
 \begin{example}[Auction]
@@ -128,7 +134,7 @@ We write $\apref_i.\aK_i$ instead of $\asum$ when $I = \{i\}$.
 	\apref[\amulti {Buyer}][\amulti {Seller}][{i\cdot {\asort[quit]}}][{\aloc[o]}][.]. 
 	\\
 	\qquad\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc[l]}}][{\aloc[c]}][.].X
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].X
 	\\
 	\qquad
 	+
@@ -137,7 +143,7 @@ We write $\apref_i.\aK_i$ instead of $\asum$ when $I = \{i\}$.
 	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[refused]}}][{\aloc[o]}][.]. 
 	\\
 	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc[l]}}][{\aloc[c]}][.].
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].
 	\\
 	\qquad
 	\apref[][\amulti {Buyer}][{i \cdot \asort[refused]}][{\aloc[o]}][].
@@ -155,6 +161,83 @@ We write $\apref_i.\aK_i$ instead of $\asum$ when $I = \{i\}$.
 	+
 	\\
 	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[sold]}}][{\aloc[c]}][.]. 
+	X
+	\\
+	+
+	\\
+	\nil
+  	\end{array}
+  }\right)]
+  \\
+  \end{array}
+\]
+\finex
+\end{example}
+
+\eMnote{un'alternativa}
+\begin{example}[Auction]
+\[
+  \begin{array}{l}
+  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
+  \\  	
+  \apref[\amulti {Seller}][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]}}][{\aloc[c]}][.].
+  \\
+  \arec[@][\left({
+    	\begin{array}{l}
+	\apref[][\amulti {Buyer}][{i:{\asort[str]} \cdot p:{\asort[int]}}][{\aloc[c]}][].
+	\\\qquad
+	\apref[\amulti {Buyer}][\amulti {Seller}][{i \cdot {\asort[offer]}  \cdot {\nu \aloc}}][{\aloc[c]}].
+	\\\qquad
+	\apref[\amulti {Buyer}][\amulti {Buyer}][{i \cdot {\asort[booked]} \cdot \aloc}][{\aloc[c]}][.].
+	\\\qquad
+	\arec[Y][\left({
+    	\begin{array}{l}
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot \asort[sold]}][\aloc].
+	\\
+          \qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]} \cdot \aloc][{\aloc[c]}].
+          \\
+          \qquad\apref[\amulti {Buyer}][\amulti {Buyer}][i \cdot {\asort[sold]} \cdot \nu \aloc][{\aloc[c]}][.].
+          \\
+          \qquad X
+	\\
+	+
+	\\
+          \apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot {\asort[request]}}][\aloc].
+          \\
+          \qquad\apref[\amulti {Buyer}][][i \cdot {\asort[offer]}][{\aloc}][.].
+	\\
+        \qquad	
+	Y
+	\\
+	+
+	\\ 
+	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[quit]}}][{\aloc[l]}]. 
+	\\
+        \qquad
+          \apref[][\amulti {Buyer}][i \cdot {\asort[booked]} \cdot \aloc][{\aloc[c]}].
+	\\
+        \qquad
+          \apref[\amulti{buyer}][\amulti {Buyer}][i \cdot {\asort[released]} \cdot \nu \aloc][{\aloc[c]}][.].
+          \\ \qquad
+        \apref[\amulti {Seller}][\amulti {Buyer}][i \cdot p][{\aloc[c]}][.].
+          \\\qquad
+          X
+	\end{array}
+	}\right)]
+	\\
+	+
+	\\
+	\apref[][\amulti {Buyer}][{i \cdot {\asort[booked]} \cdot \wildcard}][{\aloc[c]}][.]. 
+          X
+          \\
+	+
+	\\
+	\apref[][\amulti {Buyer}][{i \cdot {\asort[released]} \cdot \wildcard}][{\aloc[c]}][.]. 
+	X
+	\\
+	+
+	\\
+	\apref[][\amulti {Buyer}][{i \cdot {\asort[sold]} \cdot \wildcard}][{\aloc[c]}][.]. 
 	X
 	\\
 	+

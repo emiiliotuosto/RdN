@@ -7,12 +7,12 @@
 \newcommandx{\aloc}[1][1=l]{\texttt{\color{blue}#1}}
 \newcommand{\locset}{\mathcal{L}}
 \newcommand{\mkop}[1]{\textcolor{ForestGreen}{#1}}
-\newcommand{\at}{\mkop{\tiny @}}
-\newcommand{\outop}{\mkop{!}}
-\newcommand{\parop}{\mkop{\mid}}
-\newcommand{\chop}{\mkop{+}}
-\newcommand{\inop}{\mkop{?}}
-\newcommand{\toop}{\mkop{\to}}
+\DeclareMathOperator{\at}{\mkop{\tiny @}}
+\DeclareMathOperator{\outop}{\mkop{!}}
+\DeclareMathOperator{\parop}{\mkop{\mid}}
+\DeclareMathOperator{\chop}{\mkop{+}}
+\DeclareMathOperator{\inop}{\mkop{?}}
+\DeclareMathOperator{\toop}{\mkop{\to}}
 \newcommand{\rec}{\mkop{rec}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
 \newcommandx{\atupleat}[3][1={}, 2=\atuple, 3=\aloc, usedefault=@]{
@@ -22,7 +22,7 @@
 \newcommand{\matches}{\bowtie}
 \newcommand{\arole}{\rho}
 \newcommand{\ptp}[1]{{\mathsf{\MakeLowercase{#1}}}}
-\newcommand{\amulti}[1]{{\mathsf{\MakeUppercase{#1}}}}
+\newcommand{\amulti}[1]{{\mathsf{\titlecap{#1}}}}
 \newcommand{\roleset}{\mathcal{R}}
 \newcommand{\participants}{\mathcal{P}}
 \newcommand{\multiroles}{\mathcal{M}}
@@ -36,7 +36,7 @@
   \ifempty{#1}{\_}{#1} \downharpoonleft_{\ifempty{#2}{\_}{#2}}
 }
 \newcommandx{\aint}[3][1=\arole, 2=\arole', 3=\aK, usedefault=@]{
-  {#1} \toop {#2} \mkop{:} {#3}
+  {#1} \toop {#2} \, \mkop{:} \, {#3}
 }
 \newcommandx{\apref}[5][1={},2={},3=\atuple,4=\aloc,5={},usedefault=@]{
   \ifempty{#1}{
@@ -47,7 +47,7 @@
     \ifempty{#2}{
       \aout[{#1}][{#3}][{#4}]
     }{
-      {#1} \toop {#2} \mkop{:} \ifempty{#5}{({#3})\at{#4}}{{#3}\at{#4}}
+      {#1} \toop {#2} \, \mkop{:} \, \ifempty{#5}{({#3})\at{#4}}{{#3}\at{#4}}
     }
   }
 }
