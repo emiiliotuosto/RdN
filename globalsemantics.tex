@@ -1,0 +1,105 @@
+We give semantics to global types using \emph{partially-ordered multi-set}.
+%
+Following~\cite{gaifman1987partial}, a \emph{pomsets} is an
+isomorphism class of labelled partially-ordered sets (lposet), where
+fixed a set of labels $\lset$,
+\begin{itemize}
+\item an lposet is a triple $(\eset, \leq, \alf)$, with $\eset$ a set
+  of events, $\leq$ is a partial order on $\eset$, and
+  $\alf: \eset \rightarrow \lset$ a labelling function mapping events
+  in $\eset$ to labels in $\lset$;
+\item two lposets $(\eset, \leq, \alf)$ and $(\eset', \leq', \alf')$
+  are \emph{isomorphic} if there is a bijection
+  $\phi: \eset \rightarrow \eset'$ such that
+  $\ae \leq \ae' \iff \phi(\ae) \leq' \phi(\ae')$ and
+  $\alf = \alf' \circ \phi$.
+\end{itemize}
+%
+Intuitively, $\leq$ represents causality; for $\ae \neq \ae'$, if
+$\ae \leq \ae'$ and both events occur then $\ae'$ is caused by $\ae$.
+%
+Note that $\alf$ is not required to be injective: for
+$\ae \neq \ae' \in \eset$, $\alf(\ae) = \alf(\ae')$ means that $\ae$
+and $\ae'$ model different occurrences of the same action.
+%
+In the following, $[\eset, \leq, \alf]$ denotes the isomorphism class
+of $(\eset, \leq, \alf)$, symbols $\apom,\apom', \dots$ (resp.
+$\aR, \aR', \dots$) range over (resp. sets of) pomsets, and we assume
+that pomsets $\apom$ contain at least one lposet which will possibly
+be referred to as $(\esetof \apom$, $\leqof \apom, \alfof \apom)$.
+%
+The empty pomset is denoted as $\emptypom$.
+
+\eMnote{forse non serve}{\color{red}
+An event $\ae$ is an \emph{immediate predecessor} of an event $\ae'$
+(or equivalently $\ae'$ is an \emph{immediate successor} of $\ae$) in
+a pomset $\apom$ if $\ae \neq \ae'$, $\ae \leqof \apom \ae'$, and for
+all $\ae'' \in \esetof \apom$ such that
+$\ae \leqof \apom \ae'' \leqof \apom \ae'$ either $\ae = \ae''$ or
+$\ae' = \ae''$.
+}
+%
+\todo{add graphical representation of pomsets}
+
+Given an uncoordinated prefix $\apref$, we let $\pomsetsingle$ to be
+the poset with a single event labelled by $\apref$.
+%
+We will use the auxiliary operations on pomsets described in the
+following.
+
+We define the union and the sequential composition of two pomsets
+$\apom$ and $\apom'$ respectively as
+\[
+  \apom \pomsetcup \apom' =
+  [\esetof{\apom} \uplus \esetof{\apom'},
+  \leqof{\apom} \uplus \leqof{\apom'},
+  \alfof{\apom} \uplus \alfof{\apom'}]
+  \quad\text{and}\quad
+  \rseq[\apom][\apom'] = 
+  [\esetof{\apom} \uplus \esetof{\apom'},
+  \leq,
+  \alfof{\apom} \uplus \alfof{\apom'}]
+\]
+where
+$\leq = \leqof{\apom} \uplus \leqof{\apom'} \cup \{(\ae,\ae') \sst \ae
+\in \max \apom \land \ae' \in \min \apom'\}$.
+%
+Finally, for $h \geq 1$ and a pomset $\apom$ we define
+\[
+  \apom^h =
+  \begin{cases}
+    r & \text{if } h = 1
+    \\
+    r \pomsetcup r^{h-1} & \text{if } h > 1
+  \end{cases}
+\]
+
+The semantics of a global type builds upon \emph{basic pomsets} $\bp$
+of prefixes $\apref$; in fact, the semantics of a global type is build
+by taking sets of disjoint unions of basic pomsets of prefixes
+sequentially composed together.
+%
+Let $\arole,\arole' \in \multiroles$
+
+\begin{eqnarray*}
+  \bp[\apref] = & \pomsetrep{\node {$\apref$}}[], & \text{if $\pi$ uncoordinated}
+  \\
+  \bp[{\apref[\arole][\arole'][@][\aloc][.]}] =
+  &
+    \begin{cases}
+      \pomsetrep{
+        \node (out) {$\apref[\arole]$};
+        \node[below = of out] (in) {$\apref[][\arole]$};
+        \draw[->] (out) -- (in);
+      }[]
+    \end{cases}
+  \\
+  \bp[{\apref[\arole][\arole']}] & = &
+\end{eqnarray*}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -5,7 +5,8 @@
 \newcommand{\wildcard}{\star}
 \newcommandx{\atuple}[1][1 = t]{\texttt{#1}}
 \newcommandx{\aloc}[1][1=l]{\texttt{\color{blue}#1}}
-\newcommand{\locset}{\mathcal{L}}
+\newcommand{\locset}{\mathcal{L}\!\mathit{oc}}
+\newcommand{\tupleset}{\mathcal{T}}
 \newcommand{\mkop}[1]{\textcolor{ForestGreen}{#1}}
 \DeclareMathOperator{\at}{\mkop{\tiny @}}
 \DeclareMathOperator{\outop}{\mkop{!}}
@@ -26,10 +27,10 @@
 \newcommand{\roleset}{\mathcal{R}}
 \newcommand{\participants}{\mathcal{P}}
 \newcommand{\multiroles}{\mathcal{M}}
-%\newcommand{\unknownstar}{\mkop{\ast}}
-%\newcommand{\unknown}{\mkop{\textbf{?}}}
-\newcommandx{\unknownstar}[1][1=P]{{\amulti {#1}}^{\mkop{\ast}}}
-\newcommandx{\unknown}[1][1= P]{{\amulti {#1}}^{\mkop{\textbf{?}}}}
+\newcommand{\unknownstarop}{{\mkop{\ast}}}
+\newcommand{\unknownop}{{\mkop{\odot}}}
+\newcommandx{\unknownstar}[1][1=P]{{\amulti {#1}}^{\unknownstarop}}
+\newcommandx{\unknown}[1][1= P]{{\amulti {#1}}^{\unknownop}}
 \newcommand{\aK}[1][K]{\texttt{\textcolor{blue}#1}}
 \newcommand{\aL}[1][L]{\texttt{\textcolor{orange}#1}}
 \newcommandx{\proj}[2][1=\aK,2=\arole,usedefault=@]{
@@ -45,7 +46,7 @@
     }
   }{
     \ifempty{#2}{
-      \aout[{#1}][{#3}][{#4}]
+      \ifempty{#5}{\aout[{#1}][({#3})][{#4}]}{\aout[{#1}][{#3}][{#4}]}
     }{
       {#1} \toop {#2} \, \mkop{:} \, \ifempty{#5}{({#3})\at{#4}}{{#3}\at{#4}}
     }
@@ -55,9 +56,9 @@
   \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{#3_{#1} \ifempty{#4}{}{. #4_{#1}}}
 }
 \newcommandx{\aout}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
-  \ifempty{#1}{#2 \outop #3}{{#1} \outop {#2} \at {#3}}
+  \ifempty{#1}{#2 \outop (#3)}{{#1} \outop {#2} \at {#3}}
 }
-\newcommandx{\ain}[3][1=\arole,2=\atuple,3=\aloc,,usedefault=@]{
+\newcommandx{\ain}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
   \ifempty{#1}{(#2) \inop #3}{{#1} \inop {(#2)} \at {#3}}
 }
 \newcommandx{\ard}[3][1=\arole,2=\atuple,3=\aloc,,usedefault=@]{
@@ -95,6 +96,65 @@
 \newcommand{\envtuple}{\textcolor{cyan}{\Gamma}}
 
 \newcommandx{\red}[1][1={}]{\xlongrightarrow{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                        START POMSETS MACROS                           %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\apom}{r}
+\newcommand{\emptypom}{\epsilon}
+\newcommand{\alf}{\lambda}
+\newcommand{\projpom}[2]{{#1}\!\!\downharpoonright_{#2}}
+
+%%% chosem macros to add to ggmacros
+\newcommand{\eset}{\mathcal{E}}
+\newcommand{\aR}[1][R]{{\colorR{#1}}}
+\newcommand{\efst}[1]{\pi_1\ifempty{#1}{}{({#1})}}
+\newcommand{\aConf}{s}
+\newcommand{\alfof}[1]{\alf_{#1}}
+\newcommand{\minev}[1]{\mathtt{min}_{[#1]}}
+\newcommand{\esetof}[1]{\eset_{#1}}
+\newcommand{\leqof}[1]{\leq_{#1}}
+\newcommandx{\detM}[1][1=\aCM,usedefault=@]{\Delta({#1})}
+
+\tikzset{
+  pomset/.style={
+    node distance = .6cm and .6cm,
+    scale = .7,
+    transform shape,
+    smooth
+  }
+}
+%
+\newcommandx{\pomsetrep}[4][2=\alf, 3={}, 4={}, usedefault=@]{
+  \left[
+    \begin{array}[c]{c}
+      \begin{tikzpicture}[#4,every node/.style={pomset}]
+        {#1;}
+      \end{tikzpicture}
+    \end{array}\right]_{#2}^{#3}
+}
+\DeclareMathOperator{\pomsetcup}{\sqcup}
+\newcommand{\pomsetsingle}[1][\apref]{\pomsetrep{\node {$#1$}}[]}
+
+\def\colorMsg{\color{BrickRed}}    
+\def\colorR{\color{OliveGreen}}
+\newcommand{\msg}[1][m]{\mathsf{\colorMsg{#1}}}
+\newcommand{\lset}{\mathcal{L}}
+\def\colorE{\color{orange}}
+\newcommand{\al}[1][l]{{\colorE{#1}}}
+\def\colorE{\color{orange}}
+\renewcommand{\ae}[1][e]{{\colorE{#1}}}
+\newcommandx{\rseq}[2][1=\aG,2={\aG'},usedefault=@]{\gfun{seq}({#1},{#2})}
+\def\colorFun{\color{black}}
+\newcommand{\gfun}[1]{\ensuremath{\mathsf{\colorFun #1}}}
+\newcommandx{\bp}[1][1=\apref,usedefault=@]{\gfun{bp}(\ifempty{#1}{\_}{#1})}
+\newcommandx{\unique}[1][1=\apref,usedefault=@]{\gfun{unique}(\ifempty{#1}{\_}{#1})}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%                        END POMSETS MACROS                             %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%% Local Variables:
 %%% mode: latex
