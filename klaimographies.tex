@@ -104,8 +104,13 @@ prefixes, namely those regarding more roles.  \eMnote{trovare una
   terminologia migliore? pt- and ptp- interaction per process-TS
   interaction e process-TS-process prefix?}
 %
-We define $\roleof$ to be the role occurring in an uncoordinated
-prefix $\apref$.
+We define $\roles \apref$ to the set of roles in $\apref$; note that
+$\roles \apref$ is a singleton if, and only if, $\apref$ is an
+uncoordinated prefix.
+%
+Likewise, $\roles \aK \subseteq \participants \cup \multiroles$ for
+the set of roles in $\aK$.
+
 
 \begin{example}[Auction]
 
@@ -248,7 +253,6 @@ prefix $\apref$.
 \finex
 \end{example}
 
-We write $\roles \aK \subseteq \participants \cup \multiroles$ for the set of roles in $\aK$. 
 TBC: 
 
 Well-formedness (TBC): Besides the usual conditions about single selector and knowledge of 

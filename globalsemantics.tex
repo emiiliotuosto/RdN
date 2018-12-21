@@ -62,7 +62,10 @@ $\apom$ and $\apom'$ respectively as
 \]
 where
 $\leq = \leqof{\apom} \uplus \leqof{\apom'} \cup \{(\ae,\ae') \sst \ae
-\in \max \apom \land \ae' \in \min \apom' \land \roleof{\alfof{\apom}(\ae)} = \roleof{\alfof{\apom'}(\ae')}\}$.
+\in \max \apom \land \ae' \in \min \apom' \land
+\roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae')}\}$.
+(recall that the labels of events are uncoordinated prefixes for which
+$\roles{}$ is a singleton).
 %
 \eMnote{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}
 %
@@ -88,10 +91,10 @@ Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
   &
     \begin{cases}
       \pomsetrep{\node {$\apref$}}[],
-      & \text{if $\apref$ uncoordinated } \land \roleof \in \participants \cup \multiroles^\unknownop
+      & \text{if $\apref$ uncoordinated } \land \roles{\apref} \subseteq \participants \cup \multiroles^\unknownop
       \\
       \bigcup_{h \geq 1}\big(\pomsetrep{\node {$\apref$}}[])^h,
-      & \text{if $\apref$ uncoordinated } \land \roleof \not\in \participants \cup \multiroles^\unknownop
+      & \text{if $\apref$ uncoordinated } \land \roles{\apref} \not\subseteq \participants \cup \multiroles^\unknownop
     \end{cases}
   \\
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
