@@ -64,6 +64,8 @@ where
 $\leq = \leqof{\apom} \uplus \leqof{\apom'} \cup \{(\ae,\ae') \sst \ae
 \in \max \apom \land \ae' \in \min \apom' \land \roleof{\alfof{\apom}(\ae)} = \roleof{\alfof{\apom'}(\ae')}\}$.
 %
+\eMnote{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}
+%
 Finally, for $h \geq 1$ and a pomset $\apom$ we define
 \[
   \apom^h =
@@ -154,10 +156,16 @@ Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
       & \text{if } \arole \not\in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
     \end{cases}
   \\
-  \ksem{\nil} = & \{ \emptypom \}
-  \\
-  \ksem \asum = & \bigcup_{\apom \in \ksem{\apref_i},\apom' \in \ksem{\aK_i}} \rseq[\apom][\apom']
+  \ksem \asum =
+  &
+    \begin{cases}
+      \{ \emptypom \}, & \text{if } I = \emptyset
+      \\
+      \bigcup_{\apom \in \ksem{\apref_i},\apom' \in \ksem{\aK_i}} \rseq[\apom][\apom'],
+      & \text{otherwise}
+    \end{cases}
 \end{align*}
+\eMnote{solo unfolding finiti?}
 The semantics of $\arec$ is the union of the semantics of all
 unfoldings of $\arec$.
 
