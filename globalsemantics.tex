@@ -30,19 +30,59 @@ be referred to as $(\esetof \apom$, $\leqof \apom, \alfof \apom)$.
 %
 The empty pomset is denoted as $\emptypom$.
 
-\eMnote{forse non serve}{\color{red}
 An event $\ae$ is an \emph{immediate predecessor} of an event $\ae'$
 (or equivalently $\ae'$ is an \emph{immediate successor} of $\ae$) in
 a pomset $\apom$ if $\ae \neq \ae'$, $\ae \leqof \apom \ae'$, and for
 all $\ae'' \in \esetof \apom$ such that
 $\ae \leqof \apom \ae'' \leqof \apom \ae'$ either $\ae = \ae''$ or
 $\ae' = \ae''$.
-}
 %
-\todo{add graphical representation of pomsets}
-
-Given an uncoordinated prefix $\apref$, we let $\pomsetsingle$ to be
-the poset with a single event labelled by $\apref$.
+We will represent pomsets as (a variant\footnote{Edges of Hasse
+  diagrams are usually not oriented; here we use arrows so to draw
+  order relations between events also horizontally.} of) Hasse
+diagrams of the immediate predecessor relation; for instance, the
+pomset
+$[\{\ae_1,\ae_2,\ae_3,\ae_4\}, \{(\ae_1,\ae_2),(\ae_1,\ae_3),
+(\ae_1,\ae_4), (\ae_4,\ae_5), \alf:
+\begin{cases}
+  \ae_1 \mapsto \apref[\ptp p][]
+  \\
+  \ae_2,\ae_3 \mapsto \apref[][{\amulti q}]
+  \\
+  \ae_4 \mapsto \apref[\amulti R][][@][@][.]
+  \\
+  \ae_5 \mapsto \apref[][\amulti R][@][@][.]
+\end{cases}
+\}]$
+is more conveniently written as
+\[
+  \pomsetrep{
+    \node (out) {$\ae_1$};
+    \node[below left = of out] (in1) {$\ae_2$};
+    \node[below right = of out] (in2) {$\ae_3$};
+    \node[above right = of in2] (out2) {$\ae_4$};
+    \node[below = of out2] (in3) {$\ae_5$};
+    \draw[->] (out) -- (in1);
+    \draw[->] (out) -- (in2);
+    \draw[->] (out) -- (out2);
+    \draw[->] (out2) -- (in3);
+  }[\alf][][node distance = .5cm and .3cm]
+  \text{ or }
+  \pomsetrep{
+    \node (out) {$\apref[{\ptp p}][]$};
+    \node[below left = of out] (in1) {$\apref[][{\amulti q}]$};
+    \node[below right = of out] (in2) {$\apref[][{\amulti q}]$};
+    \node[above right = of in2] (out2) {$\apref[\amulti R][][@][@][.]$};
+    \node[below = of out2] (in3) {$\apref[][\amulti R][@][@][.]$};
+    \draw[->] (out) -- (in1);
+    \draw[->] (out) -- (in2);
+    \draw[->] (out) -- (out2);
+    \draw[->] (out2) -- (in3);
+  }[][][node distance = .5cm and .3cm]
+\]
+  
+% Given an uncoordinated prefix $\apref$, we let $\pomsetsingle$ to be
+% the pomset with a single event labelled by $\apref$.
 %
 We will use the auxiliary operations on pomsets described in the
 following.
