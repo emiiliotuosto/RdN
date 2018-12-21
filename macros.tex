@@ -97,6 +97,7 @@
 
 \newcommandx{\red}[1][1={}]{\xlongrightarrow{#1}}
 
+\newcommand{\roleof}[1][\apref]{\mathsf{role}\ifempty{#1}{}{(#1)}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                        START POMSETS MACROS                           %%%
@@ -119,7 +120,6 @@
 
 \tikzset{
   pomset/.style={
-    node distance = .6cm and .6cm,
     scale = .7,
     transform shape,
     smooth
@@ -129,7 +129,7 @@
 \newcommandx{\pomsetrep}[4][2=\alf, 3={}, 4={}, usedefault=@]{
   \left[
     \begin{array}[c]{c}
-      \begin{tikzpicture}[#4,every node/.style={pomset}]
+      \begin{tikzpicture}[every node/.style={pomset},#4]
         {#1;}
       \end{tikzpicture}
     \end{array}\right]_{#2}^{#3}
@@ -148,8 +148,9 @@
 \newcommandx{\rseq}[2][1=\aG,2={\aG'},usedefault=@]{\gfun{seq}({#1},{#2})}
 \def\colorFun{\color{black}}
 \newcommand{\gfun}[1]{\ensuremath{\mathsf{\colorFun #1}}}
-\newcommandx{\bp}[1][1=\apref,usedefault=@]{\gfun{bp}(\ifempty{#1}{\_}{#1})}
+\newcommandx{\bp}[2][1=h,2=\apref,usedefault=@]{\gfun{bp}(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
 \newcommandx{\unique}[1][1=\apref,usedefault=@]{\gfun{unique}(\ifempty{#1}{\_}{#1})}
+\newcommand{\ksem}[1]{\llbracket \ifempty{#1}{\_}{#1} \rrbracket}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%

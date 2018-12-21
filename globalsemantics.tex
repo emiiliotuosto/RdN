@@ -62,7 +62,7 @@ $\apom$ and $\apom'$ respectively as
 \]
 where
 $\leq = \leqof{\apom} \uplus \leqof{\apom'} \cup \{(\ae,\ae') \sst \ae
-\in \max \apom \land \ae' \in \min \apom'\}$.
+\in \max \apom \land \ae' \in \min \apom' \land \roleof{\alfof{\apom}(\ae)} = \roleof{\alfof{\apom'}(\ae')}\}$.
 %
 Finally, for $h \geq 1$ and a pomset $\apom$ we define
 \[
@@ -79,23 +79,88 @@ of prefixes $\apref$; in fact, the semantics of a global type is build
 by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
 %
-Let $\arole,\arole' \in \multiroles$
+Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
 
-\begin{eqnarray*}
-  \bp[\apref] = & \pomsetrep{\node {$\apref$}}[], & \text{if $\pi$ uncoordinated}
+\begin{align*}
+  \bp =
+  &
+    \begin{cases}
+      \pomsetrep{\node {$\apref$}}[],
+      & \text{if $\apref$ uncoordinated } \land \roleof \in \participants \cup \multiroles^\unknownop
+      \\
+      \bigcup_{h \geq 1}\big(\pomsetrep{\node {$\apref$}}[])^h,
+      & \text{if $\apref$ uncoordinated } \land \roleof \not\in \participants \cup \multiroles^\unknownop
+    \end{cases}
   \\
-  \bp[{\apref[\arole][\arole'][@][\aloc][.]}] =
+  \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
   &
     \begin{cases}
       \pomsetrep{
-        \node (out) {$\apref[\arole]$};
-        \node[below = of out] (in) {$\apref[][\arole]$};
+        \node (out) {$\apref[\arole][][@][@][.]$};
+        \node[below = of out] (in) {$\apref[][\arole'][@][@][.]$};
         \draw[->] (out) -- (in);
-      }[]
+      }[], & \text{if } \arole' \in \participants \cup \multiroles^\unknownop
+      \\
+      \pomsetrep{
+        \node (out) {$\apref[\arole][]$};
+        \node[below left = of out] (rd1) {$\ae_1$};
+        \node[below = of out] (dots) {};
+        \node[below right = of out] (rd2) {$\ae_h$};
+        \draw[->] (out) -- (rd1);
+        \draw[->] (out) -- (rd2);
+        \draw[dotted] (rd1) -- (rd2);
+      }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm], & \text{otherwise}
     \end{cases}
   \\
-  \bp[{\apref[\arole][\arole']}] & = &
-\end{eqnarray*}
+  \bp[@][{\apref[\arole][\arole']}] =
+  &
+    \pomsetrep{
+    \node (out) {$\apref[\arole][]$};
+    \node[below left = of out] (rd1) {$\ae_1$};
+    \node[below = of out] (dots) {};
+    \node[below right = of out] (rd2) {$\ae_h$};
+    \node[below = of dots] (in) {$\apref[][\arole']$};
+    \draw[->] (out) -- (rd1);
+    \draw[->] (out) -- (rd2);
+    \draw[->] (rd1) -- (in);
+    \draw[->] (rd2) -- (in);
+    \draw[dotted] (rd1) -- (rd2);
+    }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm]
+\end{align*}
+
+\begin{align*}
+  \ksem{\apref} =
+  &
+    \bigcup_{h \geq 1}\big(\bp[@][\apref]\big)^h,
+  \qquad \text{if $\apref$ uncoordinated}
+  \\
+  \ksem{\apref[\arole][\arole'][@][@][.]} =
+  &
+    \begin{cases}
+      \bigcup_{h \geq 1}\bp[@][{\apref[\arole][\arole'][@][@][.]}],
+      & \text{if } \arole \in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+      \\
+      \bigcup_{k \geq 1}\bigcup_{h \geq 1}\big(\bp[@][{\apref[\arole][\arole'][@][@][.]}]\big)^k,
+      & \text{if } \arole \not\in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+    \end{cases}
+  \\
+  \ksem{\apref[\arole][\arole']} =
+  &
+    \begin{cases}
+      \bigcup_{h \geq 1}\bp[@][{\apref[\arole][\arole']}],
+      & \text{if } \arole \in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+      \\
+      \bigcup_{k \geq 1}\bigcup_{h \geq 1}\big(\bp[@][{\apref[\arole][\arole']}]\big)^k,
+      & \text{if } \arole \not\in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+    \end{cases}
+  \\
+  \ksem{\nil} = & \{ \emptypom \}
+  \\
+  \ksem \asum = & \bigcup_{\apom \in \ksem{\apref_i},\apom' \in \ksem{\aK_i}} \rseq[\apom][\apom']
+\end{align*}
+The semantics of $\arec$ is the union of the semantics of all
+unfoldings of $\arec$.
+
 
 
 
