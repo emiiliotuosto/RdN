@@ -1,8 +1,9 @@
-We give semantics to global types using \emph{partially-ordered multi-set}.
+We give semantics to global types using \emph{partially-ordered
+  multi-set} (pomsets for short).
 %
-Following~\cite{gaifman1987partial}, a \emph{pomsets} is an
-isomorphism class of labelled partially-ordered sets (lposet), where
-fixed a set of labels $\lset$,
+Following~\cite{gaifman1987partial}, a \emph{pomset} is an isomorphism
+class of labelled partially-ordered sets (lposet) where, fixed a set
+of labels $\lset$,
 \begin{itemize}
 \item an lposet is a triple $(\eset, \leq, \alf)$, with $\eset$ a set
   of events, $\leq$ is a partial order on $\eset$, and
@@ -15,8 +16,11 @@ fixed a set of labels $\lset$,
   $\alf = \alf' \circ \phi$.
 \end{itemize}
 %
-Intuitively, $\leq$ represents causality; for $\ae \neq \ae'$, if
-$\ae \leq \ae'$ and both events occur then $\ae'$ is caused by $\ae$.
+Intuitively, the partial order $\leq$ yields a causality relation
+among events; for $\ae \neq \ae'$, if $\ae \leq \ae'$ then $\ae'$ is
+caused by $\ae$ or, in other words, the occurrence of $\ae'$ must be
+preceded by the one of $\ae$ in any execution respecting the order
+$\leq$.
 %
 Note that $\alf$ is not required to be injective: for
 $\ae \neq \ae' \in \eset$, $\alf(\ae) = \alf(\ae')$ means that $\ae$
@@ -42,18 +46,21 @@ We will represent pomsets as (a variant\footnote{Edges of Hasse
   order relations between events also horizontally.} of) Hasse
 diagrams of the immediate predecessor relation; for instance, the
 pomset
-$[\{\ae_1,\ae_2,\ae_3,\ae_4\}, \{(\ae_1,\ae_2),(\ae_1,\ae_3),
-(\ae_1,\ae_4), (\ae_4,\ae_5), \alf:
-\begin{cases}
-  \ae_1 \mapsto \apref[\ptp p][]
-  \\
-  \ae_2,\ae_3 \mapsto \apref[][{\amulti q}]
-  \\
-  \ae_4 \mapsto \apref[\amulti R][][@][@][.]
-  \\
-  \ae_5 \mapsto \apref[][\amulti R][@][@][.]
-\end{cases}
-\}]$
+\[
+  \left[\{\ae_1,\ae_2,\ae_3,\ae_4\}, \{(\ae_1,\ae_2),(\ae_1,\ae_3),
+    (\ae_1,\ae_4), (\ae_4,\ae_5)\}
+    \alf:
+    \begin{cases}
+      \ae_1 \mapsto \apref[\ptp p][]
+      \\
+      \ae_2,\ae_3 \mapsto \apref[][{\amulti q}]
+      \\
+      \ae_4 \mapsto \apref[\amulti R][][@][@][.]
+      \\
+      \ae_5 \mapsto \apref[][\amulti R][@][@][.]
+    \end{cases}
+  \right]
+\]
 is more conveniently written as
 \[
   \pomsetrep{
@@ -67,7 +74,7 @@ is more conveniently written as
     \draw[->] (out) -- (out2);
     \draw[->] (out2) -- (in3);
   }[\alf][][node distance = .5cm and .3cm]
-  \text{ or }
+  \qquad\text{or}\qquad
   \pomsetrep{
     \node (out) {$\apref[{\ptp p}][]$};
     \node[below left = of out] (in1) {$\apref[][{\amulti q}]$};
@@ -86,8 +93,8 @@ is more conveniently written as
 %
 We will use the auxiliary operations on pomsets described in the
 following.
-
-We define the union and the sequential composition of two pomsets
+%
+Define union and sequential composition of two pomsets
 $\apom$ and $\apom'$ respectively as
 \[
   \apom \pomsetcup \apom' =
@@ -103,8 +110,8 @@ $\apom$ and $\apom'$ respectively as
 where
 $\leq = \leqof{\apom} \uplus \leqof{\apom'} \cup \{(\ae,\ae') \sst \ae
 \in \max \apom \land \ae' \in \min \apom' \land
-\roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae')}\}$.
-(recall that the labels of events are uncoordinated prefixes for which
+\roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae')}\}$ (recall
+that the labels of events are uncoordinated prefixes for which
 $\roles{}$ is a singleton).
 %
 \eMnote{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}
@@ -118,6 +125,7 @@ Finally, for $h \geq 1$ and a pomset $\apom$ we define
     r \pomsetcup r^{h-1} & \text{if } h > 1
   \end{cases}
 \]
+The operation $\_^h$ extends element-wise to sets of pomsets.
 
 The semantics of a global type builds upon \emph{basic pomsets} $\bp$
 of prefixes $\apref$; in fact, the semantics of a global type is build
@@ -130,7 +138,7 @@ Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
   \bp =
   &
     \begin{cases}
-      \pomsetrep{\node {$\apref$}}[],
+      \left\{ \pomsetrep{\node {$\apref$}}[] \right\},
       & \text{if $\apref$ uncoordinated } \land \roles{\apref} \subseteq \participants \cup \multiroles^\unknownop
       \\
       \bigcup_{h \geq 1}\big(\pomsetrep{\node {$\apref$}}[])^h,
@@ -140,13 +148,15 @@ Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
   &
     \begin{cases}
-      \pomsetrep{
+      \left\{ \pomsetrep{
         \node (out) {$\apref[\arole][][@][@][.]$};
         \node[below = of out] (in) {$\apref[][\arole'][@][@][.]$};
         \draw[->] (out) -- (in);
-      }[], & \text{if } \arole' \in \participants \cup \multiroles^\unknownop
+      }[]\right\},
+      &
+      \text{if } \arole' \in \participants \cup \multiroles^\unknownop
       \\
-      \pomsetrep{
+      \left\{\pomsetrep{
         \node (out) {$\apref[\arole][]$};
         \node[below left = of out] (rd1) {$\ae_1$};
         \node[below = of out] (dots) {};
@@ -154,12 +164,14 @@ Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
         \draw[->] (out) -- (rd1);
         \draw[->] (out) -- (rd2);
         \draw[dotted] (rd1) -- (rd2);
-      }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm], & \text{otherwise}
+      }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm]\right\},
+    &
+    \text{otherwise}
     \end{cases}
   \\
   \bp[@][{\apref[\arole][\arole']}] =
   &
-    \pomsetrep{
+    \left\{\pomsetrep{
     \node (out) {$\apref[\arole][]$};
     \node[below left = of out] (rd1) {$\ae_1$};
     \node[below = of out] (dots) {};
@@ -170,7 +182,7 @@ Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
     \draw[->] (rd1) -- (in);
     \draw[->] (rd2) -- (in);
     \draw[dotted] (rd1) -- (rd2);
-    }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm]
+    }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm]\right\}
 \end{align*}
 
 \begin{align*}
