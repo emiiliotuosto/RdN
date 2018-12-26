@@ -116,13 +116,13 @@ Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and define
   \leq,
   \alfof{\apom} \uplus \bigcup_{\ae \in \max \apom}\alfof{\apom'_{\ae}}]
 \]
-where
-$\leq = \leqof{\apom} \cup \bigcup_{\ae \in \max
-  \apom}\leqof{\apom'_{\ae}} \cup \leqof{\apom'} \cup
-\{(\ae,(\ae,\ae')) \sst \ae \in \max \apom \land (\ae,\ae') \in \min
-{\apom'_{\ae}} \land \roles{\alfof{\apom}(\ae)} =
-\roles{\alfof{\apom'}(\ae')}\}$ (recall that the labels of events are
-uncoordinated prefixes for which $\roles{}$ is a singleton).
+where $\leq$ is the reflexo-transitive closure of
+$\leqof{\apom} \cup \bigcup_{\ae \in \max \apom}\leqof{\apom'_{\ae}}
+\cup \leqof{\apom'} \cup \{(\ae,(\ae,\ae')) \sst \ae \in
+\esetof{\apom} \land (\ae,\ae') \in \esetof{\apom'_{\ae}} \land
+\roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae')}\}$ (recall
+that the labels of events are uncoordinated prefixes for which
+$\roles{}$ is a singleton).
 %
 \eMnote{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}
 %
@@ -164,7 +164,7 @@ Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
         \draw[->] (out) -- (in);
       }[]\right\},
       &
-      \text{if } \arole' \in \participants \cup \multiroles^\unknownop
+      \text{if } \arole' \in \participants \cup \multiroles^\unknownop \text{ or $\atuple$ generates} 
       \\
       \left\{\pomsetrep{
         \node (out) {$\apref[\arole][]$};

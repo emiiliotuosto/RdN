@@ -18,8 +18,12 @@ derived from the following grammar:
 Names $x : \asort$ and $\nu \aloc$ act as binders for the names $x$
 and $\aloc$ at type level.
 %
+We say that $\atupe$ \emph{generates} when in one of its fields there
+is a $\nu \loc$ type.
+%
 Tuple types \emph{match} according to the relation
 $\matches \subseteq \tupleset \times \tupleset$ defined as
+\eMnote{add typeing env}
 \[
   \atuple \matches \atuple' \iff
   \begin{cases}
