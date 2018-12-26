@@ -48,7 +48,7 @@ diagrams of the immediate predecessor relation; for instance, the
 pomset
 \[
   \left[\{\ae_1,\ae_2,\ae_3,\ae_4\}, \{(\ae_1,\ae_2),(\ae_1,\ae_3),
-    (\ae_1,\ae_4), (\ae_4,\ae_5)\}
+    (\ae_1,\ae_4), (\ae_4,\ae_5)\},
     \alf:
     \begin{cases}
       \ae_1 \mapsto \apref[\ptp p][]
@@ -85,34 +85,44 @@ is more conveniently written as
     \draw[->] (out) -- (in2);
     \draw[->] (out) -- (out2);
     \draw[->] (out2) -- (in3);
-  }[][][node distance = .5cm and .3cm]
+  }[][][node distance = .5cm and .1cm]
 \]
   
 % Given an uncoordinated prefix $\apref$, we let $\pomsetsingle$ to be
 % the pomset with a single event labelled by $\apref$.
 %
-We will use the auxiliary operations on pomsets described in the
-following.
+We will use the auxiliary operations on pomsets described below.
 %
-Define union and sequential composition of two pomsets
-$\apom$ and $\apom'$ respectively as
+Define (disjoing) union of two pomsets $\apom$ and $\apom'$ as
 \[
   \apom \pomsetcup \apom' =
   [\esetof{\apom} \uplus \esetof{\apom'},
   \leqof{\apom} \uplus \leqof{\apom'},
   \alfof{\apom} \uplus \alfof{\apom'}]
-  \quad\text{and}\quad
+\]
+The sequential composition of $\apom$ and $\apom'$ composes an
+instance of $\apom'$ with every maximal event of $\apom$.
+%
+Formally, for each $\ae \in \max \apom$, let
+$\apom'_{\ae} = [\{\ae\} \times \eset_{\apom'}, \leq, \alf]$ where
+$(\ae,\ae_1) \leq (\ae,\ae_2) \iff \ae_1 \leqof{\apom'} \ae_2$ and
+$\alfof{\apom'_{\ae}} = (\ae,\ae') \mapsto \alfof{\apom'}(\ae')$ for
+all $\ae' \in \esetof{\apom'}$.
+%
+Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and define
+\[
   \rseq[\apom][\apom'] = 
-  [\esetof{\apom} \uplus \esetof{\apom'},
+  [\esetof{\apom} \uplus \bigcup_{\ae \in \max \apom}\esetof{\apom'_{\ae}},
   \leq,
-  \alfof{\apom} \uplus \alfof{\apom'}]
+  \alfof{\apom} \uplus \bigcup_{\ae \in \max \apom}\alfof{\apom'_{\ae}}]
 \]
 where
-$\leq = \leqof{\apom} \uplus \leqof{\apom'} \cup \{(\ae,\ae') \sst \ae
-\in \max \apom \land \ae' \in \min \apom' \land
-\roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae')}\}$ (recall
-that the labels of events are uncoordinated prefixes for which
-$\roles{}$ is a singleton).
+$\leq = \leqof{\apom} \cup \bigcup_{\ae \in \max
+  \apom}\leqof{\apom'_{\ae}} \cup \leqof{\apom'} \cup
+\{(\ae,(\ae,\ae')) \sst \ae \in \max \apom \land (\ae,\ae') \in \min
+{\apom'_{\ae}} \land \roles{\alfof{\apom}(\ae)} =
+\roles{\alfof{\apom'}(\ae')}\}$ (recall that the labels of events are
+uncoordinated prefixes for which $\roles{}$ is a singleton).
 %
 \eMnote{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}
 %
