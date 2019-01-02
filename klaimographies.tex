@@ -266,7 +266,22 @@ choices,  we assume the following conditions hold in any $\aK$.
 	\item 
 \end{itemize}
 
-
+\todo[inline]{eM: The notion of well formedness seems to guarantee a
+  much weaker notion of correctness than the usual ones.
+  %
+  Firstly, note that well-formedness here does not imply deadlock
+  freedom (but this is fine since we are not interested in properties
+  of the control of processes).
+  %
+  There must be a unique selector role, however many instances of the
+  selector role could exercise choices.
+  %
+  Unless we enforce more stringent conditions, probably the notion of
+  correctness we can guarantee is that at least one of the branches of
+  a choice is taken and fully executed (assuming that at least one
+  instance of each role involved in the choice is running.
+  %
+}
 
 Local types $\aL$ have the following syntax
 \begin{eqnarray*}
