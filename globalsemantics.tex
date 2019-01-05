@@ -159,7 +159,7 @@ Let $h \geq 1$ and define
 \begin{align*}
   \bp =
   &
-    \left\{ \pomsetrep{\node {$\alabel$}}[] \right\},
+    \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}
   \\
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
   &
@@ -169,9 +169,9 @@ Let $h \geq 1$ and define
         \node (out) {$\alabel[@][\arole][][@][@][.]$};
         \node[below = of out] (in) {$\alabel[@][][\arole'][@][@][.]$};
         \draw[->] (out) -- (in);
-      }[]\right\},
+      }[]\right\}
       &
-      \text{if } \arole' \in \participants \cup \multiroles^\unknownop \text{ or $\atuple$ generates} 
+      \text{if } \arole' \in \participants \cup \multiroles^\unknownop % \text{ or $\atuple$ generates} 
       \\
       \bigcup_{h \geq 1}
       \left\{
@@ -188,7 +188,6 @@ Let $h \geq 1$ and define
       \left\{
         \pomsetrep{\node {$\alabel[@][\arole][][@][@][.]$}}[]
       \right\}
-,
     &
     \text{otherwise}
     \end{cases}
@@ -244,7 +243,7 @@ Let $\arole,\arole' \in \multiroles$
       & \text{if } \arole \in \participants \cup \multiroles^\unknownop
       \\
       \bigcup_{i \geq 1}\bp[@][{\apref[\arole][\arole'][@][@][.]}]
-      & \text{if } \arole \not\in \participants \cup \multiroles^\unknownop
+      & \text{otherwise}
     \end{cases}
   \\
   \ksem{\apref[\arole][\arole']} =
@@ -254,15 +253,15 @@ Let $\arole,\arole' \in \multiroles$
       & \text{if } \arole \in \participants \cup \multiroles^\unknownop
       \\
       \bigcup_{i \geq 1}\big(\bp[@][{\apref[\arole][\arole']}]\big)
-      & \text{if } \arole \not\in \participants \cup \multiroles^\unknownop
+      & \text{otherwise}
     \end{cases}
   \\
   \ksem \asum =
   &
     \begin{cases}
-      \{ \emptypom \}, & \text{if } I = \emptyset
+      \{ \emptypom \} & \text{if } I = \emptyset
       \\
-      \bigcup_{\apom \in \ksem{\apref_i},\apom' \in \ksem{\aK_i}} \rseq[\apom][\apom'],
+      \bigcup_{\apom \in \ksem{\apref_i},\apom' \in \ksem{\aK_i}} \rseq[\apom][\apom']
       & \text{otherwise}
     \end{cases}
 \end{align*}
