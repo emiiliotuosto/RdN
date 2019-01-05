@@ -52,6 +52,7 @@
     }
   }
 }
+\newcommandx{\alabel}[6][1=i,2={},3={},4=\atuple,5=\aloc,6={},usedefault=@]{\ifempty{#1}{}{^{[#1]}}\apref[#2][#3][#4][#5][#6]}
 \newcommandx{\asum}[4][1=i,2=I,3=\apref,4=\aK,usedefault=@]{
   \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{#3_{#1} \ifempty{#4}{}{. #4_{#1}}}
 }
@@ -147,7 +148,7 @@
 \newcommandx{\rseq}[2][1=\aG,2={\aG'},usedefault=@]{\gfun{seq}({#1},{#2})}
 \def\colorFun{\color{black}}
 \newcommand{\gfun}[1]{\ensuremath{\mathsf{\colorFun #1}}}
-\newcommandx{\bp}[2][1=h,2=\apref,usedefault=@]{\gfun{bp}(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
+\newcommandx{\bp}[2][1={i},2=\apref,usedefault=@]{\gfun{bp}(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
 \newcommandx{\unique}[1][1=\apref,usedefault=@]{\gfun{unique}(\ifempty{#1}{\_}{#1})}
 \newcommand{\ksem}[1]{\llbracket \ifempty{#1}{\_}{#1} \rrbracket}
 

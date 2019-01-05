@@ -137,88 +137,124 @@ Finally, for $h \geq 1$ and a pomset $\apom$ we define
 \]
 The operation $\_^h$ extends element-wise to sets of pomsets.
 
+The labels of the events are (decorations of) uncoordinated prefixes
+$\apref$: labels are either just uncoordinated prefixes $\apref$
+or of the form $\alabel$ with $\apref$ an uncoordinated prefix.
+%
+Intuitively, a label $\alabel[@][][\arole][@][@][.]$
+(resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
+$i^\mathit{th}$ instance of $\arole$ consumed (resp. produced) a tuple
+of type $\atuple$.
+%
+Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
+can be performed by any instance of the role in $\apref$.
+
 The semantics of a global type builds upon \emph{basic pomsets} $\bp$
 of prefixes $\apref$; in fact, the semantics of a global type is build
 by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
+% 
+Let $h \geq 1$ and define
 %
-Let $\arole,\arole' \in \multiroles$ and $h \geq 0$
-
 \begin{align*}
   \bp =
   &
-    \begin{cases}
-      \left\{ \pomsetrep{\node {$\apref$}}[] \right\},
-      & \text{if $\apref$ uncoordinated } \land \roles{\apref} \subseteq \participants \cup \multiroles^\unknownop
-      \\
-      \bigcup_{h \geq 1}\big(\pomsetrep{\node {$\apref$}}[])^h,
-      & \text{if $\apref$ uncoordinated } \land \roles{\apref} \not\subseteq \participants \cup \multiroles^\unknownop
-    \end{cases}
+    \left\{ \pomsetrep{\node {$\alabel$}}[] \right\},
   \\
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
   &
     \begin{cases}
-      \left\{ \pomsetrep{
-        \node (out) {$\apref[\arole][][@][@][.]$};
-        \node[below = of out] (in) {$\apref[][\arole'][@][@][.]$};
+      \left\{
+        \pomsetrep{
+        \node (out) {$\alabel[@][\arole][][@][@][.]$};
+        \node[below = of out] (in) {$\alabel[@][][\arole'][@][@][.]$};
         \draw[->] (out) -- (in);
       }[]\right\},
       &
       \text{if } \arole' \in \participants \cup \multiroles^\unknownop \text{ or $\atuple$ generates} 
       \\
-      \left\{\pomsetrep{
-        \node (out) {$\apref[\arole][]$};
-        \node[below left = of out] (rd1) {$\ae_1$};
-        \node[below = of out] (dots) {};
-        \node[below right = of out] (rd2) {$\ae_h$};
-        \draw[->] (out) -- (rd1);
-        \draw[->] (out) -- (rd2);
-        \draw[dotted] (rd1) -- (rd2);
-      }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm]\right\},
+      \bigcup_{h \geq 1}
+      \left\{
+        \pomsetrep{
+          \node (out) {$\alabel[@][\arole][][@][@][.]$};
+          \node[below left = of out] (rd1) {$\ae_1$};
+          \node[below = of out] (dots) {};
+          \node[below right = of out] (rd2) {$\ae_h$};
+          \draw[->] (out) -- (rd1);
+          \draw[->] (out) -- (rd2);
+          \draw[dotted] (rd1) -- (rd2);
+        }[(\ae_j \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq j \leq h}][][node distance = 1cm and -.25cm]\right\}
+      \cup
+      \left\{
+        \pomsetrep{\node {$\alabel[@][\arole][][@][@][.]$}}[]
+      \right\}
+,
     &
     \text{otherwise}
     \end{cases}
-  \\
+\end{align*}
+%
+Let $\arole,\arole' \in \multiroles$
+%
+\begin{align*}
   \bp[@][{\apref[\arole][\arole']}] =
   &
-    \left\{\pomsetrep{
-    \node (out) {$\apref[\arole][]$};
+    \left\{
+    \pomsetrep{
+    \node (out) {$\alabel[@][\arole][]$};
     \node[below left = of out] (rd1) {$\ae_1$};
     \node[below = of out] (dots) {};
     \node[below right = of out] (rd2) {$\ae_h$};
-    \node[below = of dots] (in) {$\apref[][\arole']$};
+    \node[below = of dots] (in) {$\alabel[@][][\arole']$};
     \draw[->] (out) -- (rd1);
     \draw[->] (out) -- (rd2);
     \draw[->] (rd1) -- (in);
     \draw[->] (rd2) -- (in);
     \draw[dotted] (rd1) -- (rd2);
-    }[(\ae_i \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq i \leq h}][][node distance = 1cm and .25cm]\right\}
+    }[(\ae_j \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq j \leq h}][][node distance = 1cm and -.25cm]\right\}
+    \cup
+    \left\{
+    \pomsetrep{
+    \node (out) {$\alabel[@][\arole][]$};
+    \node[below = of out] (in) {$\alabel[@][][\arole']$};
+    \draw[->] (out) -- (in);
+    }[]
+    \right\}
 \end{align*}
 
 \begin{align*}
   \ksem{\apref} =
   &
-    \bigcup_{h \geq 1}\big(\bp[@][\apref]\big)^h,
-  \qquad \text{if $\apref$ uncoordinated}
+    \begin{cases}
+      \bp[1][\apref]
+      & \text{if $\apref$ uncoordinated } \land \roles{\apref} \subseteq \participants \cup \multiroles^\unknownop
+      \\
+      \bigcup_{i \geq 1}\bp[@][\apref]
+      % \bigcup_{h \geq 1}\big\{\pomsetrep{
+      % \node {$\alabel[1]\cdots\alabel[h]$};
+      % }[]\big\},
+      & \text{if $\apref$ uncoordinated } \land \roles{\apref} \not\subseteq \participants \cup \multiroles^\unknownop
+    \end{cases}
+%  \qquad \text{if $\apref$ uncoordinated}
   \\
   \ksem{\apref[\arole][\arole'][@][@][.]} =
   &
     \begin{cases}
-      \bigcup_{h \geq 1}\bp[@][{\apref[\arole][\arole'][@][@][.]}],
-      & \text{if } \arole \in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+      \bp[1][{\apref[\arole][\arole'][@][@][.]}]
+      & \text{if } \arole \in \participants \cup \multiroles^\unknownop
       \\
-      \bigcup_{k \geq 1}\bigcup_{h \geq 1}\big(\bp[@][{\apref[\arole][\arole'][@][@][.]}]\big)^k,
-      & \text{if } \arole \not\in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+      \bigcup_{i \geq 1}\bp[@][{\apref[\arole][\arole'][@][@][.]}]
+      & \text{if } \arole \not\in \participants \cup \multiroles^\unknownop
     \end{cases}
   \\
   \ksem{\apref[\arole][\arole']} =
   &
     \begin{cases}
-      \bigcup_{h \geq 1}\bp[@][{\apref[\arole][\arole']}],
-      & \text{if } \arole \in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+      \bp[1][{\apref[\arole][\arole']}]
+      & \text{if } \arole \in \participants \cup \multiroles^\unknownop
       \\
-      \bigcup_{k \geq 1}\bigcup_{h \geq 1}\big(\bp[@][{\apref[\arole][\arole']}]\big)^k,
-      & \text{if } \arole \not\in \participants % \land \arole' \in \participants \cup \multiroles^\unknownop
+      \bigcup_{i \geq 1}\big(\bp[@][{\apref[\arole][\arole']}]\big)
+      & \text{if } \arole \not\in \participants \cup \multiroles^\unknownop
     \end{cases}
   \\
   \ksem \asum =

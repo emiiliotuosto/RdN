@@ -13,7 +13,7 @@ derived from the following grammar:
                       \nu \aloc \bnfmid
                       \aloc \bnfmid
                       \atuple \cdot \atuple \bnfmid
-                      \wildcard \bnfmid
+                      \wildcard
 \end{eqnarray*}
 Names $x : \asort$ and $\nu \aloc$ act as binders for the names $x$
 and $\aloc$ at type level.
@@ -23,7 +23,7 @@ is a $\nu \aloc$ type.
 %
 Tuple types \emph{match} according to the relation
 $\matches \subseteq \tupleset \times \tupleset$ defined as
-\eMnote{add typeing env}
+\eMnote{add typing env}
 \[
   \atuple \matches \atuple' \iff
   \begin{cases}
@@ -261,9 +261,10 @@ Well-formedness (TBC): Besides the usual conditions about single selector and kn
 choices,  we assume the following conditions hold in any $\aK$.
 
 \begin{itemize}
-%	\item $\roles {\aK_1} \cap \roles {\aK_2} = \emptyset$ if $\aK = \aK_1 \parop \aK_2$
-	\item $\neg (\arole \eqR \arole')$ in $\apref[\arole][\arole']$ and $\apref[\arole][\arole'][@][\aloc][.]$.
-	\item 
+% \item $\roles {\aK_1} \cap \roles {\aK_2} = \emptyset$ if $\aK = \aK_1 \parop \aK_2$
+\item $\neg (\arole \eqR \arole')$ in $\apref[\arole][\arole']$ and
+  $\apref[\arole][\arole'][@][\aloc][.]$.
+\item the prefixes of each branch must generate
 \end{itemize}
 
 \todo[inline]{eM: The notion of well formedness seems to guarantee a

@@ -23,5 +23,6 @@ clean:
 	rm -f *~ *.log *.aux *.out
 
 e:
-	 emacs --reverse -T $(title) -mm $(t).tex &
+	git pull
+	emacs --reverse -T $(title) -mm $(t).tex &
 
