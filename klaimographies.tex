@@ -312,11 +312,18 @@ choices,  we assume the following conditions hold in any $\aK$.
   alter the intended data flow (in the example above the instance of
   $C$ executing $K_2$ branch may receive the boolean that the instance
   of $C$ in $K_1$ generates for $B$).
-  % %
-  % Unless we enforce more stringent conditions, probably the notion of
-  % correctness we can guarantee is that at least one of the branches of
-  % a choice is taken and fully executed (assuming that at least one
-  % instance of each role involved in the choice is running.
+  %
+  We can tackle this issue in two different way (at least): one way is
+  to statically ensure that tuples generated on one branch do not
+  match any other on another branch; another way is to modify the
+  semantics of the choice by implicitly inserting an extra field in
+  each tuple with a unique identifier of each branch.
+  %
+  \newline
+  %
+  Under the current interpretation of our semantics, probably the
+  notion of correctness we can guarantee is that any set of instances
+  taking a choice will fully execute a branch.
   %
 }
 
