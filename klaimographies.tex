@@ -268,23 +268,55 @@ choices,  we assume the following conditions hold in any $\aK$.
 % \item $\roles {\aK_1} \cap \roles {\aK_2} = \emptyset$ if $\aK = \aK_1 \parop \aK_2$
 \item $\neg (\arole \eqR \arole')$ in $\apref[\arole][\arole']$ and
   $\apref[\arole][\arole'][@][\aloc][.]$.
+  %
+  \todo[inline]{eM: does the restriction above apply only to branches? May be it can be relaxed under the new semantic interpretation...}
 \item the prefixes of each branch must generate
 \end{itemize}
-
-\todo[inline]{eM: The notion of well formedness seems to guarantee a
-  much weaker notion of correctness than the usual ones.
+%
+\todo[inline]{eM:
+  To ensure uniquess of selector in choices we can syntactically restrict the branching operator as
+  \[
+    \asum[@][@][{\apref[\arole][\arole'_i][\atuple_i]}]
+  \]
+  A simple way to ensure knowledge of choice is to require that the
+  first input actions of passive roles in the branches are
+  ``disjoint'' (ie non matching tuples or different locations).
   %
-  Firstly, note that well-formedness here does not imply deadlock
-  freedom (but this is fine since we are not interested in properties
-  of the control of processes).
+  This is just for simplicity as we could adopt definitions similar
+  to the ones in \cite{gt16,gt17}.
   %
-  There must be a unique selector role, however many instances of the
-  selector role could exercise choices.
+  % The notion of well formedness seems to guarantee a much weaker
+  % notion of correctness than the usual ones.
+  % %
+  % Firstly, note that well-formedness here does not imply deadlock
+  % freedom (but this is fine since we are not interested in properties
+  % of the control of processes).
+  % %
+  A problem to consider is that, even assuming unique selector, many
+  instances of the selector role could exercise choices concurrently.
   %
-  Unless we enforce more stringent conditions, probably the notion of
-  correctness we can guarantee is that at least one of the branches of
-  a choice is taken and fully executed (assuming that at least one
-  instance of each role involved in the choice is running.
+  This may create confusion if different branches generate matching
+  tuples on the a locality.
+  %
+  % A example could be the following:
+  \[
+    K_\mathrm{bad} = \apref[A][B][int].K_1 \chop \apref[A][B][str].K_2
+  \]
+  \[
+    K_1 = \apref[B][C][str].\apref[C][B][bool]
+  \]
+  \[
+    K_2 = \apref[B][C][bool]
+  \]
+  This type of confusion does not seem to introduce deadlocks, but may
+  alter the intended data flow (in the example above the instance of
+  $C$ executing $K_2$ branch may receive the boolean that the instance
+  of $C$ in $K_1$ generates for $B$).
+  % %
+  % Unless we enforce more stringent conditions, probably the notion of
+  % correctness we can guarantee is that at least one of the branches of
+  % a choice is taken and fully executed (assuming that at least one
+  % instance of each role involved in the choice is running.
   %
 }
 
