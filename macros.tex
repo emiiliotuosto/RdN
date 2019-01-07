@@ -16,8 +16,11 @@
 \DeclareMathOperator{\toop}{\mkop{\to}}
 \newcommand{\rec}{\mkop{rec}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
-\newcommandx{\atupleat}[3][1={}, 2=\atuple, 3=\aloc, usedefault=@]{
+\newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\aloc, usedefault=@]{
   \ifempty{#1}{{#2} \at {#3}}{{#2} \at {#3}}
+}
+\newcommandx{\atupleat}[3][1={}, 2=\atuple, 3=\aloc, usedefault=@]{
+  \ifempty{#1}{{(#2)} \at {#3}}{{(#2)} \at {#3}}
 }
 \newcommand{\clashes}{\sharp}
 \newcommand{\matches}{\bowtie}
@@ -56,8 +59,11 @@
 \newcommandx{\asum}[4][1=i,2=I,3=\apref,4=\aK,usedefault=@]{
   \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{#3_{#1} \ifempty{#4}{}{. #4_{#1}}}
 }
+\newcommandx{\arout}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
+  \ifempty{#1}{#2 \outop #3}{{#1} \outop {#2} \at {#3}}
+}
 \newcommandx{\aout}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
-  \ifempty{#1}{#2 \outop (#3)}{{#1} \outop {#2} \at {#3}}
+  \ifempty{#1}{(#2) \outop #3}{{#1} \outop {#2} \at {#3}}
 }
 \newcommandx{\ain}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
   \ifempty{#1}{(#2) \inop #3}{{#1} \inop {(#2)} \at {#3}}
@@ -68,8 +74,9 @@
 \newcommandx{\arec}[2][1=X,2=\aK,usedefault=@]{
   \rec\ #1 \mkop{.} #2
 }
-\newcommandx{\aLsum}[4][1=i,2=I,3=\arole,4=\aL,usedefault=@]{
-    \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{#3_{#1} : {#4_{#1}}}
+\newcommandx{\aLpref}{\kappa}
+\newcommandx{\aLsum}[4][1=i,2=I,3 = \aLpref,4=\aL,usedefault=@]{
+    \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{{#3_{#1}.#4_{#1}}}
 }
 
 \newcommand{\selectors}[1]{\it{sel}(#1)}

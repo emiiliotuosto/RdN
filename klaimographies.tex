@@ -53,23 +53,24 @@ We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$
 and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
 \emph{participants} and \emph{multiple} roles, and define the set of
 \emph{roles}
-$\roleset = \participants \cup \multiroles \cup
-\multiroles^\unknownstarop \cup \multiroles^\unknownop$ (ranged over
-by $\arole, \arole_1, \ldots$) where
-$\multiroles^{\unknownstarop} = \{\unknownstar \sst \amulti P
-\in\multiroles\}$ and
-$\multiroles^{\unknownop} = \{ \unknown \sst \amulti p \in \multiroles
-\}$ account for some flexibility when implementing multiroles: an
-action involving a $\unknownstar$ role can be optionally executed by
-an implementation of role $\amulti P$, while $\unknown$ establishes
-that exactly one implementer must execute that action.
+$\roleset = \participants \cup \multiroles$
+% \cup
+%\multiroles^\unknownstarop \cup \multiroles^\unknownop$ (ranged over
+%by $\arole, \arole_1, \ldots$) where
+%$\multiroles^{\unknownstarop} = \{\unknownstar \sst \amulti P
+%\in\multiroles\}$ and
+%$\multiroles^{\unknownop} = \{ \unknown \sst \amulti p \in \multiroles
+%\}$ account for some flexibility when implementing multiroles: an
+%action involving a $\unknownstar$ role can be optionally executed by
+%an implementation of role $\amulti P$, while $\unknown$ establishes
+%that exactly one implementer must execute that action.
 %
 We conventionally write multiroles with initial uppercase letter and
 unique roles with initial lowercase letter.
 %
-We write $\eqR$ for the least equivalence relation on $\roleset$
-satisfying
-\[\amulti P \eqR \unknownstar \hspace{2cm} \amulti P \eqR \unknown\]
+%We write $\eqR$ for the least equivalence relation on $\roleset$
+%satisfying
+%\[\amulti P \eqR \unknownstar \hspace{2cm} \amulti P \eqR \unknown\]
 
 Roles are to be thought of as types inhabited by instances of
 processes enacting the behaviour specified in a choreography.
@@ -117,95 +118,95 @@ autonomous prefix.
 Likewise, $\roles \aK \subseteq \participants \cup \multiroles$ is the
 set of roles in $\aK$.
 
-
-\begin{example}[Auction]
-
-\[
-  \begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
-  \\  	
-  \apref[\amulti {Seller}][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu \aloc}}][{\aloc[c]}][.].
-  \\
-  \arec[@][\left({
-    	\begin{array}{l}
-	\apref[][\amulti {Buyer}][{i:{\asort[str]} \cdot p:{\asort[int]} \cdot \aloc[o]}][{\aloc[c]}][].
-	\\
-	\apref[\amulti {Buyer}][\amulti {Buyer}][{i \cdot {\asort[booked]}}][{\aloc[c]}][.].
-	\\
-	\arec[Y][\left({
-    	\begin{array}{l}
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i \cdot {\asort[offer]} \cdot {\asort[int]}}][{\aloc[o]}][.].
-	\\
-	\apref[][\amulti {Seller}][{i \cdot \asort[offer]} \cdot  {\asort[int]}][{\aloc[o]}][].
-	\\
-	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot \asort[sold]}][{\aloc[c]}][.].
-	\\
-	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
-	X
-	\\
-	\qquad
-	+
-	\\
-	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot {\asort[request]}  \cdot \asort[int]}][{\aloc[o]}][.]. 
-	\\
-	\qquad
-	\apref[][\amulti {Buyer}][i \cdot {\asort[request]} \cdot {\asort[int]}][{\aloc[o]}][].
-	\\
-	\qquad\qquad	
-	Y
-	\\
-	\qquad\qquad	
-	+
-	\\ 
-	\qquad\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
-	\\
-	\qquad\qquad
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i\cdot {\asort[quit]}}][{\aloc[o]}][.]. 
-	\\
-	\qquad\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].X
-	\\
-	\qquad
-	+
-	\\
-	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[refused]}}][{\aloc[o]}][.]. 
-	\\
-	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].
-	\\
-	\qquad
-	\apref[][\amulti {Buyer}][{i \cdot \asort[refused]}][{\aloc[o]}][].
-	\\
-	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
-	X
-	\end{array}
-	}\right)]
-	\\
-	+
-	\\
-	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[booked]}}][{\aloc[c]}][.]. 
-	X
-	\\
-	+
-	\\
-	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[sold]}}][{\aloc[c]}][.]. 
-	X
-	\\
-	+
-	\\
-	\nil
-  	\end{array}
-  }\right)]
-  \\
-  \end{array}
-\]
-\finex
-\end{example}
-
-\eMnote{un'alternativa}
+%
+%\begin{example}[Auction]
+%
+%\[
+%  \begin{array}{l}
+%  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
+%  \\  	
+%  \apref[\amulti {Seller}][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu \aloc}}][{\aloc[c]}][.].
+%  \\
+%  \arec[@][\left({
+%    	\begin{array}{l}
+%	\apref[][\amulti {Buyer}][{i:{\asort[str]} \cdot p:{\asort[int]} \cdot \aloc[o]}][{\aloc[c]}][].
+%	\\
+%	\apref[\amulti {Buyer}][\amulti {Buyer}][{i \cdot {\asort[booked]}}][{\aloc[c]}][.].
+%	\\
+%	\arec[Y][\left({
+%    	\begin{array}{l}
+%	\apref[\amulti {Buyer}][\amulti {Seller}][{i \cdot {\asort[offer]} \cdot {\asort[int]}}][{\aloc[o]}][.].
+%	\\
+%	\apref[][\amulti {Seller}][{i \cdot \asort[offer]} \cdot  {\asort[int]}][{\aloc[o]}][].
+%	\\
+%	\qquad 
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot \asort[sold]}][{\aloc[c]}][.].
+%	\\
+%	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+%	X
+%	\\
+%	\qquad
+%	+
+%	\\
+%	\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot {\asort[request]}  \cdot \asort[int]}][{\aloc[o]}][.]. 
+%	\\
+%	\qquad
+%	\apref[][\amulti {Buyer}][i \cdot {\asort[request]} \cdot {\asort[int]}][{\aloc[o]}][].
+%	\\
+%	\qquad\qquad	
+%	Y
+%	\\
+%	\qquad\qquad	
+%	+
+%	\\ 
+%	\qquad\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+%	\\
+%	\qquad\qquad
+%	\apref[\amulti {Buyer}][\amulti {Seller}][{i\cdot {\asort[quit]}}][{\aloc[o]}][.]. 
+%	\\
+%	\qquad\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].X
+%	\\
+%	\qquad
+%	+
+%	\\
+%	\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[refused]}}][{\aloc[o]}][.]. 
+%	\\
+%	\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].
+%	\\
+%	\qquad
+%	\apref[][\amulti {Buyer}][{i \cdot \asort[refused]}][{\aloc[o]}][].
+%	\\
+%	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+%	X
+%	\end{array}
+%	}\right)]
+%	\\
+%	+
+%	\\
+%	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[booked]}}][{\aloc[c]}][.]. 
+%	X
+%	\\
+%	+
+%	\\
+%	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[sold]}}][{\aloc[c]}][.]. 
+%	X
+%	\\
+%	+
+%	\\
+%	\nil
+%  	\end{array}
+%  }\right)]
+%  \\
+%  \end{array}
+%\]
+%\finex
+%\end{example}
+%
+%\eMnote{un'alternativa}
 \begin{example}[Auction]
 \[
   \begin{array}{l}
@@ -325,84 +326,6 @@ choices,  we assume the following conditions hold in any $\aK$.
   taking a choice will fully execute a branch.
   %
 }
-
-Local types $\aL$ have the following syntax
-\begin{eqnarray*}
-  \aL & \bnfdef & %\nil \bnfmid
-                  \aout[].\aL \bnfmid
-                  \ain[].\aL \bnfmid
-                  \ard[].\aL \bnfmid
-                  %\aL \chop \aL \bnfmid
-                  \aLsum \bnfmid
-                  X \bnfmid
-                  \arec[@][\aL]
-\end{eqnarray*}
-As for global types, we write $\nil$ for a sum with an empty set $I$ of branches. 
-
-For a local type $\aL = \aLsum$, we write $\selectors \aL$ for the selecting roles the choice, i.e.,
-$\selectors \aL = \cup_{i\in I}{\{\arole_i\}}$.
-%
-Moreover, we assume
-\begin{itemize}
-\item $\aL_i \neq\aLsum[j][J]$, for all $i \in I$.
-\item $\arole_i \eqR \arole_j$ for all $i,j \in I$.
-\end{itemize}
-
-The projection $\proj$ of a global type $\aK$ on a role
-$\arole \in \participants \cup \multiroles$ is defined as
-\[
-  \proj =
-  \begin{cases}
-    \nil & \text{if } \arole \not \in \roles \aK
-    \\
-    (\proj[\aK_1]) \ + \ (\proj[\aK_2])
-    &
-    \text{if } \aK = \aK_1 \ + \ \aK_2
-    \\
-    \arole_1 : \aout[].(\proj[\aK_1])
-    &
-    \text{if } \arole \eqR \arole_1\ \text{ and }\ \aK = \apref[\arole_1].\aK_1
-    \\
-    \arole_1 : \ain[].(\proj[\aK_1])
-    &
-    \text{if } \arole \eqR \arole_1\ \text{ and }\ \aK = \apref[{}][\arole_1].\aK_1 \ \text{ and }
-    \\
-    \arole_1 : \ard[].(\proj[\aK_1])
-    &
-    \text{if } \arole \eqR \arole_1\ \text{ and }\ \aK = \apref[{}][\arole_1][@][@][.].\aK_1
-    \\
-    \arole_1 : \aout[].(\proj[\aK_1])
-    &
-    \text{if } \arole \eqR \arole_1\ \text{ and either}\ \aK = \apref[\arole_1][\arole_2].\aK_1
-    \\
-    &
-    \hspace{2.5cm}\text{ or }\ \aK = \apref[\arole_1][\arole_2][@][\aloc][.].\aK_1
-    \\
-    \arole_2 : \ain[].(\proj[\aK_1])
-    &
-    \text{if } \arole \eqR \arole_2\ \text{ and }\ \aK = \apref[\arole_1][\arole_2].\aK_1
-    \\
-    \arole_2 : \ard[].(\proj[\aK_1])
-    &
-    \text{if } \arole \eqR \arole_2\ \text{ and }\ \aK = \apref[\arole_1][\arole_2][@][\aloc][.].\aK_1
-    \\
-    \proj[\aK_1]
-    &
-    \text{if } \aK = \apref.\aK_1 \text{ and the previous ones do not apply}
-%    \\
-%    \proj[\aK_1]   
-%    & \text{if } \aK = \aK_1 \parop \aK_2 
-%    \text{ and } \arole \not\eqR \roles {\aK_2}
-   \\
-   X
-   & \text{if } \aK = X
-   \\
-   \arec[@][{(\proj[\aK_1])}]
-   &
-   \text{if } \aK = \arec[@][\aK_1]
-  \end{cases}
-\]
-
 
 %%% Local Variables:
 %%% mode: latex

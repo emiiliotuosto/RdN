@@ -1,16 +1,42 @@
 
+Local types $\aL$ have the following syntax
+\begin{eqnarray*}
+  \aLpref & \bnfdef &
+                  \aout[] \bnfmid
+                  \arout[]\bnfmid
+                  \ain[] \bnfmid
+                  \ard[] 
+\\
+  \aL & \bnfdef &
+                  \aLsum \bnfmid
+                  X \bnfmid
+                  \arec[@][\aL]
+\end{eqnarray*}
+As for global types, we write $\nil$ for a sum with an empty set $I$ of branches. 
+%
+%For a local type $\aL = \aLsum$, we write $\selectors \aL$ for the selecting roles the choice, i.e.,
+%$\selectors \aL = \cup_{i\in I}{\{\arole_i\}}$.
+%%
+%Moreover, we assume
+%\begin{itemize}
+%\item $\aL_i \neq\aLsum[j][J]$, for all $i \in I$.
+%\item $\arole_i \eqR \arole_j$ for all $i,j \in I$.
+%\end{itemize}
+%
+
 We consider the following syntax for run-time semantics of a set of local types and tuple spaces, 
 called {\em specification}.
 
 \begin{eqnarray*}
   \envmv & \bnfdef & \emptyset \bnfmid
                   \envmv, \arole :  \aL \bnfmid
-                  \envmv, \atupleat
+                  \envmv, \atupleat \bnfmid
+                  \envmv, \artupleat                  
 \end{eqnarray*}
 
-In $\arole :  \aL$  we assume
-$\arole \in \participants \cup \multiroles$  and $\arole \eqR \arole'$ for any $\arole'$
-occurring in $\aL$.
+%In $\arole :  \aL$  we assume
+%$\arole \in \participants \cup \multiroles$  and $\arole \eqR \arole'$ for any $\arole'$
+%occurring in $\aL$.
 %
 We write $\envtuple$ for a specification that only contains terms of the form $\atupleat$. 
  
@@ -19,25 +45,38 @@ We write $\envtuple$ for a specification that only contains terms of the form $\
 \mathaxiom
 	{\envmv, \arole : \aout[].\aL 
 	 \red[\arole : {\aout[]}]
-	 \envmv, \arole : \aL , \aout[]}
-	{LOut}
-&
+	 \envmv, \arole : \aL , \atupleat}
+	{LOut_1}
+\\[25pt]
+\mathaxiom
+	{\envmv, \arole : \arout[].\aL 
+	 \red[\arole : {\arout[]}]
+	 \envmv, \arole : \aL , \artupleat}
+	{LOut_2}
+\\[25pt]
 \mathrule
 	{\atuple \matches \atuple'}
-	{\envmv, \arole : \ain[].\aL, \aout[][\atuple'] 
+	{\envmv, \arole : \ain[].\aL, \atupleat[][\atuple'] 
 	 \red[\arole : {\ain[][\atuple']}]
 	 \envmv, \arole : \aL}
 	{LIn}
 \\[25pt]
 \mathrule
 	{\atuple \matches \atuple'}
-	{\envmv, \arole : \ard[].\aL, \aout[][\atuple'] 
+	{\envmv, \arole : \ard[].\aL, \atupleat[][\atuple'] 
 	 \red[\arole : {\ard[][\atuple']}]
-	 \envmv, \arole : \aL,  \aout[][\atuple'] }
-	{LRd}
-&
+	 \envmv, \arole : \aL,  \atupleat[][\atuple'] }
+	{LRd_1}
+\\[25pt]
 \mathrule
-	{\envtuple, \arole_i : \aL_i \red[\alpha] \envmv'}
+	{\atuple \matches \atuple'}
+	{\envmv, \arole : \ard[].\aL, \artupleat[][\atuple'] 
+	 \red[\arole : {\ard[][\atuple']}]
+	 \envmv, \arole : \aL,  \artupleat[][\atuple'] }
+	{LRd_2}
+\\[25pt]
+\mathrule
+	{j\in I \qquad \envtuple, \arole : \aLpref_j.\aL_j \red[\alpha] \envmv'}
 	{\envmv, \envtuple, \arole : \aLsum
 	 \red[\alpha]
 	 \envmv,\envmv'}
@@ -45,6 +84,62 @@ We write $\envtuple$ for a specification that only contains terms of the form $\
 \end{array}
 \]
 \todo{not sure which decoration do we want in LSum $\arole$ or $\arole_i$.}
+
+The projection $\proj$ of a global type $\aK$ on a role
+$\arole \in \participants \cup \multiroles$ is defined as
+\[
+  \proj =
+  \begin{cases}
+    \nil & \text{if } \arole \not \in \roles \aK
+    \\
+    \displaystyle{\sum_{i\in I}{\proj[(\apref_i.\aK_i)]}}
+    &
+    \text{if } \aK = \asum
+    \\
+    \proj[\aK_1]
+    &
+    \text{if } \aK = \apref.\aK_1 \text{ and } \rho\not\in\roles{\apref}
+    \\
+    \aout[].(\proj[\aK_1])
+    &
+    \text{if } \aK = \apref[\arole].\aK_1
+    \\
+    \arout[].(\proj[\aK_1])
+    &
+    \text{if } \aK = \apref[\arole][{}][@][@][.].\aK_1
+    \\
+    \ain[].(\proj[\aK_1])
+    &
+    \text{if } \aK = \apref[{}][\arole].\aK_1
+    \\
+    \ard[].(\proj[\aK_1])
+    &
+    \text{if }  \aK = \apref[{}][\arole][@][@][.].\aK_1
+    \\
+    \aout[].(\proj[\aK_1])
+    &
+    \text{if } \aK = \apref[\arole][\arole'].\aK_1
+    \\
+    \ain[].(\proj[\aK_1])
+    &
+    \text{if } \aK = \apref[\arole'][\arole].\aK_1
+    \\
+    \arout[].(\proj[\aK_1])
+    &
+    \text{if } \aK = \apref[\arole][\arole'][@][\aloc][.].\aK_1
+    \\
+    \ard[].(\proj[\aK_1])
+    &
+    \text{if } \aK = \apref[\arole'][\arole][@][\aloc][.].\aK_1
+    \\
+    X
+    & \text{if } \aK = X
+    \\
+    \arec[@][{(\proj[\aK_1])}]
+    &
+    \text{if } \aK = \arec[@][\aK_1]
+  \end{cases}
+\]
 
 
 %%% Local Variables:
