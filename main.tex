@@ -15,7 +15,11 @@
 
 % first the title is needed
 \title{
+  \iffinal
   Data-driven choreographies \`a la Klaim
+  \else
+  \fcolorbox{black!15}{yellow!20}{Data-driven choreographies \`a la Klaim}
+  \fi
 }
 
 % a short form should be given in case it is too long for the running head
@@ -42,10 +46,11 @@
   \and
   University of Leicester, UK
 }
-	
-% \setcounter{tocdepth}{2}
-% \listoffixmes
-% \newpage
+
+\iffinal
+\else
+\authorrunning{\fcolorbox{black!15}{yellow!20}{Check list of fixmes}}
+\fi
 
 \maketitle
 
@@ -114,5 +119,12 @@
 
 \bibliographystyle{abbrv}
 \bibliography{biblio}
+
+\iffinal
+\else
+ \newpage
+ \setcounter{tocdepth}{2}
+ \listoffixmes
+\fi
 
 \end{document}
