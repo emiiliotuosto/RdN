@@ -1,46 +1,178 @@
 % !TEX root =  main.tex
 %
-Let $\locset$ be a set of \emph{localities} and $\asort$ range over
-basic sorts which include $\asort[int]$, $\asort[bool]$,
-$\asort[str]$, etc. We assume $\varset$ to be 
-a set of variables $x, y, \ldots$.
+\subsection{Tuple types}
+We consider $\asort$ range over basic sorts which include
+$\asort[int]$, $\asort[bool]$, $\asort[str]$ and sort $\asort[loc]$ of
+\emph{localities}. We assume $\varset$ to be a set of variables $x, y,
+z, \ldots$.
 %
 The set $\tupleset$ of \emph{(tuple) types} consists of the terms
 derived from the following grammar:
 \begin{eqnarray*}
   \atuple & \bnfdef & \asort \bnfmid
                       x : \asort \bnfmid
-                      x  \bnfmid
-                      \nu \aloc \bnfmid
-                      \aloc \bnfmid
+                      \nu x : \asort  \bnfmid
+%                      \nu \aloc \bnfmid
+%                      \aloc \bnfmid
                       \atuple \cdot \atuple \bnfmid
                       \wildcard
 \end{eqnarray*}
-Names $x : \asort$ and $\nu \aloc$ act as binders for the names $x$
-and $\aloc$ at type level. \todo{We assume binders in tuple to be linear}.
-%
-We say that $\atuple$ \emph{generates} when in one of its fields there
-is a $\nu \aloc$ type.
-%
-Tuple types \emph{match} according to the relation
-$\matches \subseteq \tupleset \times \tupleset$ defined as
-\eMnote{add typing env}
+Names $x$ in tuples $\nu x : \asort$ are binders. Hence, we talk about
+free and defined (sorted) names occurring in tuples. Formally, the functions
+$\fn{\_}$ and $\dn{\_}$ returns sets of pairs that associate variables to sorts.
 \[
-  \atuple \matches \atuple' \iff
-  \begin{cases}
-    \atuple = \atuple'  
+\begin{array}{l@{\hspace{1cm}}l}
+\begin{array}{lcl}
+  \dn\asort & = & \emptyset
+  \\
+  \dn{x : \asort} & = & \emptyset
+  \\
+  \dn{\nu x : \asort} & = & \{x \mapsto \asort \}
+  \\
+  \dn{\atuple_1 \cdot \atuple_2} & = & \dn{\atuple_1} \cup \dn{\atuple_2}
+  \\
+  \dn{\wildcard} & = & \emptyset
+\end{array}
+&
+\begin{array}{lcl}
+  \fn\asort & = & \emptyset
+  \\
+  \fn{x : \asort} & = &  \{x \mapsto \asort\}
+  \\
+  \fn{\nu x : \asort} & = & \emptyset
+  \\
+  \fn{\atuple_1 \cdot \atuple_2} & = & \fn{\atuple_1} \cup \fn{\atuple_2}
+  \\
+  \fn{\wildcard} & = & \emptyset
+\end{array}
+\end{array}
+\]
+We write $\supp{\_}$ to denote the projection of a set of pairs over its first component. 
+
+We say a tuple $\atuple$ is {\em well-sorted} if the following two
+conditions hold:
+\begin{itemize}
+\item
+  $\supp{\fn\atuple} \cap \supp{\dn{\atuple}} = \emptyset$, i.e., free and
+  defined names are disjoint; and
+\item
+  $\atuple = \atuple_1 \cdot \atuple_2$ implies $\atuple_1$ and
+  $\atuple_2$ well-sorted and $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =
+  \emptyset$, i.e., defined names are all different.	 
+\end{itemize}
+%
+Hereafter, we assume all tuples to be well-sorted. Note that 
+$\fn{\atuple}$ and $\dn{\atuple}$ is a partial function for a well-sorted tuple.
+
+A capture-avoiding substitution of the free occurrences of a variable
+$x$ in a (well-sorted) tuple $\atuple$ by a variable $y$, written
+$\atuple \sust x y$, is defined as follows
+%
+\[
+\begin{array}{r@{}l@{\ = \ } ll}
+%\asort
+%&
+%\sust x y  
+%&  
+%\asort
+%\\
+%(x : \asort)
+%& 
+%\sust x y  
+%& x : \asort
+%\\
+%z
+%&
+%\sust x y 
+%&  
+%z 
+%& 
+%{\it if} z\neq x
+%\\
+(x  : \asort)
+&
+\sust x y  
+&  
+y : \asort
+\\
+(\atuple_1 \cdot \atuple_2)
+&
+\sust x y  
+& 
+(\atuple_1\sust x y) \cdot (\atuple_2\sust x y) 
+%& 
+%{\it if} y\not\in\dn{\atuple_1 \cdot \atuple_2}
+%\\
+%\wildcard
+%&
+%\sust x y  
+%&  
+%\wildcard
+\end{array}
+\]
+%
+and it is the identity on the remaining cases. Let $\sigma =
+\{y_1/x_1,\ldots,y_n/x_n\}$ such that $x_i\neq x_j$ for all $i\neq j$
+(i.e., a partial function), we write $\atuple\sigma$ for the
+simultaneous substitution of each $x_i$ by $y_i$.
+%
+We use $\Sigma$ for the set of all substitutions. We write
+$\sigma_1\sigma_2$ for the composition of partial functions with
+disjoint domain, and $\sigma_1[\sigma_2]$ for the update of $\sigma_1$
+with $\sigma_2$.
+
+
+Tuple types \emph{match} by producing a substitution; formally given
+by the partial function ${\matches} : \tupleset \times \tupleset
+\rightarrow \Sigma$ defined such as
+%\eMnote{add typing env}
+\[
+  \atuple \matches \atuple' \generates
+    \begin{cases}
+     \emptyset
     & 
-    \text{if $\atuple\in\{\asort, x : \asort, x, \nu \aloc, \aloc\}$}
+    \text{if  } \atuple = \wildcard \vee \atuple' = \wildcard  \vee (\atuple = \atuple' \land \atuple\in\{\asort, x : \asort\})
     \\
-    \atuple_1 \matches \atuple'_1
-    \land \atuple_2 \matches \atuple'_2
+    \sigma_1\sigma_2
     &
     \text{if } \atuple = \atuple_1 \cdot \atuple_2
-    \text{ and }  \atuple' = \atuple'_1 \cdot \atuple'_2
+    \land  \atuple' = \atuple'_1 \cdot \atuple'_2
+    \land \atuple_1 \matches \atuple'_1 \generates \sigma_1
+    \land \atuple_2 \matches \atuple'_2 \generates \sigma_1
     \\
-    \atuple = \wildcard \vee \atuple' = \wildcard & \text{otherwise}
-  \end{cases}
+    \sust x y 
+    &
+    \text{if  } (\atuple = \nu x : \asort \land \atuple' = y: \asort) \vee  (\atuple' = \nu y : \asort \land \atuple = x: \asort) 
+    \\
+    \textit{undef} & \textit{otherwise}
+   \end{cases}
 \]
+\todo{double-check}
+
+%
+%
+%\[
+%  \atuple \matches \atuple' \iff
+%  \begin{cases}
+%    \atuple = \atuple'  
+%    & 
+%    \text{if $\atuple\in\{\asort, x : \asort, x, \nu \aloc, \aloc\}$}
+%    \\
+%    \atuple_1 \matches \atuple'_1
+%    \land \atuple_2 \matches \atuple'_2
+%    &
+%    \text{if } \atuple = \atuple_1 \cdot \atuple_2
+%    \text{ and }  \atuple' = \atuple'_1 \cdot \atuple'_2
+%    \\
+%    \atuple = \wildcard \vee \atuple' = \wildcard & \text{otherwise}
+%  \end{cases}
+%\]
+
+
+%
+We say that $\atuple$ \emph{generates} when in one of its fields there
+is a $\nu \aloc$ type. \todo{check}
+%
 
 %We define
 %\[
@@ -50,11 +182,11 @@ $\matches \subseteq \tupleset \times \tupleset$ defined as
 %and say that $\atuple$ and $\atuple'$ \emph{are in conflict} when
 %$\atuple \clashes \atuple'$.
 
+\subsection{Global types}
 We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$
 and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
 \emph{participants} and \emph{multiple} roles, and define the set of
-\emph{roles}
-$\roleset = \participants \cup \multiroles$
+\emph{roles} $\roleset = \participants \cup \multiroles$
 % \cup
 %\multiroles^\unknownstarop \cup \multiroles^\unknownop$ (ranged over
 %by $\arole, \arole_1, \ldots$) where
@@ -79,24 +211,28 @@ processes enacting the behaviour specified in a choreography.
 Participants are unit types while multiroles account for multiple
 instances of processes all performing actions according to their role.
 
+We consider a set of localities $\locset$ ranged over by $\aloc$. We use 
+$\alocvar$ to range over $\locset\cup\varset$.
+
 Global types $\aK$ have the following syntax
 %\eMnote{non e' chiaro se vogliamo $\aK \parop \aK $}
 \begin{eqnarray*}
   \aK & \bnfdef & \asum \bnfmid
 %                  \aK \parop \aK \bnfmid
+	    	 \aK; \aK \bnfmid
                   X \bnfmid
                   \arec
   \\[1.5em]
-  \apref & \bnfdef & \apref[\arole] \bnfmid
-                     \apref[\arole][{}][@][@][.] \bnfmid
-                     \apref[{}][\arole] \bnfmid
-                     \apref[{}][\arole][@][@][.]
+  \apref & \bnfdef & \apref[\arole][@][@][\alocvar] \bnfmid
+                     \apref[\arole][{}][@][\alocvar][.] \bnfmid
+                     \apref[{}][\arole][@][\alocvar] \bnfmid
+                     \apref[{}][\arole][@][\alocvar][.]
   \\[1em]
-        & \bnfmid & \apref[\arole][\arole'] \bnfmid
-                    \apref[\arole][\arole'][@][\aloc][.]
+        & \bnfmid & \apref[\arole][\arole'][@][\alocvar] \bnfmid
+                    \apref[\arole][\arole'][@][\alocvar][.]
 \end{eqnarray*}
-where $I$ is a finite set of indexes and $\aloc \in \locset$ is a
-locality.
+where $I$ is a finite set of indexes.
+% and $\aloc \in \locset$ is a locality.
 %
 We write $\nil$ for $\asum$ when $I = \emptyset$ and
 $\apref_j.\aK_j$ instead of $\asum$ when $I = \{j\}$.
@@ -118,6 +254,154 @@ autonomous prefix.
 %
 Likewise, $\roles \aK \subseteq \participants \cup \multiroles$ is the
 set of roles in $\aK$.
+
+We extend the notions of defined and free names to global types as follows:
+
+\[
+\begin{array}{ll}
+\begin{array}{l@{\ =\ } ll}
+ \fn{\apref[\arole][@][@][\alocvar]} 
+ & \fn \atuple \cup \{\alocvar \mapsto \asort[loc]\} 
+ \\
+ \multicolumn{3}{c}{\hspace{1cm}\textit{omitted prefixes are defined analogously}}
+ \\ 
+ \fn \asum & \bigcup_{i\in I} \fn{\apref_i} \cup (\fn{\aK_i}\setminus\dn{\apref_i})
+ \\
+  \fn{\aK_1; \aK_2} 
+  &
+  \fn{\aK_1}\cup\fn{\aK_2}
+  \\
+  \fn X & \emptyset
+  \\
+  \fn \arec & \fn {\aK}
+\end{array}
+\qquad
+\begin{array}{l@{\ =\ } ll}
+ \dn{\apref[\arole][@][@][\alocvar]} 
+ & \dn \atuple 
+ \\
+ \multicolumn{3}{c}{\hspace{1cm}\ldots}
+ \\ 
+ \dn \asum & \bigcup_{i\in I} \dn{\apref_i} \cup \dn{\aK_i}
+ \\
+  \dn{\aK_1; \aK_2} 
+  &
+  \dn{\aK_1}\cup\dn{\aK_2}
+  \\
+  \dn X & \emptyset
+  \\
+  \dn \arec & \dn {\aK}
+\end{array}
+\end{array}
+\]
+
+We write  $\names \_$ for the set of sorted names of a term, i.e., 
+ $\names \apref = \fn\apref \cup \dn\apref$ and similarly
+  $\names \aK = \fn\aK \cup \dn\aK$. A set $S$ of sorted names 
+  is consistent, written $\consistent S$, if 
+  $x\mapsto \asort \in S$ and $x\mapsto \asort' \in S$ 
+  implies  $\asort = \asort'$.
+ 
+The set of well-sorted terms 
+are defined inductively as follows:
+
+\begin{itemize}
+\item $\apref$ is well-sorted if $\fn\apref\cap\dn\apref = \emptyset$ and  
+$\consistent{\names\apref}$, i.e., there are no clashes/inconsistencies in the sorts of 
+the names in $\atuple$ and the locality $\alocvar$.
+
+\item 
+$\asum$ is well-sorted if for all ${i\in I}$ both ${\apref_i}$ and ${\aK_i}$ are
+well-sorted and $\consistent{\names {\apref_i.\aK_i}}$.
+ 
+\item 
+$\aK_1;\aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are 
+well-sorted and $\consistent{\names{\aK_1;\aK_2}}$.
+
+\item $X$ is well-sorted.
+
+\item $\arec$ is well-sorted if $\aK$ is well-sorted.
+
+\end{itemize}
+
+
+We consider terms up-to $\alpha$-renaming of defined names. As usual we 
+say that a global type $\aK$ is {\em closed} when it does not contain free occurrences of 
+variables, i.e., $\supp{\fn\aK} \cap \varset = \emptyset$. 
+
+
+\begin{example}
+Consider the following global type that describes the interaction of a client $\ptp c$
+with a simple service $\ptp s$ that converts integers into strings. 
+\[
+ \aK_1 =
+    \apref[\ptp c][\ptp s][{\asort[int]}][{\aloc[l]}].    
+    \apref[\ptp s][\ptp c][{\asort[str]}][{\aloc[l]}].\nil
+\]
+The client $\ptp c$ produces a integer value on 
+on the locality $\aloc$, which must be consumed by the server $\ptp b$, which 
+produces back with the corresponding string for the client. 
+
+Assume now that we consider  client and server as 
+multiple roles instead of single participants, and write
+\[
+ \aK_2 =
+    \apref[\amulti {C}][\amulti {S}][{\asort[int]}][{\aloc[l]}].
+    \apref[\amulti {S}][\amulti {C}][{\asort[str]}][{\aloc[l]}].\nil
+\]
+In this case, $\aK_2$ states that each integer produced by 
+a client will be consumed by a server, which will in turn produce a 
+string for one of the clients. However, the type doesn't ensure
+that a client will consume the value sent by the corresponding server. 
+Variables can be used to correlate tuples. For instance,
+\[
+ \aK_3 =
+    \apref[\amulti {C}][\amulti {S}][{\nu x:\asort[int]}][{\aloc[l]}].
+    \apref[\amulti {S}][\amulti {C}][{x : {\asort[int]} \cdot {\asort[str]} }][{\aloc[l]}].\nil
+\]
+$\aK_3$ associates a fresh identifier $x$ to each value produced by a 
+ client and consumed by a server. Despite the identifier is  known only to 
+ the communicating instances,  this does not forbid two clients to 
+ generate the same integer value.  Basically, the name $x$ allows to 
+ express constraints about the flow of values. In particular,  $x : \asort[int]$ 
+in the second interaction states that a server must generate a tuple 
+that contains the consumed integer. Analogously, each 
+client must consume a tuple matching  
+the produced integer. We remark that this does not establishes
+a one-to-one association between instances of $\amulti C$ and $\amulti S$.
+ In fact, an instance of $\amulti C$ not necessarily interacts with the 
+ same instance of $\amulti S$ in the two communications when two instances of 
+ $\amulti C$ generate the same intenger in the first interaction. 
+ 
+A one-to-one correspondence can be achieved
+by using  fresh localities, e.g..
+
+\[
+ \aK_4 = 
+    \apref[\amulti {C}][\amulti {S}][{{\asort[int]} \cdot \nu x: {\asort[loc]}}][{\aloc[l]}].
+    \apref[\amulti {S}][\amulti {C}][{{\asort[int]}}][{x}].\nil
+\]
+
+A client generates a fresh locality identified by $x$, which is then
+used as the locality for the subsequent communication. Since the name 
+$x$ is known only to the two communicating instances, the second 
+interaction can only take place between the two instances that know the 
+locality $x$.
+\end{example}
+
+\begin{example} I think we can also deal with situations like the following, in which 
+A creates a private session for B and C. 
+
+\[
+  \begin{array}{l} 
+    \apref[\amulti {A}][\amulti {B}][{\nu y: {\asort[loc]}}][{\aloc[l]}].
+    \\
+    \apref[\amulti {A}][\amulti {C}][{y : {\asort[loc]}}][{\aloc[l]}].
+    \\
+    \apref[\amulti {B}][\amulti {C}][\asort][{y}]. \nil
+\end{array}
+\]
+\end{example}
 
 
 \begin{example}[Auction]

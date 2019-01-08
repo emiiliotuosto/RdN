@@ -18,38 +18,6 @@ As for global types, we write $\nil$ for a sum with an empty set $I$ of branches
 
 We remark that  $x : \asort$ and $\nu \aloc$ acts as binders for $x$ and $\aloc$. 
 We write $\dn\atuple$ for the set of binders of a tuple, defined as follows
-\begin{eqnarray*}
-  \dn\asort & = & \emptyset
-  \\
-  \dn{x : \asort} & = & \{x\}
-  \\
-  \dn{x} & = & \emptyset
-  \\
-  \dn{\nu \aloc} & = & \{\aloc\}
-  \\
-  \dn{\aloc} & = & \emptyset
-  \\
-  \dn{\atuple_1 \cdot \atuple_2} & = & \dn{\atuple_1} \cup \dn{\atuple_2}
-  \\
-  \dn{\wildcard} & = & \emptyset
-\end{eqnarray*}
-
-Free names are 
-\begin{eqnarray*}
-  \fn\asort & = & \emptyset
-  \\
-  \fn{x : \asort} & = & \emptyset
-  \\
-  \fn{x} & = &  \{x\}
-  \\
-  \fn{\nu \aloc} & = & \emptyset
-  \\
-  \fn{\aloc} & = & \{\aloc\}
-  \\
-  \fn{\atuple_1 \cdot \atuple_2} & = & \fn{\atuple_1} \cup \fn{\atuple_2}
-  \\
-  \fn{\wildcard} & = & \emptyset
-\end{eqnarray*}
 
 The definition of $\fn\_$ is extended to local types 
 \begin{eqnarray*}
@@ -62,14 +30,6 @@ The definition of $\fn\_$ is extended to local types
   \fn {\arec[@][\aL]} & = & \fn {\aL} 
 \end{eqnarray*}
 
-The substitution of a variable $x$ by a variable $y$ in a tuple $\atuple$, written $\atuple \sust x y$, is 
-defined such that 
-$$  x \sust x y  =  y \hspace{2cm} (\atuple_1 \cdot \atuple_2)\sust x y  =  ( \atuple_1\sust x y) \cup ( \atuple_2\sust x y)$$
-and it is the identity in the remaining cases. Analogously, 
-the substitution of a locality $\aloc$ by a locality $\aloc'$, written $\atuple \sust \aloc {\aloc'}$, is such that
-%
-$$  \aloc \sust \aloc {\aloc'}  =  \aloc' \hspace{2cm} (\atuple_1 \cdot \atuple_2)\sust \aloc {\aloc'}  =  ( \atuple_1\sust \aloc {\aloc'}) \cup ( \atuple_2\sust \aloc {\aloc'})$$
-%
  
 Hereafter we use $v$, $w$ to range over $\varset\cup\locset$. The notion of substitution is extended to local terms.
 \begin{align*}

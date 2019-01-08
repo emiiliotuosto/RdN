@@ -6,6 +6,7 @@
 \newcommandx{\atuple}[1][1 = t]{\texttt{#1}}
 \newcommandx{\aloc}[1][1=l]{\texttt{\color{blue}#1}}
 \newcommand{\locset}{\mathcal{L}\!\mathit{oc}}
+\newcommand{\locsort}{\mathcal{L}\!\mathit{oc}}
 \newcommand{\varset}{\mathcal{V}}
 \newcommand{\tupleset}{\mathcal{T}}
 \newcommand{\mkop}[1]{\textcolor{ForestGreen}{#1}}
@@ -169,7 +170,13 @@
 \newcommand{\fn}[1]{{\it fn}(#1)}
 \newcommand{\names}[1]{{\it n}(#1)}
 \newcommand{\sust}[2]{\{#2 / #1\}}
-\newcommand{\generates}{\rightsquigarrow}
+%\newcommand{\generates}{\rightsquigarrow}
+\newcommand{\generates}{=}
+\newcommand{\alocvar}{{\color{red}\ell}}
+\newcommand{\supp}[1]{\llcorner#1\lrcorner}
+\newcommand{\consistent}[1]{#1\downarrow}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
