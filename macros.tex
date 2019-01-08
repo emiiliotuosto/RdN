@@ -6,6 +6,7 @@
 \newcommandx{\atuple}[1][1 = t]{\texttt{#1}}
 \newcommandx{\aloc}[1][1=l]{\texttt{\color{blue}#1}}
 \newcommand{\locset}{\mathcal{L}\!\mathit{oc}}
+\newcommand{\varset}{\mathcal{V}}
 \newcommand{\tupleset}{\mathcal{T}}
 \newcommand{\mkop}[1]{\textcolor{ForestGreen}{#1}}
 \DeclareMathOperator{\at}{\mkop{\tiny @}}
@@ -159,6 +160,16 @@
 \newcommandx{\unique}[1][1=\apref,usedefault=@]{\gfun{unique}(\ifempty{#1}{\_}{#1})}
 \newcommand{\ksem}[1]{\llbracket \ifempty{#1}{\_}{#1} \rrbracket}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 			LOCAL TYPES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\dn}[1]{{\it dn}(#1)}
+\newcommand{\fn}[1]{{\it fn}(#1)}
+\newcommand{\names}[1]{{\it n}(#1)}
+\newcommand{\sust}[2]{\{#2 / #1\}}
+\newcommand{\generates}{\rightsquigarrow}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,3 +1,5 @@
+% !TEX root =  main.tex
+%
 
 Local types $\aL$ have the following syntax
 \begin{eqnarray*}
@@ -13,6 +15,82 @@ Local types $\aL$ have the following syntax
                   \arec[@][\aL]
 \end{eqnarray*}
 As for global types, we write $\nil$ for a sum with an empty set $I$ of branches. 
+
+We remark that  $x : \asort$ and $\nu \aloc$ acts as binders for $x$ and $\aloc$. 
+We write $\dn\atuple$ for the set of binders of a tuple, defined as follows
+\begin{eqnarray*}
+  \dn\asort & = & \emptyset
+  \\
+  \dn{x : \asort} & = & \{x\}
+  \\
+  \dn{x} & = & \emptyset
+  \\
+  \dn{\nu \aloc} & = & \{\aloc\}
+  \\
+  \dn{\aloc} & = & \emptyset
+  \\
+  \dn{\atuple_1 \cdot \atuple_2} & = & \dn{\atuple_1} \cup \dn{\atuple_2}
+  \\
+  \dn{\wildcard} & = & \emptyset
+\end{eqnarray*}
+
+Free names are 
+\begin{eqnarray*}
+  \fn\asort & = & \emptyset
+  \\
+  \fn{x : \asort} & = & \emptyset
+  \\
+  \fn{x} & = &  \{x\}
+  \\
+  \fn{\nu \aloc} & = & \emptyset
+  \\
+  \fn{\aloc} & = & \{\aloc\}
+  \\
+  \fn{\atuple_1 \cdot \atuple_2} & = & \fn{\atuple_1} \cup \fn{\atuple_2}
+  \\
+  \fn{\wildcard} & = & \emptyset
+\end{eqnarray*}
+
+The definition of $\fn\_$ is extended to local types 
+\begin{eqnarray*}
+  \fn {\aout[]}  & = & \fn {\arout[]} = \fn {\ain[]} = \fn {\ard[]} = \fn {\atuple} \cup \{\aloc\}  
+  \\
+  \fn {\aLsum} & = & \bigcup_{i\in I} \fn{\aLpref_i}\cup (\fn {\aL_i}\setminus \dn{\aLpref_i}) 
+  \\
+  \fn {X} & = & \emptyset 
+  \\
+  \fn {\arec[@][\aL]} & = & \fn {\aL} 
+\end{eqnarray*}
+
+The substitution of a variable $x$ by a variable $y$ in a tuple $\atuple$, written $\atuple \sust x y$, is 
+defined such that 
+$$  x \sust x y  =  y \hspace{2cm} (\atuple_1 \cdot \atuple_2)\sust x y  =  ( \atuple_1\sust x y) \cup ( \atuple_2\sust x y)$$
+and it is the identity in the remaining cases. Analogously, 
+the substitution of a locality $\aloc$ by a locality $\aloc'$, written $\atuple \sust \aloc {\aloc'}$, is such that
+%
+$$  \aloc \sust \aloc {\aloc'}  =  \aloc' \hspace{2cm} (\atuple_1 \cdot \atuple_2)\sust \aloc {\aloc'}  =  ( \atuple_1\sust \aloc {\aloc'}) \cup ( \atuple_2\sust \aloc {\aloc'})$$
+%
+ 
+Hereafter we use $v$, $w$ to range over $\varset\cup\locset$. The notion of substitution is extended to local terms.
+\begin{align*}
+  (\aout[]) \sust v w  = &  \aout[][\atuple\sust v w][(\aloc\sust v w)] &  {\it if}\  \{v,w\}\cap \dn\atuple = \emptyset
+  \\ 
+  \fn {\arout[]} = & 
+  \\
+  \fn {\ain[]}  = &
+  \\
+  \fn {\ard[]}  = &
+  \\
+  \fn {\aLsum}  = & \bigcup_{i\in I} \fn{\aLpref_i}\cup (\fn {\aL_i}\setminus \dn{\aLpref_i}) 
+  \\
+  \fn {X}  = & \emptyset 
+  \\
+  \fn {\arec[@][\aL]}  = & \fn {\aL} 
+\end{align*}
+
+
+Let $s$ and $t$ in $\locset$  local types up-to $\alpha$-renaming of binders. 
+
 %
 %For a local type $\aL = \aLsum$, we write $\selectors \aL$ for the selecting roles the choice, i.e.,
 %$\selectors \aL = \cup_{i\in I}{\{\arole_i\}}$.
@@ -42,37 +120,40 @@ We write $\envtuple$ for a specification that only contains terms of the form $\
  
 \[
 \begin{array}{l@{\hspace{1cm}}l}
-\mathaxiom
+\mathrule{}
 	{\envmv, \arole : \aout[].\aL 
 	 \red[\arole : {\aout[]}]
 	 \envmv, \arole : \aL , \atupleat}
-	{LOut_1}
+	{LOut_1} 
+	{\it with}\ 	\dn\atuple\ {\it fresh}
 \\[25pt]
-\mathaxiom
+\mathrule{}
 	{\envmv, \arole : \arout[].\aL 
 	 \red[\arole : {\arout[]}]
 	 \envmv, \arole : \aL , \artupleat}
 	{LOut_2}
+	{\it with}\ 	\dn\atuple\ {\it fresh}
+
 \\[25pt]
 \mathrule
-	{\atuple \matches \atuple'}
+	{\atuple \matches \atuple' \generates \sigma}
 	{\envmv, \arole : \ain[].\aL, \atupleat[][\atuple'] 
-	 \red[\arole : {\ain[][\atuple']}]
-	 \envmv, \arole : \aL}
+	 \red[\arole : {\ain[][\atuple'\sigma]}]
+	 \envmv, \arole : \aL\sigma}
 	{LIn}
 \\[25pt]
 \mathrule
-	{\atuple \matches \atuple'}
+	{\atuple \matches \atuple' \generates \sigma}
 	{\envmv, \arole : \ard[].\aL, \atupleat[][\atuple'] 
-	 \red[\arole : {\ard[][\atuple']}]
-	 \envmv, \arole : \aL,  \atupleat[][\atuple'] }
+	 \red[\arole : {\ard[][\atuple'\sigma]}]
+	 \envmv, \arole : \aL\sigma,  \atupleat[][\atuple'] }
 	{LRd_1}
 \\[25pt]
 \mathrule
-	{\atuple \matches \atuple'}
+	{\atuple \matches \atuple'\generates \sigma}
 	{\envmv, \arole : \ard[].\aL, \artupleat[][\atuple'] 
-	 \red[\arole : {\ard[][\atuple']}]
-	 \envmv, \arole : \aL,  \artupleat[][\atuple'] }
+	 \red[\arole : {\ard[][\atuple'\sigma]}]
+	 \envmv, \arole : \aL\sigma,  \artupleat[][\atuple'] }
 	{LRd_2}
 \\[25pt]
 \mathrule
@@ -83,7 +164,6 @@ We write $\envtuple$ for a specification that only contains terms of the form $\
 	{LSum}
 \end{array}
 \]
-\todo{not sure which decoration do we want in LSum $\arole$ or $\arole_i$.}
 
 The projection $\proj$ of a global type $\aK$ on a role
 $\arole \in \participants \cup \multiroles$ is defined as
