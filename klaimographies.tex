@@ -1,202 +1,19 @@
-% !TEX root =  main.tex
-%
-\subsection{Tuple types}
-We consider $\asort$ range over basic sorts which include
-$\asort[int]$, $\asort[bool]$, $\asort[str]$ and sort $\asort[loc]$ of
-\emph{localities}. We assume $\varset$ to be a set of variables $x, y,
-z, \ldots$.
-%
-The set $\tupleset$ of \emph{(tuple) types} consists of the terms
-derived from the following grammar:
-\begin{eqnarray*}
-  \atuple & \bnfdef & \asort \bnfmid
-                      x : \asort \bnfmid
-                      \nu x : \asort  \bnfmid
-%                      \nu \aloc \bnfmid
-%                      \aloc \bnfmid
-                      \atuple \cdot \atuple \bnfmid
-                      \wildcard
-\end{eqnarray*}
-Names $x$ in tuples $\nu x : \asort$ are binders. Hence, we talk about
-free and defined (sorted) names occurring in tuples. Formally, the functions
-$\fn{\_}$ and $\dn{\_}$ returns sets of pairs that associate variables to sorts.
-\[
-\begin{array}{l@{\hspace{1cm}}l}
-\begin{array}{lcl}
-  \dn\asort & = & \emptyset
-  \\
-  \dn{x : \asort} & = & \emptyset
-  \\
-  \dn{\nu x : \asort} & = & \{x \mapsto \asort \}
-  \\
-  \dn{\atuple_1 \cdot \atuple_2} & = & \dn{\atuple_1} \cup \dn{\atuple_2}
-  \\
-  \dn{\wildcard} & = & \emptyset
-\end{array}
-&
-\begin{array}{lcl}
-  \fn\asort & = & \emptyset
-  \\
-  \fn{x : \asort} & = &  \{x \mapsto \asort\}
-  \\
-  \fn{\nu x : \asort} & = & \emptyset
-  \\
-  \fn{\atuple_1 \cdot \atuple_2} & = & \fn{\atuple_1} \cup \fn{\atuple_2}
-  \\
-  \fn{\wildcard} & = & \emptyset
-\end{array}
-\end{array}
-\]
-We write $\supp{\_}$ to denote the projection of a set of pairs over its first component. 
 
-We say a tuple $\atuple$ is {\em well-sorted} if the following two
-conditions hold:
-\begin{itemize}
-\item
-  $\supp{\fn\atuple} \cap \supp{\dn{\atuple}} = \emptyset$, i.e., free and
-  defined names are disjoint; and
-\item
-  $\atuple = \atuple_1 \cdot \atuple_2$ implies $\atuple_1$ and
-  $\atuple_2$ well-sorted and $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =
-  \emptyset$, i.e., defined names are all different.	 
-\end{itemize}
-%
-Hereafter, we assume all tuples to be well-sorted. Note that 
-$\fn{\atuple}$ and $\dn{\atuple}$ is a partial function for a well-sorted tuple.
-
-A capture-avoiding substitution of the free occurrences of a variable
-$x$ in a (well-sorted) tuple $\atuple$ by a variable $y$, written
-$\atuple \sust x y$, is defined as follows
-%
-\[
-\begin{array}{r@{}l@{\ = \ } ll}
-%\asort
-%&
-%\sust x y  
-%&  
-%\asort
-%\\
-%(x : \asort)
-%& 
-%\sust x y  
-%& x : \asort
-%\\
-%z
-%&
-%\sust x y 
-%&  
-%z 
-%& 
-%{\it if} z\neq x
-%\\
-(x  : \asort)
-&
-\sust x y  
-&  
-y : \asort
-\\
-(\atuple_1 \cdot \atuple_2)
-&
-\sust x y  
-& 
-(\atuple_1\sust x y) \cdot (\atuple_2\sust x y) 
-%& 
-%{\it if} y\not\in\dn{\atuple_1 \cdot \atuple_2}
-%\\
-%\wildcard
-%&
-%\sust x y  
-%&  
-%\wildcard
-\end{array}
-\]
-%
-and it is the identity on the remaining cases. Let $\sigma =
-\{y_1/x_1,\ldots,y_n/x_n\}$ such that $x_i\neq x_j$ for all $i\neq j$
-(i.e., a partial function), we write $\atuple\sigma$ for the
-simultaneous substitution of each $x_i$ by $y_i$.
-%
-We use $\Sigma$ for the set of all substitutions. We write
-$\sigma_1\sigma_2$ for the composition of partial functions with
-disjoint domain, and $\sigma_1[\sigma_2]$ for the update of $\sigma_1$
-with $\sigma_2$.
-
-
-Tuple types \emph{match} by producing a substitution; formally given
-by the partial function ${\matches} : \tupleset \times \tupleset
-\rightarrow \Sigma$ defined such as
-%\eMnote{add typing env}
-\[
-  \atuple \matches \atuple' \generates
-    \begin{cases}
-     \emptyset
-    & 
-    \text{if  } \atuple = \wildcard \vee \atuple' = \wildcard  \vee (\atuple = \atuple' \land \atuple\in\{\asort, x : \asort\})
-    \\
-    \sigma_1\sigma_2
-    &
-    \text{if } \atuple = \atuple_1 \cdot \atuple_2
-    \land  \atuple' = \atuple'_1 \cdot \atuple'_2
-    \land \atuple_1 \matches \atuple'_1 \generates \sigma_1
-    \land \atuple_2 \matches \atuple'_2 \generates \sigma_1
-    \\
-    \sust x y 
-    &
-    \text{if  } (\atuple = \nu x : \asort \land \atuple' = y: \asort) \vee  (\atuple' = \nu y : \asort \land \atuple = x: \asort) 
-    \\
-    \textit{undef} & \textit{otherwise}
-   \end{cases}
-\]
-\todo{double-check}
-
-%
-%
-%\[
-%  \atuple \matches \atuple' \iff
-%  \begin{cases}
-%    \atuple = \atuple'  
-%    & 
-%    \text{if $\atuple\in\{\asort, x : \asort, x, \nu \aloc, \aloc\}$}
-%    \\
-%    \atuple_1 \matches \atuple'_1
-%    \land \atuple_2 \matches \atuple'_2
-%    &
-%    \text{if } \atuple = \atuple_1 \cdot \atuple_2
-%    \text{ and }  \atuple' = \atuple'_1 \cdot \atuple'_2
-%    \\
-%    \atuple = \wildcard \vee \atuple' = \wildcard & \text{otherwise}
-%  \end{cases}
-%\]
-
-
-%
-We say that $\atuple$ \emph{generates} when in one of its fields there
-is a $\nu \aloc$ type. \todo{check}
-%
-
-%We define
-%\[
-%  \atuple \clashes \atuple' \iff \exists \atuple'' \qst \atuple'' \matches \atuple \land \atuple'' \matches \atuple'
-%\]
-%
-%and say that $\atuple$ and $\atuple'$ \emph{are in conflict} when
-%$\atuple \clashes \atuple'$.
-
-\subsection{Global types}
 We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$
 and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
 \emph{participants} and \emph{multiple} roles, and define the set of
-\emph{roles} $\roleset = \participants \cup \multiroles$
-% \cup
-%\multiroles^\unknownstarop \cup \multiroles^\unknownop$ (ranged over
-%by $\arole, \arole_1, \ldots$) where
-%$\multiroles^{\unknownstarop} = \{\unknownstar \sst \amulti P
-%\in\multiroles\}$ and
-%$\multiroles^{\unknownop} = \{ \unknown \sst \amulti p \in \multiroles
-%\}$ account for some flexibility when implementing multiroles: an
-%action involving a $\unknownstar$ role can be optionally executed by
-%an implementation of role $\amulti P$, while $\unknown$ establishes
-%that exactly one implementer must execute that action.
+\emph{roles} $\roleset = \participants \cup \multiroles$.
+% \cup \multiroles^\unknownstarop \cup
+% \multiroles^\unknownop$ (ranged over by $\arole, \arole_1,
+% \ldots$) where $\multiroles^{\unknownstarop} = \{\unknownstar \sst
+% \amulti P \in\multiroles\}$ and $\multiroles^{\unknownop} = \{
+% \unknown \sst \amulti p \in \multiroles
+% \}$ account for some flexibility when implementing multiroles: an
+% action involving a
+% $\unknownstar$ role can be optionally executed by an implementation
+% of role $\amulti P$, while
+% $\unknown$ establishes that exactly one implementer must execute
+% that action.
 %
 We conventionally write multiroles with initial uppercase letter and
 unique roles with initial lowercase letter.
@@ -246,14 +63,15 @@ $\apref$ above are the \emph{autonomous} prefixes, that is those
 prefixes that processes can execute directly on a tuple space without
 coordinating with other processes; the prefixes generated by the
 remaining two productions of the grammar are the \emph{interaction}
-prefixes, namely those involving more roles.
+prefixes, namely those involving a role generating tuples and a role
+consuming/reading them.
 %
-We define $\roles \apref$ to the set of roles in $\apref$; note that
-$\roles \apref$ is a singleton if, and only if, $\apref$ is an
-autonomous prefix.
+The set $\roles \apref \subseteq \roleset$ of roles in $\apref$ is
+defined in the obvious way; note that $\roles \apref$ is a singleton
+if, and only if, $\apref$ is an autonomous prefix.
 %
-Likewise, $\roles \aK \subseteq \participants \cup \multiroles$ is the
-set of roles in $\aK$.
+Likewise, $\roles \aK$ is the set of roles in
+$\aK$.
 
 We extend the notions of defined and free names to global types as follows:
 
