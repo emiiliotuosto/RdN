@@ -1,6 +1,10 @@
 % !TEX root =  main.tex
 %%% Macros for Klaimographies ;-)
 
+\def\finex{{\unskip\nobreak\hfil
+\penalty50\hskip1em\null\nobreak\hfil$\diamond$
+\parfillskip=0pt\finalhyphendemerits=0\endgraf}}
+    
 \newcommandx{\asort}[1][1 = s, usedefault=@]{\mathbf{#1}}
 \newcommand{\wildcard}{\star}
 \newcommandx{\atuple}[1][1 = t]{\texttt{#1}}
@@ -18,10 +22,10 @@
 \DeclareMathOperator{\toop}{\mkop{\to}}
 \newcommand{\rec}{\mkop{rec}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
-\newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\aloc, usedefault=@]{
+\newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\alocvar, usedefault=@]{
   \ifempty{#1}{{#2} \at {#3}}{{#2} \at {#3}}
 }
-\newcommandx{\atupleat}[3][1={}, 2=\atuple, 3=\aloc, usedefault=@]{
+\newcommandx{\atupleat}[3][1={}, 2=\atuple, 3=\alocvar, usedefault=@]{
   \ifempty{#1}{{(#2)} \at {#3}}{{(#2)} \at {#3}}
 }
 \newcommand{\clashes}{\sharp}
@@ -44,7 +48,7 @@
 \newcommandx{\aint}[3][1=\arole, 2=\arole', 3=\aK, usedefault=@]{
   {#1} \toop {#2} \, \mkop{:} \, {#3}
 }
-\newcommandx{\apref}[5][1={},2={},3=\atuple,4=\aloc,5={},usedefault=@]{
+\newcommandx{\apref}[5][1={},2={},3=\atuple,4=\alocvar,5={},usedefault=@]{
   \ifempty{#1}{
     \ifempty{#2}{\pi}{
       \ifempty{#5}{\ain[{#2}][{#3}][{#4}]}{\ard[{#2}][{#3}][{#4}]}
@@ -57,20 +61,20 @@
     }
   }
 }
-\newcommandx{\alabel}[6][1=i,2={},3={},4=\atuple,5=\aloc,6={},usedefault=@]{\ifempty{#1}{}{^{[#1]}}\apref[#2][#3][#4][#5][#6]}
-\newcommandx{\asum}[4][1=i,2=I,3=\apref,4=\aK,usedefault=@]{
-  \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{#3_{#1} \ifempty{#4}{}{. #4_{#1}}}
+\newcommandx{\alabel}[6][1=i,2={},3={},4=\atuple,5=\alocvar,6={},usedefault=@]{\ifempty{#1}{}{^{[#1]}}\apref[#2][#3][#4][#5][#6]}
+\newcommandx{\asum}[5][1=i,2=I,3=\arole,4=\arole,5=\aK,usedefault=@]{
+  \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{\apref[{#3}][{#4_{#1}}][\atuple_{#1}][\alocvar_{#1}] \ifempty{#5}{}{. #5_{#1}}}
 }
-\newcommandx{\arout}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
+\newcommandx{\arout}[3][1=\arole,2=\atuple,3=\alocvar,usedefault=@]{
   \ifempty{#1}{#2 \outop #3}{{#1} \outop {#2} \at {#3}}
 }
-\newcommandx{\aout}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
+\newcommandx{\aout}[3][1=\arole,2=\atuple,3=\alocvar,usedefault=@]{
   \ifempty{#1}{(#2) \outop #3}{{#1} \outop {#2} \at {#3}}
 }
-\newcommandx{\ain}[3][1=\arole,2=\atuple,3=\aloc,usedefault=@]{
+\newcommandx{\ain}[3][1=\arole,2=\atuple,3=\alocvar,usedefault=@]{
   \ifempty{#1}{(#2) \inop #3}{{#1} \inop {(#2)} \at {#3}}
 }
-\newcommandx{\ard}[3][1=\arole,2=\atuple,3=\aloc,,usedefault=@]{
+\newcommandx{\ard}[3][1=\arole,2=\atuple,3=\alocvar,,usedefault=@]{
   \ifempty{#1}{#2 \inop #3}{{#1} \inop {#2} \at {#3}}
 }
 \newcommandx{\arec}[2][1=X,2=\aK,usedefault=@]{
