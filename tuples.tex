@@ -1,0 +1,198 @@
+% !TEX root =  main.tex
+%
+We consider $\asort$ range over basic sorts which include
+$\asort[int]$, $\asort[bool]$, $\asort[str]$ and sort $\asort[loc]$ of
+\emph{localities}.
+%
+The set $\tupleset$ of \emph{(tuple) types} consists of the terms
+derived from the following grammar:
+\begin{eqnarray*}
+  \atuple & \bnfdef & \asort \bnfmid
+                      x : \asort \bnfmid
+                      \nu x : \asort  \bnfmid
+%                      \nu \aloc \bnfmid
+%                      \aloc \bnfmid
+                      \atuple \cdot \atuple \bnfmid
+                      \wildcard
+\end{eqnarray*}
+Fields $\nu x : \asort$ are binders that \emph{define}
+$x \in \varset$.
+%
+Hence, we talk about \emph{free} and \emph{defined} (sorted) names occurring in
+tuples.
+%
+We assume that in a tuple there is at most one occurrence of $\nu x$,
+for each $x \in \varset$.
+%
+Formally, the functions $\fn{\_}$ and $\dn{\_}$ returns sets of pairs
+$x \mapsto \asort$ assigning sort $\asort$ to $x \in \varset$.
+\[
+\begin{array}{l@{\hspace{1cm}}l}
+\begin{array}{lcl}
+  \dn\asort & = & \emptyset
+  \\
+  \dn{x : \asort} & = & \emptyset
+  \\
+  \dn{\nu x : \asort} & = & \{x \mapsto \asort \}
+  \\
+  \dn{\atuple_1 \cdot \atuple_2} & = & \dn{\atuple_1} \cup \dn{\atuple_2}
+  \\
+  \dn{\wildcard} & = & \emptyset
+\end{array}
+&
+\begin{array}{lcl}
+  \fn\asort & = & \emptyset
+  \\
+  \fn{x : \asort} & = &  \{x \mapsto \asort\}
+  \\
+  \fn{\nu x : \asort} & = & \emptyset
+  \\
+  \fn{\atuple_1 \cdot \atuple_2} & = & \fn{\atuple_1} \cup \fn{\atuple_2}
+  \\
+  \fn{\wildcard} & = & \emptyset
+\end{array}
+\end{array}
+\]
+We write $\supp{\_}$ to denote the projection of a set of pairs over its first component. 
+
+We say a tuple $\atuple$ is {\em well-sorted} if the following two
+conditions hold:
+\begin{itemize}
+\item
+  $\supp{\fn\atuple} \cap \supp{\dn{\atuple}} = \emptyset$, i.e., free and
+  defined names are disjoint; and
+\item
+  $\atuple = \atuple_1 \cdot \atuple_2$ implies $\atuple_1$ and
+  $\atuple_2$ well-sorted and $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =
+  \emptyset$, i.e., defined names are all different.	 
+\end{itemize}
+%
+Hereafter, we assume all tuples to be well-sorted.
+%
+Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions for
+well-sorted tuples.
+
+A capture-avoiding substitution of the free occurrences of a variable
+$x$ in a (well-sorted) tuple $\atuple$ by a variable $y$, written
+$\atuple \sust x y$, is defined as follows
+%
+\[
+\begin{array}{r@{}l@{\ = \ } ll}
+%\asort
+%&
+%\sust x y  
+%&  
+%\asort
+%\\
+%(x : \asort)
+%& 
+%\sust x y  
+%& x : \asort
+%\\
+%z
+%&
+%\sust x y 
+%&  
+%z 
+%& 
+%{\it if} z\neq x
+%\\
+(x  : \asort)
+&
+\sust x y  
+&  
+y : \asort
+\\
+(\atuple_1 \cdot \atuple_2)
+&
+\sust x y  
+& 
+(\atuple_1\sust x y) \cdot (\atuple_2\sust x y) 
+%& 
+%{\it if} y\not\in\dn{\atuple_1 \cdot \atuple_2}
+%\\
+%\wildcard
+%&
+%\sust x y  
+%&  
+%\wildcard
+\end{array}
+\]
+%
+and it is the identity on the remaining cases. Let
+$\sigma = \{y_1/x_1,\ldots,y_n/x_n\}$ such that $x_i\neq x_j$ for all
+$i\neq j$ (i.e., a partial endo-function on $\varset$), we write
+$\atuple\sigma$ for the simultaneous substitution of each $x_i$ by
+$y_i$.
+%
+We use $\Sigma$ for the set of all substitutions. We write
+$\sigma_1\sigma_2$ for the composition of partial functions with
+disjoint domain, and $\sigma_1[\sigma_2]$ for the update of $\sigma_1$
+with $\sigma_2$.
+
+
+Tuple types \emph{match} by producing a substitution; formally given
+by the partial function ${\matches} : \tupleset \times \tupleset
+\rightarrow \Sigma$ defined such as
+%\eMnote{add typing env}
+\[
+  \atuple \matches \atuple' \generates
+    \begin{cases}
+     \emptyset
+    & 
+    \text{if  } \atuple = \wildcard \vee \atuple' = \wildcard  \vee (\atuple = \atuple' \land \atuple\in\{\asort, x : \asort\})
+    \\
+    \sigma_1\sigma_2
+    &
+    \text{if } \atuple = \atuple_1 \cdot \atuple_2
+    \land  \atuple' = \atuple'_1 \cdot \atuple'_2
+    \land \atuple_1 \matches \atuple'_1 \generates \sigma_1
+    \land \atuple_2 \matches \atuple'_2 \generates \sigma_1
+    \\
+    \sust x y 
+    &
+    \text{if  } (\atuple = \nu x : \asort \land \atuple' = y: \asort) \vee  (\atuple' = \nu y : \asort \land \atuple = x: \asort) 
+    \\
+    \textit{undef} & \textit{otherwise}
+   \end{cases}
+\]
+\todo{double-check}
+
+%
+%
+%\[
+%  \atuple \matches \atuple' \iff
+%  \begin{cases}
+%    \atuple = \atuple'  
+%    & 
+%    \text{if $\atuple\in\{\asort, x : \asort, x, \nu \aloc, \aloc\}$}
+%    \\
+%    \atuple_1 \matches \atuple'_1
+%    \land \atuple_2 \matches \atuple'_2
+%    &
+%    \text{if } \atuple = \atuple_1 \cdot \atuple_2
+%    \text{ and }  \atuple' = \atuple'_1 \cdot \atuple'_2
+%    \\
+%    \atuple = \wildcard \vee \atuple' = \wildcard & \text{otherwise}
+%  \end{cases}
+%\]
+
+
+%
+We say that $\atuple$ \emph{generates} when in one of its fields there
+is a $\nu \aloc$ type. \todo{check}
+%
+
+%We define
+%\[
+%  \atuple \clashes \atuple' \iff \exists \atuple'' \qst \atuple'' \matches \atuple \land \atuple'' \matches \atuple'
+%\]
+%
+%and say that $\atuple$ and $\atuple'$ \emph{are in conflict} when
+%$\atuple \clashes \atuple'$.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
