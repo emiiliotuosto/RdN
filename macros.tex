@@ -5,7 +5,7 @@
 \penalty50\hskip1em\null\nobreak\hfil$\diamond$
 \parfillskip=0pt\finalhyphendemerits=0\endgraf}}
     
-\newcommandx{\asort}[1][1 = s, usedefault=@]{\mathbf{#1}}
+\newcommand{\asort}[1][s]{\mathtt{#1}}
 \newcommand{\wildcard}{\star}
 \newcommandx{\atuple}[1][1 = t]{\texttt{#1}}
 \newcommandx{\aloc}[1][1=l]{\texttt{\color{blue}#1}}
@@ -20,6 +20,7 @@
 \DeclareMathOperator{\chop}{\mkop{+}}
 \DeclareMathOperator{\inop}{\mkop{?}}
 \DeclareMathOperator{\toop}{\mkop{\to}}
+\DeclareMathOperator{\seqop}{\mkop{;}}
 \newcommand{\rec}{\mkop{rec}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
 \newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\alocvar, usedefault=@]{
@@ -61,9 +62,16 @@
     }
   }
 }
-\newcommandx{\alabel}[6][1=i,2={},3={},4=\atuple,5=\alocvar,6={},usedefault=@]{\ifempty{#1}{}{^{[#1]}}\apref[#2][#3][#4][#5][#6]}
+\newcommandx{\alabel}[6][1=i,2={},3={},4=\atuple,5=\alocvar,6={},usedefault=@]{
+  \ifempty{#1}{}{^{[#1]}}\apref[#2][#3][#4][#5][#6]
+}
 \newcommandx{\asum}[5][1=i,2=I,3=\arole,4=\arole,5=\aK,usedefault=@]{
-  \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{\apref[{#3}][{#4_{#1}}][\atuple_{#1}][\alocvar_{#1}] \ifempty{#5}{}{. #5_{#1}}}
+  \displaystyle{\sum_{#1 \ifempty{#2}{}{\in #2}}}{
+    \ifempty{#4}{\apref_{#1}}{
+      \apref[#3][{#4_{#1}}][\atuple_{#1}][\alocvar_{#1}]
+    }
+    \ifempty{#5}{}{. #5_{#1}}
+  }
 }
 \newcommandx{\arout}[3][1=\arole,2=\atuple,3=\alocvar,usedefault=@]{
   \ifempty{#1}{#2 \outop #3}{{#1} \outop {#2} \at {#3}}
