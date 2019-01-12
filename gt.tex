@@ -424,7 +424,7 @@ We consider well-sequencedness first.
 
 Consider the following choreography
 \begin{align}\label{eq:seq}
-  \apref[\ptp a][\ptp b][{\asort[str] \cdot \wildcard}] \seqop \apref[\ptp b][\ptp c][{\asort[str] \cdot \asort[int]}]
+  \apref[\ptp a][\ptp b][{\asort[str] \cdot \wildcard}][\aloc] \seqop \apref[\ptp b][\ptp c][{\asort[str] \cdot \asort[int]}][\aloc]
 \end{align}
 %
 where intuitively requires an instance of $\ptp b$ to transform a pair
@@ -440,9 +440,16 @@ The problem is due to the fact that ($i$) the input of $\ptp c$
 causally depends on the output of $\ptp a$, that ($ii$) the input
 could match the tuple sent by $\ptp a$, and that ($iii$) $\ptp c$
 can consume the tuple sent by $\ptp a$ because it is on the same
-locality $\alocvar$.
+locality $\aloc$.
 %
-More generally, given $\aK_1 \seqop \aK_2$ and, for $i \in \{1,2\}$,
+More generally, we say that $(\atuple, \aloc)$ is \emph{local} to
+$\aK$ if $\atuple$ is in an output at $\aloc$ in $\aK$ and there is a
+tuple $\atuple'$ in an input from $\aloc$ in $\aK$ and
+$\atuple \matches \atuple'$.
+%
+The choreography $\aK_1 \seqop \aK_2$ is well-sequenced if 
+
+given $\aK_1 \seqop \aK_2$ and, for $i \in \{1,2\}$,
 tuple types $\atuple_i$ such that $\atuple_i$ occurs in a prefix of
 $\aK_i$ both at a locality $\aloc$,
 \eMnote{Problema: $\aloc$ vs $\alocvar$}
