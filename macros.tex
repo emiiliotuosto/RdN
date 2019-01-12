@@ -21,7 +21,7 @@
 \DeclareMathOperator{\inop}{\mkop{?}}
 \DeclareMathOperator{\toop}{\mkop{\to}}
 \DeclareMathOperator{\seqop}{\mkop{;}}
-\newcommand{\rec}{\mkop{rec}\xspace}
+\newcommand{\rec}{\mkop{\mathtt{rec}}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
 \newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\alocvar, usedefault=@]{
   \ifempty{#1}{{#2} \at {#3}}{{#2} \at {#3}}
@@ -70,7 +70,7 @@
     \ifempty{#4}{\apref_{#1}}{
       \apref[#3][{#4_{#1}}][\atuple_{#1}][\alocvar_{#1}]
     }
-    \ifempty{#5}{}{. #5_{#1}}
+    \ifempty{#5}{}{\mkop{.} #5_{#1}}
   }
 }
 \newcommandx{\arout}[3][1=\arole,2=\atuple,3=\alocvar,usedefault=@]{

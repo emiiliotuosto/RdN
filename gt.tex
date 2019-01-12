@@ -36,10 +36,10 @@ $\alocvar$ to range over $\locset\cup\varset$.
 Global types $\aK$ have the following syntax
 %\eMnote{non e' chiaro se vogliamo $\aK \parop \aK $}
 \begin{eqnarray*}
-  \aK & \bnfdef & \asum
+  \aK & \bnfdef & \asum[@][@][][]
                   \bnfmid
                   % \aK \parop \aK \bnfmid
-                  \aK; \aK \bnfmid
+                  \aK \seqop \aK \bnfmid
                   X \bnfmid
                   \arec
   \\[1.5em]
@@ -51,16 +51,19 @@ Global types $\aK$ have the following syntax
         & \bnfmid & \apref[\arole][\arole'][@][\alocvar] \bnfmid
                     \apref[\arole][\arole'][@][\alocvar][.]
 \end{eqnarray*}
-where $I$ is a finite set of indexes.
+where $I$ is a finite set of indexes; we write $\nil$ for
+$\asum[@][@][][]$ when $I = \emptyset$ and $\apref_j.\aK_j$ instead of
+$\asum[@][@][][]$ when $I = \{j\}$.
+%
+Also, when $I$ has more than two elements, we omit trailing
+occurrences of $\nil$.
+%
+We syntactically restrict choices to be of the form
+\[\asum\]
+ namely there is a \emph{unique}
+selector.
 % and $\aloc \in \locset$ is a locality.
 %
-We write $\nil$ for $\asum$ when $I = \emptyset$ and
-$\apref_j.\aK_j$ instead of $\asum$ when $I = \{j\}$.
-%
-We omit trailing occurrences of $\nil$.
-%
-Note that we syntactically restrict choices to have a \emph{unique}
-selector.
 %
 This is just for simplicity as we could adopt definitions similar to
 the ones in \cite{gt16,gt17} at the cost of higher technical
@@ -128,27 +131,25 @@ omitted prefixes are defined analogously.
   \end{array}
 \]
 %
-We write  $\names \_$ for the set of sorted names of a term, i.e., 
- $\names \apref = \fn\apref \cup \dn\apref$ and similarly
-  $\names \aK = \fn\aK \cup \dn\aK$. A set $S$ of sorted names 
-  is consistent, written $\consistent S$, if 
-  $x\mapsto \asort \in S$ and $x\mapsto \asort' \in S$ 
-  implies  $\asort = \asort'$.
+We write $\names \_$ for the set of sorted names of a term, i.e.,
+$\names \apref = \fn\apref \cup \dn\apref$ and similarly
+$\names \aK = \fn\aK \cup \dn\aK$. A set $S$ of sorted names is
+consistent, written $\consistent S$, if $x\mapsto \asort \in S$ and
+$x\mapsto \asort' \in S$ implies $\asort = \asort'$.
  
-The set of well-sorted terms 
-are defined inductively as follows:
+The set of well-sorted terms are defined inductively as follows:
 
 \begin{itemize}
 \item $\apref$ is well-sorted if $\fn\apref\cap\dn\apref = \emptyset$ and  
 $\consistent{\names\apref}$, i.e., there are no clashes/inconsistencies in the sorts of 
-the names in $\atuple$ and the locality $\alocvar$.
-\item $\asum$ is well-sorted if for all ${i\in I}$ both
-  $\apref[\arole][{\arole_i}][\atuple_i][\alocvar_i]$ and ${\aK_i}$
-  are well-sorted and $\consistent{\names {\apref_i.\aK_i}}$.
+the names in $\atuple$ and the locality $\alocvar$
+\item $\asum[@][@][][]$ is well-sorted if for all ${i\in I}$ both
+  $\apref$ and ${\aK_i}$ are well-sorted and
+  $\consistent{\names {\apref_i.\aK_i}}$
 \item $\aK_1;\aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
-  well-sorted and $\consistent{\names{\aK_1;\aK_2}}$.
-\item $X$ is well-sorted.
-\item $\arec$ is well-sorted if $\aK$ is well-sorted.
+  well-sorted and $\consistent{\names{\aK_1;\aK_2}}$
+\item $X$ is well-sorted and $\arec$ is well-sorted if $\aK$ is
+  well-sorted.
 \end{itemize}
 
 
@@ -260,26 +261,26 @@ A creates a private session for B and C.
 \]
 }
 
-
+\eMnote{definire $\arec[@][@][i]$ and fare un forward ref a ws}
 \begin{example}[Auction]
 \[
   \begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.].
+  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.] \mkop{.}
   \\  	
-  \arec[X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].X}][1];
+  \arec[X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].X}][1] \seqop
   \\  	
   \arec[Y][{\left({
       	\begin{array}{l}
-	\arec[Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.].Z}][1];
+	\arec[Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.].Z}][1] \seqop
 	\\
-	      \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].
+	      \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
 	\\
 	\arec[W][\left({
     	\begin{array}{l}
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}].
+	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \mkop{.}
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}].
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \mkop{.}
 	\\
 	\qquad 
 	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]
@@ -288,27 +289,28 @@ A creates a private session for B and C.
 	Y	
 	\\
 	\qquad
-	+
+	\chop
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}].
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\mkop{.}
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]. 
+	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\mkop{.}
 	\\
 	\qquad
 	Y	
 	\\
 	\qquad
-	+
+	\chop
 	\\
 	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}].W
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \mkop{.} W
 	\\
-	+
+	\chop
 	\\
-	\apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}].\\
-	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].
+        \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \mkop{.}
+        \\
+	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
 	\\
 	Y
 	\end{array}
@@ -476,131 +478,6 @@ A creates a private session for B and C.
 % \end{itemize}
 %
 
-The \emph{well-formedness} of our global views presents some
-peculiarities respect to standard notions.
-%
-In particular, \emph{well-sequencedness} and \emph{well-branchedness}
-of our global types need some care.
-%
-We consider well-sequencedness first.
-
-Consider the following choreography
-\begin{align}\label{eq:seq}
-  \apref[\ptp a][\ptp b][{\asort[str] \cdot \wildcard}][\aloc] \seqop \apref[\ptp b][\ptp c][{\asort[str] \cdot \asort[int]}][\aloc]
-\end{align}
-%
-where intuitively requires an instance of $\ptp b$ to transform a pair
-generated by $\ptp a$ into a pair for $\ptp c$.
-%
-The choreography specified in \eqref{eq:seq} may be violated when
-$\ptp a$ generates a tuple of type $\asort[str] \cdot \asort[int]$.
-%
-In fact, such a tuple could match the type consumed by $\ptp c$ and
-therefore $\ptp c$ could \quo{steal} the tuple from $\ptp b$.
-%
-The problem is due to the fact that ($i$) the input of $\ptp c$
-causally depends on the output of $\ptp a$, that ($ii$) the input
-could match the tuple sent by $\ptp a$, and that ($iii$) $\ptp c$
-can consume the tuple sent by $\ptp a$ because it is on the same
-locality $\aloc$.
-%
-More generally, we say that $(\atuple, \aloc)$ is \emph{local} to
-$\aK$ if $\atuple$ is in an output at $\aloc$ in $\aK$ and there is a
-tuple $\atuple'$ in an input from $\aloc$ in $\aK$ and
-$\atuple \matches \atuple'$.
-%
-The choreography $\aK_1 \seqop \aK_2$ is well-sequenced if 
-
-given $\aK_1 \seqop \aK_2$ and, for $i \in \{1,2\}$,
-tuple types $\atuple_i$ such that $\atuple_i$ occurs in a prefix of
-$\aK_i$ both at a locality $\aloc$,
-\eMnote{Problema: $\aloc$ vs $\alocvar$}
-
-\hsl
-
-To avoid this problem we introduce \emph{run-time} tuples
-
-Well-branchedness requires two conditions: single selector and knowledge of 
-choices.
-%
-This can be formalised by requiring that one process in the choice is
-\emph{active}, namely it selects the branch to take, while the others
-are \emph{passive}, namely they are informed of the chosed branch by
-inputting some information that unambiguously identifies each branch
-of the choice.
-%
-As anticipated in \cref{sec:klaimographies}, we syntactically enforce
-the first condition; in choice
-\begin{align}
-  \asum\label{eq:ch}
-\end{align}
-an instance of $\arole$ is the active process selecting the branch to take.
-
-
-The notion of well-branchedness is slightly complicated by the
-presence of multiroles.
-%
-Intuitively, a passive instance (for example one enacting role
-$\arole_i$) in \eqref{eq:ch} has to be able to ascertain which branch
-the selector decided when the choice was taken.
-%
-For instance, even assuming unique selectors, many instances of a
-selector role could exercise choices concurrently.
-%
-This may create confusion if different branches generate matching
-tuples on the a locality.
-%
-Therefore we need a mechanisms so that different \quo{groups} of
-instances involved in concurrent resolutions of a choice do not
-\quo{interfere} with each other.
-
-\eMnote{add here dummy fields}
-
-
-A simple way to ensure this is to require that the first input actions
-of passive roles in the branches are \quo{disjoint} (\ie\ non matching
-tuples or different locations).
-%
-This is just for simplicity as we could adopt more general definitions
-similar to the one based on divergence points in \cite{gt16,gt17}.
-
-\hsl
-  %
-  % The notion of well formedness seems to guarantee a much weaker
-  % notion of correctness than the usual ones.
-  % %
-  % Firstly, note that well-formedness here does not imply deadlock
-  % freedom (but this is fine since we are not interested in properties
-  % of the control of processes).
-  % %
-  %
-  % A example could be the following:
-  \[
-    K_\mathrm{bad} = \apref[A][B][int].K_1 \chop \apref[A][B][str].K_2
-  \]
-  \[
-    K_1 = \apref[B][C][str].\apref[C][B][bool]
-  \]
-  \[
-    K_2 = \apref[B][C][bool]
-  \]
-  This type of confusion does not seem to introduce deadlocks, but may
-  alter the intended data flow (in the example above the instance of
-  $C$ executing $K_2$ branch may receive the boolean that the instance
-  of $C$ in $K_1$ generates for $B$).
-  %
-  We can tackle this issue in two different way (at least): one way is
-  to statically ensure that tuples generated on one branch do not
-  match any other on another branch; another way is to modify the
-  semantics of the choice by implicitly inserting an extra field in
-  each tuple with a unique identifier of each branch.
-  %
-  \newline
-  %
-  Under the current interpretation of our semantics, probably the
-  notion of correctness we can guarantee is that any set of instances
-  taking a choice will fully execute a branch.
-  %
   
 %%% Local Variables:
 %%% mode: latex
