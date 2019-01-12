@@ -194,6 +194,9 @@
 \newcommand{\consistent}[1]{#1\downarrow}
 
 \newcommand{\eraseB}[1]{\downarrow\!{#1}}
+\newcommandx{\ws}[2][1={\aG},2={\aG'},usedefault=@]{ws({#1}, {#2})}
+\newcommandx{\wb}[1][1={},usedefault=@]{wb(\ifempty{#1}{\_}{#1})}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
