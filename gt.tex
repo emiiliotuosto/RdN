@@ -1,3 +1,5 @@
+% !TEX root =  main.tex
+%
 
 We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$
 and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
@@ -260,143 +262,203 @@ A creates a private session for B and C.
 
 
 \begin{example}[Auction]
-
 \[
   \begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
+  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.].
   \\  	
-  \apref[\amulti {Seller}][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu \aloc}}][{\aloc[c]}][.].
-  \\
-  \arec[@][\left({
+  \arec[X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].X}][1];
+  \\  	
+  \arec[Y][{\left({
+      	\begin{array}{l}
+	\arec[Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.].Z}][1];
+	\\
+	      \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].
+	\\
+	\arec[W][\left({
     	\begin{array}{l}
-	\apref[][\amulti {Buyer}][{i:{\asort[str]} \cdot p:{\asort[int]} \cdot \aloc[o]}][{\aloc[c]}][].
-	\\
-	\apref[\amulti {Buyer}][\amulti {Buyer}][{i \cdot {\asort[booked]}}][{\aloc[c]}][.].
-	\\
-	\arec[Y][\left({
-    	\begin{array}{l}
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i \cdot {\asort[offer]} \cdot {\asort[int]}}][{\aloc[o]}][.].
-	\\
-	\apref[][\amulti {Seller}][{i \cdot \asort[offer]} \cdot  {\asort[int]}][{\aloc[o]}][].
+	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}].
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot \asort[sold]}][{\aloc[c]}][.].
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}].
 	\\
-	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
-	X
+	\qquad 
+	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]
+	\\
+	\qquad
+	Y	
+	\\
+	\qquad
+	+
+	\\
+	\qquad 
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}].
+	\\
+	\qquad 
+	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]. 
+	\\
+	\qquad
+	Y	
 	\\
 	\qquad
 	+
 	\\
 	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot {\asort[request]}  \cdot \asort[int]}][{\aloc[o]}][.]. 
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}].W
 	\\
-	\qquad
-	\apref[][\amulti {Buyer}][i \cdot {\asort[request]} \cdot {\asort[int]}][{\aloc[o]}][].
+	+
 	\\
-	\qquad\qquad	
+	\apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}].\\
+	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].
+	\\
 	Y
-	\\
-	\qquad\qquad	
-	+
-	\\ 
-	\qquad\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
-	\\
-	\qquad\qquad
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i\cdot {\asort[quit]}}][{\aloc[o]}][.]. 
-	\\
-	\qquad\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].X
-	\\
-	\qquad
-	+
-	\\
-	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[refused]}}][{\aloc[o]}][.]. 
-	\\
-	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].
-	\\
-	\qquad
-	\apref[][\amulti {Buyer}][{i \cdot \asort[refused]}][{\aloc[o]}][].
-	\\
-	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
-	X
 	\end{array}
-	}\right)]
-	\\
-	+
-	\\
-	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[booked]}}][{\aloc[c]}][.]. 
-	X
-	\\
-	+
-	\\
-	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[sold]}}][{\aloc[c]}][.]. 
-	X
-	\\
-	+
-	\\
-	\nil
-  	\end{array}
-  }\right)]
-  \\
+	}\right)][1]
+     	\end{array}
+  }\right)}][1]
   \end{array}
 \]
 \finex
 \end{example}
 
-\eMnote{un'alternativa}
-\begin{example}[Auction]
-\[
-  \begin{array}{l}
-    \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
-    \\  	
-    \arec[X][\left({
-    \begin{array}{l}
-      \apref[\amulti{Seller}][\amulti {Buyer}][s:{\asort[seller]} \cdot {i:{\asort[str]} \cdot p:{\asort[int]}}][{\aloc[m]}].
-      \\\qquad
-      X
-      \\
-      \chop
-      \\
-      \apref[\amulti {Buyer}][\amulti {Seller}][s \cdot i \cdot {\asort[offer]} \cdot \nu \aloc][{\aloc[m]}][.].
-      \\\qquad
-      \arec[Y][\left({
-      \begin{array}{l}
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][\aloc].
-	\\\qquad
-	\apref[\amulti {Seller}][][s \cdot i \cdot p][{\aloc[m]}].
-        \\
-        \qquad
-        X
-        \\
-        \chop
-	\\
-        \apref[\amulti{Seller}][\amulti {Buyer}][{\asort[sold]}][\aloc].
-        \\\qquad
-        \apref[\amulti{Seller}][\ptp{broker}][s \cdot i \cdot \aloc \cdot {\asort[fee]}][{\aloc[s]}].        
-        \\
-        \qquad
-        X
-	\\
-        \chop
-	\\
-        \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][\aloc].
-        \\
-        \qquad\apref[\amulti {Buyer}][\amulti {Seller}][{\asort[offer]}][{\aloc}][].
-	\\
-        \qquad	
-	Y
-      \end{array}
-      } \right)]
-    \end{array}
-    }\right)]
-    \\
-  \end{array}
-\]
-\finex
-\end{example}
+
+%\begin{example}[Auction]
+%
+%\[
+%  \begin{array}{l}
+%  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
+%  \\  	
+%  \apref[\amulti {Seller}][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu \aloc}}][{\aloc[c]}][.].
+%  \\
+%  \arec[@][\left({
+%    	\begin{array}{l}
+%	\apref[][\amulti {Buyer}][{i:{\asort[str]} \cdot p:{\asort[int]} \cdot \aloc[o]}][{\aloc[c]}][].
+%	\\
+%	\apref[\amulti {Buyer}][\amulti {Buyer}][{i \cdot {\asort[booked]}}][{\aloc[c]}][.].
+%	\\
+%	\arec[Y][\left({
+%    	\begin{array}{l}
+%	\apref[\amulti {Buyer}][\amulti {Seller}][{i \cdot {\asort[offer]} \cdot {\asort[int]}}][{\aloc[o]}][.].
+%	\\
+%	\apref[][\amulti {Seller}][{i \cdot \asort[offer]} \cdot  {\asort[int]}][{\aloc[o]}][].
+%	\\
+%	\qquad 
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot \asort[sold]}][{\aloc[c]}][.].
+%	\\
+%	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+%	X
+%	\\
+%	\qquad
+%	+
+%	\\
+%	\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot {\asort[request]}  \cdot \asort[int]}][{\aloc[o]}][.]. 
+%	\\
+%	\qquad
+%	\apref[][\amulti {Buyer}][i \cdot {\asort[request]} \cdot {\asort[int]}][{\aloc[o]}][].
+%	\\
+%	\qquad\qquad	
+%	Y
+%	\\
+%	\qquad\qquad	
+%	+
+%	\\ 
+%	\qquad\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+%	\\
+%	\qquad\qquad
+%	\apref[\amulti {Buyer}][\amulti {Seller}][{i\cdot {\asort[quit]}}][{\aloc[o]}][.]. 
+%	\\
+%	\qquad\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].X
+%	\\
+%	\qquad
+%	+
+%	\\
+%	\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i\cdot {\asort[refused]}}][{\aloc[o]}][.]. 
+%	\\
+%	\qquad
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{i \cdot p \cdot {\nu \aloc}}][{\aloc[c]}][.].
+%	\\
+%	\qquad
+%	\apref[][\amulti {Buyer}][{i \cdot \asort[refused]}][{\aloc[o]}][].
+%	\\
+%	\qquad\apref[][\amulti {Buyer}][i \cdot {\asort[booked]}][{\aloc[c]}][].
+%	X
+%	\end{array}
+%	}\right)]
+%	\\
+%	+
+%	\\
+%	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[booked]}}][{\aloc[c]}][.]. 
+%	X
+%	\\
+%	+
+%	\\
+%	\apref[][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[sold]}}][{\aloc[c]}][.]. 
+%	X
+%	\\
+%	+
+%	\\
+%	\nil
+%  	\end{array}
+%  }\right)]
+%  \\
+%  \end{array}
+%\]
+%\finex
+%\end{example}
+%
+%\eMnote{un'alternativa}
+%\begin{example}[Auction]
+%\[
+%  \begin{array}{l}
+%    \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[s]}][.].
+%    \\  	
+%    \arec[X][\left({
+%    \begin{array}{l}
+%      \apref[\amulti{Seller}][\amulti {Buyer}][s:{\asort[seller]} \cdot {i:{\asort[str]} \cdot p:{\asort[int]}}][{\aloc[m]}].
+%      \\\qquad
+%      X
+%      \\
+%      \chop
+%      \\
+%      \apref[\amulti {Buyer}][\amulti {Seller}][s \cdot i \cdot {\asort[offer]} \cdot \nu \aloc][{\aloc[m]}][.].
+%      \\\qquad
+%      \arec[Y][\left({
+%      \begin{array}{l}
+%	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][\aloc].
+%	\\\qquad
+%	\apref[\amulti {Seller}][][s \cdot i \cdot p][{\aloc[m]}].
+%        \\
+%        \qquad
+%        X
+%        \\
+%        \chop
+%	\\
+%        \apref[\amulti{Seller}][\amulti {Buyer}][{\asort[sold]}][\aloc].
+%        \\\qquad
+%        \apref[\amulti{Seller}][\ptp{broker}][s \cdot i \cdot \aloc \cdot {\asort[fee]}][{\aloc[s]}].        
+%        \\
+%        \qquad
+%        X
+%	\\
+%        \chop
+%	\\
+%        \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][\aloc].
+%        \\
+%        \qquad\apref[\amulti {Buyer}][\amulti {Seller}][{\asort[offer]}][{\aloc}][].
+%	\\
+%        \qquad	
+%	Y
+%      \end{array}
+%      } \right)]
+%    \end{array}
+%    }\right)]
+%    \\
+%  \end{array}
+%\]
+%\finex
+%\end{example}
 
 % TBC: 
 
