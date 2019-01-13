@@ -317,6 +317,9 @@ Let $\arole,\arole' \in \multiroles$
       & \text{otherwise}
     \end{cases}
   \\
+%
+\eMnote{\text{fare rec}}
+%
   \ksem{\asum[@][@][][]} =
   &
     \begin{cases}
@@ -414,45 +417,57 @@ tuples on a locality as illustrated by next example.
   \finex
 \end{example}
 %
-Therefore we need a mechanisms so that different \quo{groups} of
-instances involved in concurrent resolutions of a choice do not
-\quo{interfere} with each other.
+Therefore we require that tuples types in different branches of a
+choice do not match when they are at the same locality and that if a
+branch of a choice involves a participant then none of the branches of
+the choice involves multiroles.
+%
+This condition, dubbed \emph{confusion-free branching} ensures that
+different \quo{groups} of instances involved in concurrent resolutions
+of a choice do not \quo{interfere} with each other and such groups can
+execute the choice many times only if none of the processes implements
+a participant.
+%
+We remark that the above condition is not a limitation; in fact, we
+can pre-process branches of choices by adding an extra field in all
+tuples of the branch so to unequivocally identify on which branch the
+tuple type is used.
 
-\eMnote{add here dummy fields}
+To sum up, we say that a choice as in~\eqref{eq:ch} is
+\emph{well-branched}, written
+$\wb[{\big\{\bigcup_{i \in I}\apref_i\mkop{.}\aK_i\big\}}]$, when it
+is confusion free, there is a unique active role, all other roles are
+passive.
 
 
+  %
+% The notion of well formedness seems to guarantee a much weaker
+% notion of correctness than the usual ones.
+% %
+% Firstly, note that well-formedness here does not imply deadlock
+% freedom (but this is fine since we are not interested in properties
+% of the control of processes).
+% %
+%
+% A example could be the following:
+%
+%
+\eMnote{We can tackle this issue in two different way (at least): one way is
+to statically ensure that tuples generated on one branch do not match
+any other tuple on another branch; another way is to modify the
+semantics of the choice by implicitly inserting an extra field in each
+tuple with a unique identifier of each branch.
+\\
+Under the current interpretation of our semantics, probably the notion
+of correctness we can guarantee is that any set of instances taking a
+choice will fully execute a branch.
+}
 
 \hsl
-  %
-  % The notion of well formedness seems to guarantee a much weaker
-  % notion of correctness than the usual ones.
-  % %
-  % Firstly, note that well-formedness here does not imply deadlock
-  % freedom (but this is fine since we are not interested in properties
-  % of the control of processes).
-  % %
-  %
-  % A example could be the following:
-  %
-  %
-  We can tackle this issue in two different way (at least): one way is
-  to statically ensure that tuples generated on one branch do not
-  match any other tuple on another branch; another way is to modify the
-  semantics of the choice by implicitly inserting an extra field in
-  each tuple with a unique identifier of each branch.
-  %
-  \newline
-  %
-  Under the current interpretation of our semantics, probably the
-  notion of correctness we can guarantee is that any set of instances
-  taking a choice will fully execute a branch.
-
   
 \eMnote{solo unfolding finiti?}
 The semantics of $\arec$ is the union of the semantics of all
 unfoldings of $\arec$.
-
-\hsl
 
 
 
