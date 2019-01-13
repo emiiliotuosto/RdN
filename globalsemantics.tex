@@ -124,7 +124,7 @@ $\leqof{\apom} \cup \bigcup_{\ae \in \max \apom}\leqof{\apom'_{\ae}}
 that the labels of events are autonomous prefixes for which
 $\roles{}$ is a singleton).
 %
-\eMnote{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}
+%\eMnote{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}
 %
 Finally, for $h \geq 1$ and a pomset $\apom$ we define
 \[
@@ -359,14 +359,18 @@ are \emph{passive}, namely they are informed of the chosed branch by
 inputting some information that unambiguously identifies each branch
 of the choice.
 %
-As anticipated in \cref{sec:klaimographies}, we syntactically enforce
-uniqueness of selectors; in a choice
+%
+We syntactically enforce uniqueness of selectors; a choice with
+several branches, takes the form
 \begin{align}
   \asum\label{eq:ch}
 \end{align}
-an instance of $\arole$ is the active process selecting the branch to take.
+namely the instance of $\arole$ act a \emph{unique} selectors.
 %
-%
+This is just for simplicity as we could adopt definitions similar to
+the ones in \cite{gt16,gt17} at the cost of higher technical
+complexity.
+
 Intuitively, a passive instance (for example one enacting role
 $\arole_i$) in \eqref{eq:ch} has to be able to ascertain which branch
 the selector decided when the choice was taken.
