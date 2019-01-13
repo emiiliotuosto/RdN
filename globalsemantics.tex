@@ -232,7 +232,7 @@ Let $h \geq 1$ and define
         \draw[->] (out) -- (in);
       }[]\right\}
       &
-      \text{if } \arole' \in \participants \cup \multiroles^\unknownop \text{ or $\atuple$ generates} 
+      \text{if } \arole' \in \participants \text{ or $\atuple$ generates} 
       \\
       \bigcup_{h \geq 1}
       \left\{
@@ -287,13 +287,13 @@ Let $\arole,\arole' \in \multiroles$
   &
     \begin{cases}
       \bp[1][\apref]
-      & \text{if $\apref$ autonomous } \land \roles{\apref} \subseteq \participants \cup \multiroles^\unknownop
+      & \text{if $\apref$ autonomous } \land \roles{\apref} \subseteq \participants
       \\
       \bigcup_{i \geq 1}\bp[@][\apref]
       % \bigcup_{h \geq 1}\big\{\pomsetrep{
       % \node {$\alabel[1]\cdots\alabel[h]$};
       % }[]\big\},
-      & \text{if $\apref$ autonomous } \land \roles{\apref} \not\subseteq \participants \cup \multiroles^\unknownop
+      & \text{if $\apref$ autonomous } \land \roles{\apref} \not\subseteq \participants
     \end{cases}
 %  \qquad \text{if $\apref$ autonomous}
   \\
@@ -301,7 +301,7 @@ Let $\arole,\arole' \in \multiroles$
   &
     \begin{cases}
       \bp[1][{\apref[\arole][\arole'][@][@][.]}]
-      & \text{if } \arole \in \participants \cup \multiroles^\unknownop
+      & \text{if } \arole \in \participants
       \\
       \bigcup_{i \geq 1}\bp[@][{\apref[\arole][\arole'][@][@][.]}]
       & \text{otherwise}
@@ -311,7 +311,7 @@ Let $\arole,\arole' \in \multiroles$
   &
     \begin{cases}
       \bp[1][{\apref[\arole][\arole']}]
-      & \text{if } \arole \in \participants \cup \multiroles^\unknownop
+      & \text{if } \arole \in \participants
       \\
       \bigcup_{i \geq 1}\big(\bp[@][{\apref[\arole][\arole']}]\big)
       & \text{otherwise}
