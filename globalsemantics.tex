@@ -137,18 +137,6 @@ Finally, for $h \geq 1$ and a pomset $\apom$ we define
 \]
 The operation $\_^h$ extends element-wise to sets of pomsets.
 
-The labels of the events are (decorations of) autonomous prefixes
-$\apref$: labels are either just autonomous prefixes $\apref$
-or of the form $\alabel$ with $\apref$ an autonomous prefix.
-%
-Intuitively, a label $\alabel[@][][\arole][@][@][.]$
-(resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
-$i^\mathit{th}$ instance of $\arole$ consumed (resp. produced) a tuple
-of type $\atuple$.
-%
-Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
-can be performed by any instance of the role in $\apref$.
-
 We define the semantics of \emph{well-formed} global views of
 choreographies.
 %
@@ -207,102 +195,26 @@ $i \neq j \in \{1,2\}$
   in a consuming output prefix in $\aK_j$
   
 \end{itemize}
-such that $\atuple_i$ occurs in a prefix of
-$\aK_i$ both at a locality $\aloc$,
-\eMnote{Problema: $\aloc$ vs $\alocvar$}
+such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a locality
+$\aloc$, \eMnote{Problema: $\aloc$ vs $\alocvar$}
 
-\hsl
-
-To avoid this problem we introduce \emph{run-time} tuples
-
-Well-branchedness requires two conditions: single selector and knowledge of 
-choices.
+The labels of the events are (decorations of) autonomous prefixes
+$\apref$: labels are either just autonomous prefixes $\apref$
+or of the form $\alabel$ with $\apref$ an autonomous prefix.
 %
-This can be formalised by requiring that one process in the choice is
-\emph{active}, namely it selects the branch to take, while the others
-are \emph{passive}, namely they are informed of the chosed branch by
-inputting some information that unambiguously identifies each branch
-of the choice.
+Intuitively, a label $\alabel[@][][\arole][@][@][.]$
+(resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
+$i^\mathit{th}$ instance of $\arole$ consumed (resp. produced) a tuple
+of type $\atuple$.
 %
-As anticipated in \cref{sec:klaimographies}, we syntactically enforce
-the first condition; in choice
-\begin{align}
-  \asum\label{eq:ch}
-\end{align}
-an instance of $\arole$ is the active process selecting the branch to take.
-
-
-The notion of well-branchedness is slightly complicated by the
-presence of multiroles.
-%
-Intuitively, a passive instance (for example one enacting role
-$\arole_i$) in \eqref{eq:ch} has to be able to ascertain which branch
-the selector decided when the choice was taken.
-%
-For instance, even assuming unique selectors, many instances of a
-selector role could exercise choices concurrently.
-%
-This may create confusion if different branches generate matching
-tuples on the a locality.
-%
-Therefore we need a mechanisms so that different \quo{groups} of
-instances involved in concurrent resolutions of a choice do not
-\quo{interfere} with each other.
-
-\eMnote{add here dummy fields}
-
-
-A simple way to ensure this is to require that the first input actions
-of passive roles in the branches are \quo{disjoint} (\ie\ non matching
-tuples or different locations).
-%
-This is just for simplicity as we could adopt more general definitions
-similar to the one based on divergence points in \cite{gt16,gt17}.
-
-\hsl
-  %
-  % The notion of well formedness seems to guarantee a much weaker
-  % notion of correctness than the usual ones.
-  % %
-  % Firstly, note that well-formedness here does not imply deadlock
-  % freedom (but this is fine since we are not interested in properties
-  % of the control of processes).
-  % %
-  %
-  % A example could be the following:
-  \[
-    K_\mathrm{bad} = \apref[A][B][int].K_1 \chop \apref[A][B][str].K_2
-  \]
-  \[
-    K_1 = \apref[B][C][str].\apref[C][B][bool]
-  \]
-  \[
-    K_2 = \apref[B][C][bool]
-  \]
-  This type of confusion does not seem to introduce deadlocks, but may
-  alter the intended data flow (in the example above the instance of
-  $C$ executing $K_2$ branch may receive the boolean that the instance
-  of $C$ in $K_1$ generates for $B$).
-  %
-  We can tackle this issue in two different way (at least): one way is
-  to statically ensure that tuples generated on one branch do not
-  match any other on another branch; another way is to modify the
-  semantics of the choice by implicitly inserting an extra field in
-  each tuple with a unique identifier of each branch.
-  %
-  \newline
-  %
-  Under the current interpretation of our semantics, probably the
-  notion of correctness we can guarantee is that any set of instances
-  taking a choice will fully execute a branch.
-
-  \hsl
-  
+Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
+can be performed by any instance of the role in $\apref$.
+% 
 The semantics of a global type builds upon \emph{basic pomsets} $\bp$
 of prefixes $\apref$; in fact, the semantics of a global type is build
 by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
-% 
+%
 Let $h \geq 1$ and define
 %
 \begin{align*}
@@ -433,6 +345,103 @@ performing actions in $\aK_2$ acts in $\aK_1$ as well and all the
 first actions of $\ptp a$ in $\aK_2$ causally depend on all last
 actions of $\ptp a$ in $\aK_1$ in the pomset
 $\rseq[\ksem{\aK_1}][{\ksem{\aK_2}}]$.
+
+% To avoid this problem we introduce \emph{run-time} tuples
+We now consider well-branchedness, the other condition of
+well-formedness.
+%
+Well-branchedness requires two conditions: single selector and knowledge of 
+choices.
+%
+This can be formalised by requiring that one process in the choice is
+\emph{active}, namely it selects the branch to take, while the others
+are \emph{passive}, namely they are informed of the chosed branch by
+inputting some information that unambiguously identifies each branch
+of the choice.
+%
+As anticipated in \cref{sec:klaimographies}, we syntactically enforce
+uniqueness of selectors; in a choice
+\begin{align}
+  \asum\label{eq:ch}
+\end{align}
+an instance of $\arole$ is the active process selecting the branch to take.
+%
+%
+Intuitively, a passive instance (for example one enacting role
+$\arole_i$) in \eqref{eq:ch} has to be able to ascertain which branch
+the selector decided when the choice was taken.
+%
+A simple way to ensure this is to require that the first input actions
+of their roles in the branches are \quo{disjoint} (\ie\ non matching
+tuples or different locations).
+%
+This is just for simplicity as we could adopt more general definitions
+similar to the one based on divergence points in \cite{gt16,gt17}.
+
+The conditions on active and passive processes alone are not enough:
+in our framework, the notion of well-branchedness is slightly
+complicated by the presence of multiroles.
+%
+For instance, even assuming unique selectors, many instances of a
+selector role could exercise choices concurrently.
+%
+This may create confusion if different branches generate matching
+tuples on a locality as illustrated by next example.
+\begin{example}\label{ex:nonwb}
+  Let
+  \begin{align*}
+    \aK_\mathrm{bad} = & \apref[\amulti A][\amulti B][{\asort[int]}][\aloc] \mkop{.} K_1 \chop \apref[\amulti A][\amulti B][{\asort[str]}][\aloc] \mkop{.} K_2
+    \\
+    \aK_1 = & \apref[\amulti B][\amulti C][{\asort[str]}][\aloc] \mkop{.} \apref[\amulti C][\amulti B][{\asort[bool]}][\aloc]
+    \\
+    \aK_2 = & \apref[\amulti B][\amulti C][{\asort[bool]}][\aloc]
+  \end{align*}
+  In $\aK_\mathrm{bad}$ confusion may arise that may alter the
+  intended data flow when two groups of instances of $\amulti A$,
+  $\amulti B$, and $\amulti C$ execute the choice so that each group
+  takes a different branch.
+  %
+  In fact, the instance of $\amulti C$ executing $K_2$ in the second
+  branch may receive the boolean that the instance of $\amulti C$ in
+  $K_1$ executing the first branch generates for $\amulti B$.
+  %
+  \emNote{This type of confusion does not seem to introduce deadlocks}
+  %
+  \finex
+\end{example}
+%
+Therefore we need a mechanisms so that different \quo{groups} of
+instances involved in concurrent resolutions of a choice do not
+\quo{interfere} with each other.
+
+\eMnote{add here dummy fields}
+
+
+
+\hsl
+  %
+  % The notion of well formedness seems to guarantee a much weaker
+  % notion of correctness than the usual ones.
+  % %
+  % Firstly, note that well-formedness here does not imply deadlock
+  % freedom (but this is fine since we are not interested in properties
+  % of the control of processes).
+  % %
+  %
+  % A example could be the following:
+  %
+  %
+  We can tackle this issue in two different way (at least): one way is
+  to statically ensure that tuples generated on one branch do not
+  match any other tuple on another branch; another way is to modify the
+  semantics of the choice by implicitly inserting an extra field in
+  each tuple with a unique identifier of each branch.
+  %
+  \newline
+  %
+  Under the current interpretation of our semantics, probably the
+  notion of correctness we can guarantee is that any set of instances
+  taking a choice will fully execute a branch.
 
   
 \eMnote{solo unfolding finiti?}
