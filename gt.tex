@@ -141,10 +141,12 @@ the names in $\atuple$ and the locality $\alocvar$
 \end{itemize}
 
 
-We consider terms up-to $\alpha$-renaming of defined names. As usual
-we say that a global type $\aK$ is {\em closed} when it does not
-contain free occurrences of names, i.e.,
-$\supp{\fn\aK} \cap \varset = \emptyset$.
+We consider terms up-to $\alpha$-renaming of defined names and
+recursion variables.
+%
+As usual we say that a global type $\aK$ is \emph{closed} when it does
+not contain free occurrences of recursion variables $X$ or free
+occurrences of names, i.e., $\supp{\fn\aK} \cap \varset = \emptyset$.
 
 
 \begin{example}\label{ex:cs}

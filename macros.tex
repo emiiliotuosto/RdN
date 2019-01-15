@@ -171,7 +171,7 @@
 \newcommand{\al}[1][l]{{\colorE{#1}}}
 \def\colorE{\color{orange}}
 \renewcommand{\ae}[1][e]{{\colorE{#1}}}
-\newcommandx{\rseq}[2][1=\aG,2={\aG'},usedefault=@]{\gfun{seq}({#1},{#2})}
+\newcommandx{\rseq}[2][1=\apom,2={\aapom'},usedefault=@]{\gfun{seq}({#1},{#2})}
 \def\colorFun{\color{black}}
 \newcommand{\gfun}[1]{\ensuremath{\mathsf{\colorFun #1}}}
 \newcommandx{\bp}[2][1={i},2=\apref,usedefault=@]{\gfun{bp}(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
@@ -194,8 +194,9 @@
 \newcommand{\consistent}[1]{#1\downarrow}
 
 \newcommand{\eraseB}[1]{\downarrow\!{#1}}
-\newcommandx{\ws}[2][1={\aG},2={\aG'},usedefault=@]{ws(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
+\newcommandx{\ws}[2][1={\aK},2={\aK'},usedefault=@]{ws(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
 \newcommandx{\wb}[1][1={},usedefault=@]{wb(\ifempty{#1}{\_}{#1})}
+\newcommand{\unfold}[2]{\text{unfold}_{#1}(\ifempty{#2}{\_}{#2})}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%

@@ -216,12 +216,9 @@ by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
 %
 Let $h \geq 1$ and define
-%
+$\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$ where, for
+$\arole,\arole' \in \roleset$,
 \begin{align*}
-  \bp =
-  &
-    \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}
-  \\
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
   &
     \begin{cases}
@@ -244,7 +241,11 @@ Let $h \geq 1$ and define
           \draw[->] (out) -- (rd1);
           \draw[->] (out) -- (rd2);
           \draw[dotted] (rd1) -- (rd2);
-        }[(\ae_j \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq j \leq h}][][node distance = 1cm and -.25cm]\right\}
+        }[{\big(\scriptsize
+        \begin{array}[c]{l}
+          \ae_j \mapsto \\ \apref[][\arole'][@][@][.]
+        \end{array}
+        \big)_{1 \leq j \leq h}}][][node distance = 1cm and -.25cm]\right\}
       \cup
       \left\{
         \pomsetrep{\node {$\alabel[@][\arole][][@][@][.]$}}[]
@@ -254,7 +255,7 @@ Let $h \geq 1$ and define
     \end{cases}
 \end{align*}
 %
-Let $\arole,\arole' \in \multiroles$
+and
 %
 \begin{align*}
   \bp[@][{\apref[\arole][\arole']}] =
@@ -282,6 +283,7 @@ Let $\arole,\arole' \in \multiroles$
     \right\}
 \end{align*}
 
+We first give semantics of prefixes.
 \begin{align*}
   \ksem{\apref} =
   &
@@ -316,10 +318,12 @@ Let $\arole,\arole' \in \multiroles$
       \bigcup_{i \geq 1}\big(\bp[@][{\apref[\arole][\arole']}]\big)
       & \text{otherwise}
     \end{cases}
-  \\
+\end{align*}
+
+We can now give the semantics of (closed) global types.
 %
-\eMnote{\text{fare rec}}
-%
+\begin{align*}
+  % 
   \ksem{\asum[@][@][][]} =
   &
     \begin{cases}
@@ -337,6 +341,22 @@ Let $\arole,\arole' \in \multiroles$
       \rseq[\ksem{\aK_1}][\ksem{\aK_2}] & \text{if } \ws[\aK_1][\aK_2]
       \\
       \mathit{undefined} & \text{otherwise}
+    \end{cases}
+  \\
+  %
+  \ksem{\arec} =
+  &
+    \begin{cases}
+      \bigcup_{h \geq 0} \ksem{\unfold h \arec} & \text{if } \ws[\aK\sust X \nil][\aK\sust X \nil]
+      \\
+      \mathit{undefined} & \text{otherwise}
+    \end{cases}
+  \\
+  & \text{where } \unfold h \arec =
+    \begin{cases}
+      \nil & \text{if } h = 0
+      \\
+      \aK \seqop \unfold{h-1}{\arec} & \text{otherwise}
     \end{cases}
 \end{align*}
 where predicates $\wb[]$ and $\ws[][]$ respectively check the
@@ -433,11 +453,10 @@ can pre-process branches of choices by adding an extra field in all
 tuples of the branch so to unequivocally identify on which branch the
 tuple type is used.
 
-To sum up, we say that a choice as in~\eqref{eq:ch} is
-\emph{well-branched}, written
-$\wb[{\big\{\bigcup_{i \in I}\apref_i\mkop{.}\aK_i\big\}}]$, when it
-is confusion free, there is a unique active role, all other roles are
-passive.
+To sum up, a choice as in~\eqref{eq:ch} is \emph{well-branched},
+written $\wb[{\big\{\bigcup_{i \in I}\apref_i\mkop{.}\aK_i\big\}}]$,
+when it is confusion free, there is a unique active role, all other
+roles are passive.
 
 
   %
@@ -463,11 +482,6 @@ of correctness we can guarantee is that any set of instances taking a
 choice will fully execute a branch.
 }
 
-\hsl
-  
-\eMnote{solo unfolding finiti?}
-The semantics of $\arec$ is the union of the semantics of all
-unfoldings of $\arec$.
 
 
 
