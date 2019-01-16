@@ -289,7 +289,7 @@ A creates a private session for B and C.
 	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \mkop{.}
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]
+	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
 	\\
 	\qquad
 	Y	
@@ -302,8 +302,7 @@ A creates a private session for B and C.
 %	\\
 %	\qquad 
 %	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\mkop{.}
-	\\
-	\qquad
+%	\\ \qquad
 	Y	
 	\\
 	\qquad
@@ -315,10 +314,10 @@ A creates a private session for B and C.
 	\chop
 	\\
         \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \mkop{.}
-        \\
-	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
-	\\
-	Y
+        \\\qquad
+        \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
+          \\\qquad
+          Y
 	\end{array}
 	}\right)][1]
      	\end{array}

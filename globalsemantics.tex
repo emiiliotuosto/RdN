@@ -156,7 +156,8 @@ by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
 %
 Let $h \geq 1$ and define
-$\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$ where, for
+$\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$ for an
+autonomous prefix $\apref[@][@][][]$ where, for
 $\arole,\arole' \in \roleset$,
 \begin{align*}
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
@@ -200,7 +201,7 @@ and
 \begin{align*}
   \bp[@][{\apref[\arole][\arole']}] =
   &
-    \left\{
+    \bigcup_{h \geq 1}\left\{
     \pomsetrep{
     \node (out) {$\alabel[@][\arole][]$};
     \node[below left = of out] (rd1) {$\ae_1$};
