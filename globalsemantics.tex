@@ -1,3 +1,5 @@
+% !TEX root =  main.tex
+
 We give semantics to global types using \emph{partially-ordered
   multi-set} (pomsets for short).
 %
@@ -46,6 +48,7 @@ We will represent pomsets as (a variant\footnote{Edges of Hasse
   order relations between events also horizontally.} of) Hasse
 diagrams of the immediate predecessor relation; for instance, the
 pomset
+\todo{RB: anche $(\ae_1,\ae_5)$ nel pomset (non nelle figure ovviamente)?}
 \[
   \left[\{\ae_1,\ae_2,\ae_3,\ae_4\}, \{(\ae_1,\ae_2),(\ae_1,\ae_3),
     (\ae_1,\ae_4), (\ae_4,\ae_5)\},
@@ -144,7 +147,7 @@ prefix.
 %
 Intuitively, a label $\alabel[@][][\arole][@][@][.]$
 (resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
-$i^\mathit{th}$ instance of $\arole$ consumed (resp. produced) a tuple
+$i^\mathit{th}$ instance of $\arole$ consumed\todo{RB: read?} (resp. produced) a tuple
 of type $\atuple$.
 %
 Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
@@ -155,9 +158,9 @@ of prefixes $\apref$; in fact, the semantics of a global type is build
 by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
 %
-Let $h \geq 1$ and define
+Let us define
 $\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$ for an
-autonomous prefix $\apref[@][@][][]$ where, for
+autonomous prefix $\apref[@][@][][]$, whereas for $h \geq 1$ and 
 $\arole,\arole' \in \roleset$,
 \begin{align*}
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =

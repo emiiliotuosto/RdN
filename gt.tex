@@ -200,7 +200,7 @@ of our setting.
   for one of the clients.
 \end{example}
 The type in \cref{ex:CS} does not ensure that clients consume the
-string conversion of the integer they produced.
+string conversion of the integer they produced, because all tuples are put at the same location $\aloc[l]$.
 %
 Name binders can be used to correlate tuples.
 %
@@ -273,6 +273,7 @@ A creates a private session for B and C.
 \eMnote{definire $\arec[@][@][i]$ and fare un forward ref a ws}
 \eMnote{rimossa interazione col broker nella scelta; utile esempio per far vedere che non catturiamo tutti i systemi 'buoni' con wb}
 \begin{example}[Auction]
+\todo[inline]{ma \`e lecito usare $\nu$ in $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]$ o dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$?}
 \[
   \begin{array}{l}
   \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.] \mkop{.}
