@@ -64,16 +64,22 @@ conditions hold:
 \item
   $\atuple = \atuple_1 \cdot \atuple_2$ implies $\atuple_1$ and
   $\atuple_2$ well-sorted and $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =
-  \emptyset$, i.e., defined names are all different.	 
+  \emptyset$, i.e., defined names are all different.
+  \todo{RB: non \`e conseguenza del fatto che ``We assume that in a tuple there is at most one occurrence of $\nu x$, for each $x \in \varset$''}
 \end{itemize}
 %
 Hereafter, we assume all tuples to be well-sorted.
 %
 Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions for
 well-sorted tuples.
+\todo{RB: in che senso funzioni parziali? perch\'e assegnano sort a nomi?}
 
-A capture-avoiding substitution of the free occurrences of a variable
-$x$ in a (well-sorted) tuple $\atuple$ by a variable $y$, written
+A capture-avoiding
+\todo{RB: toglierei capture-avoiding aggiungendo condizioni esplicite su $x,y,\atuple$}
+substitution of the free occurrences of a variable
+$x$ in a (well-sorted) tuple $\atuple$ such that $x\not\in \dn{\atuple}$
+\todo{RB: aggiunto}
+ by a variable $y\not\in \dn{\atuple}$, written
 $\atuple \sust x y$, is defined as follows
 %
 \[
@@ -141,13 +147,20 @@ $\matches : \tupleset \times \tupleset \to \Sigma$ defined such as
      \emptyset
     & 
     \text{if  } \atuple = \wildcard \vee \atuple' = \wildcard  \vee (\atuple = \atuple' \land \atuple\in\{\asort, x : \asort\})
+%    \\
+%    \sigma_1\sigma_2
+%    &
+%    \text{if } \atuple = \atuple_1 \cdot \atuple_2
+%    \land  \atuple' = \atuple'_1 \cdot \atuple'_2
+%    \land \atuple_1 \matches \atuple'_1 \generates \sigma_1
+%    \land \atuple_2 \matches \atuple'_2 \generates \sigma_2
     \\
-    \sigma_1\sigma_2
+    \sigma
     &
     \text{if } \atuple = \atuple_1 \cdot \atuple_2
     \land  \atuple' = \atuple'_1 \cdot \atuple'_2
     \land \atuple_1 \matches \atuple'_1 \generates \sigma_1
-    \land \atuple_2 \matches \atuple'_2 \generates \sigma_1
+    \land \atuple_2\sigma_1 \matches \atuple'_2\sigma_1 \generates \sigma
     \\
     \sust x y 
     &
@@ -156,7 +169,7 @@ $\matches : \tupleset \times \tupleset \to \Sigma$ defined such as
     \textit{undef} & \textit{otherwise}
    \end{cases}
 \]
-\todo{double-check}
+\todo{RB: cambiato caso $\atuple = \atuple_1 \cdot \atuple_2$}
 
 %
 %
@@ -180,7 +193,8 @@ $\matches : \tupleset \times \tupleset \to \Sigma$ defined such as
 
 %
 We say that $\atuple$ \emph{generates} when in one of its fields there
-is a $\nu \aloc$ type. \todo{check}
+is a $\nu \aloc$ type. 
+\todo{RB: meglio dire $\nu \aloc: \asort[loc]$}
 %
 
 %We define
