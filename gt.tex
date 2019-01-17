@@ -29,6 +29,7 @@ processes enacting the behaviour specified in a choreography.
 %
 Participants are unit types while multiroles account for multiple
 instances of processes all performing actions according to their role.
+\todo{RB: forse \`e importante dire che tutti i multiruoli sono disgiunti, giusto?}
 
 We consider a set of localities $\locset$ ranged over by $\aloc$ and
 use $\alocvar$ to range over $\locset\cup\varset$.
@@ -81,7 +82,7 @@ Global types $\aK$ have the following syntax
                   X \bnfmid
                   \arec
 \end{eqnarray*}
-\todo{RB: forse il simbolo $\aK$ \`e misleading}
+\todo{RB: forse il simbolo $\seqop$ \`e misleading: se ho capito bene parlando con Emilio di tratta di un una specie di parallelo asimmetrico, potremmo usare $>$ o qualche simbolo simile?}
 where $I$ is a finite set of indexes; we write $\nil$ for
 $\asum[@][@][][]$ when $I = \emptyset$ and $\apref_j.\aK_j$ instead of
 $\asum[@][@][][]$ when $I = \{j\}$.
@@ -89,7 +90,7 @@ $\asum[@][@][][]$ when $I = \{j\}$.
 Also, we omit trailing occurrences of $\nil$.
 
 Tuple types are generated and accessed according to two modalities
-syntactically distinguished by the round brackets around the tupe
+syntactically distinguished by the round brackets around the tuple
 in prefixes.
 %
 The set $\roles \apref \subseteq \roleset$ of roles in $\apref$ is
@@ -101,6 +102,7 @@ $\aK$.
 
 We extend the notions of defined and free names to global types as
 follows:
+\todo{RB: ma la $\nu$ pu\`o essere usata anche in una tupla di input/read (senza output)?}
 \[
  \fn{\apref[\arole][@][@][\alocvar]}
  = \fn \atuple \cup \{\alocvar \mapsto \asort[loc]\} 
