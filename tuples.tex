@@ -21,8 +21,8 @@ $x \in \varset$.
 Hence, we talk about \emph{free} and \emph{defined} (sorted) names occurring in
 tuples.
 %
-We assume that in a tuple there is at most one occurrence of $\nu x$,
-for each $x \in \varset$.
+%We assume that in a tuple there is at most one occurrence of $\nu x$,
+%for each $x \in \varset$.
 %
 Formally, the functions $\fn{\_}$ and $\dn{\_}$ returns sets of pairs
 $x \mapsto \asort$ assigning sort $\asort$ to $x \in \varset$.
@@ -65,22 +65,22 @@ conditions hold:
   $\atuple = \atuple_1 \cdot \atuple_2$ implies $\atuple_1$ and
   $\atuple_2$ well-sorted and $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =
   \emptyset$, i.e., defined names are all different.
-  \todo{RB: non \`e conseguenza del fatto che ``We assume that in a tuple there is at most one occurrence of $\nu x$, for each $x \in \varset$''}
+%  \todo{RB: non \`e conseguenza del fatto che ``We assume that in a tuple there is at most one occurrence of $\nu x$, for each $x \in \varset$''}
 \end{itemize}
 %
 Hereafter, we assume all tuples to be well-sorted.
 %
 Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions for
 well-sorted tuples.
-\todo{RB: in che senso funzioni parziali? perch\'e assegnano sort a nomi?}
+\todo{RB: in che senso funzioni parziali? perch\'e assegnano sort a nomi? HM: Si, in questo senso.}
 
 A capture-avoiding
-\todo{RB: toglierei capture-avoiding aggiungendo condizioni esplicite su $x,y,\atuple$}
+\todo{RB: toglierei capture-avoiding aggiungendo condizioni esplicite su $x,y,\atuple$.}
 substitution of the free occurrences of a variable
 $x$ in a (well-sorted) tuple $\atuple$ such that $x\not\in \dn{\atuple}$
 \todo{RB: aggiunto}
  by a variable $y\not\in \dn{\atuple}$, written
-$\atuple \sust x y$, is defined as follows
+$\atuple \sust x y$, is defined such that
 %
 \[
 \begin{array}{r@{}l@{\ = \ } ll}
@@ -193,8 +193,8 @@ $\matches : \tupleset \times \tupleset \to \Sigma$ defined such as
 
 %
 We say that $\atuple$ \emph{generates} when in one of its fields there
-is a $\nu \aloc$ type. 
-\todo{RB: meglio dire $\nu \aloc: \asort[loc]$}
+is a $\nu x: \asort[loc]$ type. 
+%\todo{RB: meglio dire $\nu \aloc: \asort[loc]$}
 %
 
 %We define
