@@ -198,6 +198,11 @@
 \newcommandx{\wb}[1][1={},usedefault=@]{wb(\ifempty{#1}{\_}{#1})}
 \newcommand{\unfold}[2]{\text{unfold}_{#1}(\ifempty{#2}{\_}{#2})}
 
+\newcommand{\seq}[1]{\widetilde{#1}}
+
+\newcommandx{\alvar}[2][1=X,2={\seq\alocvar},usedefault=@]{#1\langle#2\rangle}
+\newcommandx{\alrec}[5][1=X,2=\seq x,3=\aL,4=\seq\alocvar,5=,usedefault=@]{\arec[#1(#2)][#3][#5]\langle#4\rangle}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
