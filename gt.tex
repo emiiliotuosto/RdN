@@ -31,8 +31,6 @@ Participants are unit types while multiroles account for multiple
 instances of processes all performing actions according to their role.
 \todo{RB: forse \`e importante dire che tutti i multiruoli sono disgiunti, giusto?}
 
-We consider a set of localities $\locset$ ranged over by $\aloc$ and
-use $\alocvar$ to range over $\locset\cup\varset$.
 %
 Let us first define the \emph{prefixes} used in global types
 with the following grammar:
@@ -79,7 +77,7 @@ Global types $\aK$ have the following syntax
                   \bnfmid
                   % \aK \parop \aK \bnfmid
                   \aK \seqop \aK \bnfmid
-                  X \bnfmid
+                  \alvar \bnfmid
                   \arec
 \end{eqnarray*}
 \todo{RB: forse il simbolo $\seqop$ \`e misleading: se ho capito bene parlando con Emilio di tratta di un una specie di parallelo asimmetrico, potremmo usare $>$ o qualche simbolo simile?}
@@ -122,7 +120,7 @@ omitted prefixes are defined analogously.
       \\
       \fn X & \emptyset
       \\
-      \fn \arec & \fn {\aK}
+      \fn \arec & \fn {\aK} \setminus \seq x
     \end{array}
     \begin{array}{l@{\ =\ } ll}
       \dn{\asum[@][@][][]} & \displaystyle{\bigcup_{i\in I}} \dn{\apref_i} \cup \dn{\aK_i}
@@ -133,10 +131,11 @@ omitted prefixes are defined analogously.
       \\
       \dn X & \emptyset
       \\
-      \dn \arec & \dn {\aK}
+      \dn \arec & \dn {\aK} \cup \seq x
     \end{array}
   \end{array}
 \]
+\eMnote{check fn e dn for rec}
 %
 We write $\names \_$ for the set of sorted names of a term, i.e.,
 $\names \apref = \fn\apref \cup \dn\apref$ and similarly
@@ -155,6 +154,7 @@ the names in $\atuple$ and the locality $\alocvar$
   $\consistent{\names {\apref_i.\aK_i}}$
 \item $\aK_1;\aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
   well-sorted and $\consistent{\names{\aK_1;\aK_2}}$
+\eMnote{adapt to new syntax of rec}
 \item $X$ is well-sorted and $\arec$ is well-sorted if $\aK$ is
   well-sorted.
 \end{itemize}
@@ -329,6 +329,7 @@ A creates a private session for B and C.
   }\right)}][1]
   \end{array}
 \]
+\eMnote{gli l non devono essere diversi?}
 \finex
 \end{example}
 

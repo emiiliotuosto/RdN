@@ -88,9 +88,10 @@
 %\newcommandx{\arec}[2][1=X,2=\aK,usedefault=@]{
 %  \rec\ #1 \mkop{.} #2
 %}
-\newcommandx{\arec}[3][1=X,2=\aK,3={},usedefault=@]{
-  \rec_{#3}\ #1 \mkop{.} #2
+\newcommandx{\arec}[6][1=X,2=\aK,3={\arole},4={\aphi},5={\seq\alocvar}, 6={\seq x},usedefault=@]{
+  {\big(\rec_{#3}^{#4}\ #1({#6}) \mkop{.} #2}\big)\langle#5\rangle
 }
+\newcommand{\aphi}{\phi}
 
 \newcommandx{\aLpref}{\kappa}
 \newcommandx{\aLsum}[4][1=i,2=I,3 = \aLpref,4=\aL,usedefault=@]{
@@ -201,7 +202,9 @@
 \newcommand{\seq}[1]{\widetilde{#1}}
 
 \newcommandx{\alvar}[2][1=X,2={\seq\alocvar},usedefault=@]{#1\langle#2\rangle}
-\newcommandx{\alrec}[5][1=X,2=\seq x,3=\aL,4=\seq\alocvar,5=,usedefault=@]{\arec[#1(#2)][#3][#5]\langle#4\rangle}
+\newcommandx{\alrec}[5][1=X,2=\seq x,3=\aL,4=\seq\alocvar,5=,usedefault=@]{
+  \arec[#1][#3][][][#4][#2]
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%
