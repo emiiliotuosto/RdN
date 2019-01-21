@@ -98,6 +98,11 @@ if, and only if, $\apref$ is an autonomous prefix.
 Likewise, $\roles \aK$ is the set of roles in
 $\aK$.
 
+For every subterm $\arec$, we assume $|\seq x| = |\seq \alocvar|$, 
+ variables in $\seq x$ pair-wise different, 
+$\phi$ injective, $\dom(\phi) = \roles \aK$, ${\it range}(\phi) = [0..|\seq x|]$ 
+and $\phi(\rho) = 0$.
+
 We extend the notions of defined and free names to global types as
 follows:
 \todo{RB: ma la $\nu$ pu\`o essere usata anche in una tupla di input/read (senza output)?}
@@ -118,9 +123,9 @@ omitted prefixes are defined analogously.
                 &
                   \fn{\aK_1}\cup\fn{\aK_2}
       \\
-      \fn X & \emptyset
+      \fn \alvar & (\seq \alocvar \cap \varset)
       \\
-      \fn \arec & \fn {\aK} \setminus \seq x
+      \fn \arec & \fn {\aK} \setminus \seq x \cup (\seq \alocvar \cap \varset)
     \end{array}
     \begin{array}{l@{\ =\ } ll}
       \dn{\asum[@][@][][]} & \displaystyle{\bigcup_{i\in I}} \dn{\apref_i} \cup \dn{\aK_i}
@@ -129,7 +134,7 @@ omitted prefixes are defined analogously.
                            &
                              \dn{\aK_1}\cup\dn{\aK_2}
       \\
-      \dn X & \emptyset
+      \dn \alvar & \emptyset
       \\
       \dn \arec & \dn {\aK} \cup \seq x
     \end{array}
