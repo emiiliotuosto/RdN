@@ -98,10 +98,10 @@ if, and only if, $\apref$ is an autonomous prefix.
 Likewise, $\roles \aK$ is the set of roles in
 $\aK$.
 
-For every subterm $\arec$, we assume $|\seq x| = |\seq \alocvar|$, 
- variables in $\seq x$ pair-wise different, 
-$\phi$ injective, $\dom(\phi) = \roles \aK$, ${\it range}(\phi) = [0..|\seq x|]$ 
-and $\phi(\rho) = 0$.
+In any subterm $\arec$,  the role $\arole$ coordinates the recursion and uses 
+the localities assigned by the injective partial function $\phi:\roleset\mapsto \locset$  to notify the 
+remaining roles. We assume $\dom(\phi) = \roles \aK \setminus \arole$, 
+and ${\it range}(\phi)$ fresh.
 
 We extend the notions of defined and free names to global types as
 follows:
