@@ -4,6 +4,7 @@
 \def\finex{{\unskip\nobreak\hfil
 \penalty50\hskip1em\null\nobreak\hfil$\diamond$
 \parfillskip=0pt\finalhyphendemerits=0\endgraf}}
+\newcommand{\dummypar}[1]{\ifempty{#1}{\_}{#1}}
     
 \newcommand{\asort}[1][s]{\mathtt{#1}}
 \newcommand{\wildcard}{\star}
@@ -22,7 +23,7 @@
 \DeclareMathOperator{\toop}{\mkop{\to}}
 \DeclareMathOperator{\seqop}{\mkop{\succ}}
 \DeclareMathOperator{\prefop}{\mkop{.}}
-\newcommand{\rec}{\mkop{\mathtt{rec}}\xspace}
+\newcommand{\rec}{\mkop{\mu}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
 \newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\alocvar, usedefault=@]{
   \ifempty{#1}{{#2} \at {#3}}{{#2} \at {#3}}
@@ -45,7 +46,7 @@
 \newcommand{\aK}[1][K]{\texttt{\textcolor{BrickRed}#1}}
 \newcommand{\aL}[1][L]{\texttt{\textcolor{orange}#1}}
 \newcommandx{\proj}[3][1=\aK,2=\arole,3=\eta,usedefault=@]{
-  \ifempty{#1}{\_}{#1} \downharpoonleft_{\ifempty{#2}{\_}{#2}}^{\ifempty{#3}{\_}{#3}}
+  \dummypar{#1} \downharpoonleft_{\dummypar{#2}}^{\dummypar{#3}}
 }
 \newcommandx{\aint}[3][1=\arole, 2=\arole', 3=\aK, usedefault=@]{
   {#1} \toop {#2} \, \mkop{:} \, {#3}
@@ -86,8 +87,8 @@
 \newcommandx{\ard}[3][1=\arole,2=\atuple,3=\alocvar,,usedefault=@]{
   \ifempty{#1}{#2 \inop #3}{{#1} \inop {#2} \at {#3}}
 }
-\newcommandx{\grec}[4][1= \aphi, 2= \arole, 3=X, 4=\aK, usedefault=@]{
-  \rec^{#1}_{#2}\ #3 \mkop{.} #4
+\newcommandx{\grec}[4][1=\arole, 2=X, 3=\aK, 4={}, usedefault=@]{
+  \rec^{#4}_{#1}\ #2 \mkop{.} #3
 }
 \newcommandx{\arec}[6][1=X,2=\aK,3={\arole},4={\aphi},5={\seq\alocvar}, 6={\seq x},usedefault=@]{
   {\big(\rec_{#3}^{#4}\ #1({#6}) \mkop{.} #2}\big)\langle#5\rangle
@@ -190,7 +191,7 @@
 \newcommand{\dn}[1]{{\it dn}(#1)}
 \newcommand{\fn}[1]{{\it fn}(#1)}
 \newcommand{\names}[1]{{\it n}(#1)}
-\newcommand{\sust}[2]{\{#2 / #1\}}
+\newcommand{\sust}[2]{\{^{#2} / _{#1}\}}
 %\newcommand{\generates}{\rightsquigarrow}
 \newcommand{\generates}{=}
 \newcommand{\alocvar}{{\color{red}\ell}}
@@ -200,7 +201,7 @@
 \newcommand{\eraseB}[1]{\downarrow\!{#1}}
 \newcommandx{\ws}[2][1={\aK},2={\aK'},usedefault=@]{ws(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
 \newcommandx{\wb}[1][1={},usedefault=@]{wb(\ifempty{#1}{\_}{#1})}
-\newcommand{\unfold}[2]{\text{unfold}_{#1}(\ifempty{#2}{\_}{#2})}
+\newcommand{\unfold}[5]{\text{unfold}_{#1}(\dummypar{#2}, \dummypar{#3}, \dummypar{#4}, \dummypar{#5})}
 
 \newcommand{\seq}[1]{\widetilde{#1}}
 

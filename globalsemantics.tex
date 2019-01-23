@@ -330,33 +330,39 @@ Finally, we give the semantic equations of global types.
 For the recursive global type $\grec$ we introduce some auxiliary
 functions:
 \begin{align*}
-  \mathit{STOP}(\arole, \aphi) = & \apref[\arole][\arole_1][{\asort[stop]}][\aphi(\arole_1)] \seqop \ldots \seqop \apref[\arole][\arole_n][{\asort[stop]}][\aphi(\arole_n)]
+  \mathit{STOP}(\arole, \aK, \seq y) = & \apref[\arole][\arole_1][{\asort[stop]}][y_1] \seqop \ldots \seqop \apref[\arole][\arole_n][{\asort[stop]}][y_n]
   \\
-  \mathit{LOOP}(\arole, \aphi, \aK) = & \apref[\arole][\arole_1][{\nu y_1:\asort[loc]}][\aphi(\arole_1)] \seqop \ldots \seqop \apref[\arole][\arole_n][{\nu y_n:\asort[loc]}][\aphi(\arole_n)] \seqop \aK
+  \mathit{LOOP}(\arole, \aK, \seq y, \seq y') = & \apref[\arole][\arole_1][{\nu y'_1:\asort[loc]}][y_1)] \seqop \ldots \seqop \apref[\arole][\arole_n][{\nu y'_n:\asort[loc]}][y_n]
 \end{align*}
-where $\dom \aphi = \{\arole_1, \ldots, \arole_n\}$ and
-$\aphi : \arole_i \mapsto \aloc_i$ for $i \in \{1, \ldots, n\}$.
+where $\roles \aK = \{\arole, \arole_1, \ldots, \arole_n\}$ with
+$\arole \not\in \{\arole_1, \ldots, \arole_n\}$ and
+$\seq y = y_1 \cdots y_n$ and 
+$\seq y' = y'_1 \cdots y'_n$.
 %
 Then, we define
 \begin{align*}
   \ksem{\grec} =
   &
     \begin{cases}
-      \bigcup_{h \geq 0} \ksem{\unfold h \grec} & \text{if } \ws[\aK\sust X \nil][\aK\sust X \nil]
+      \bigcup_{h \geq 0} \ksem{\unfold h \grec {\fn{\aK}} {\seq y}  {\seq y'}} & \text{if } \ws[\aK\sust X \nil][\aK\sust X \nil]
+      \\ & \text{ and } \seq y \cap \fn{\aK} = \emptyset
       \\
       \mathit{undefined} & \text{otherwise}
     \end{cases}
 \end{align*}
 where
 \[
-  \unfold h \grec =
+  \unfold h \grec L {\seq y} {\seq y'} =
   \begin{cases}
-    \mathit{STOP}(\arole,\aphi) & \text{if } h = 0
+    \mathit{STOP}(\arole,\seq y) & \text{if } h = 0
     \\
-    \mathit{LOOP}(\arole,\aphi,\aK) \seqop \unfold{h-1}{\grec} & \text{otherwise}
+    \mathit{LOOP}(\arole,\aK, \seq y, \seq y') \seqop \aK \sust X {\aK'} & \text{otherwise}
   \end{cases}
 \]
 %
+where $\aK' = \unfold{h-1}{\grec}{L \cup \seq y \cup \seq y'}{\seq y'}{\seq y''}$
+with $\seq y''$ fresh.
+
 The remaining equations are
 %
 \begin{align*}

@@ -31,7 +31,7 @@ Participants are unit types while multiroles account for multiple
 instances of processes all performing actions according to their role.
 %
 \todo{RB: forse \`e importante dire che tutti i multiruoli sono disgiunti, giusto?}
-\todo{eM: direi di no; noi vorremmo che un processo possa coprire piu' ruoli}
+\todo{eM: direi di no; in the long run vorremmo che un processo possa coprire piu' ruoli}
 
 %
 Let us first define the \emph{prefixes} used in global types
@@ -53,6 +53,10 @@ with the following grammar:
   & \apref[\arole][\arole'][@][\alocvar][.]  & \text{read-only interaction}
   \end{array}
 \]
+%
+The set $\roles \apref \subseteq \roleset$ of roles in $\apref$ is
+defined in the obvious way; note that $\roles \apref$ is a singleton
+if, and only if, $\apref$ is an autonomous prefix.
 %
 We syntactically distinguish two kinds of prefixes.
 %
@@ -92,27 +96,30 @@ where $I$ is a finite set of indexes; we write $\nil$ for
 $\asum[@][@][][]$ when $I = \emptyset$ (we omit trailing occurrences
 of $\nil$) and $\apref_j.\aK_j$ instead of $\asum[@][@][][]$ when
 $I = \{j\}$.
-
-The set $\roles \apref \subseteq \roleset$ of roles in $\apref$ is
-defined in the obvious way; note that $\roles \apref$ is a singleton
-if, and only if, $\apref$ is an autonomous prefix.
 %
-Likewise, $\roles \aK$ is the set of roles in
-$\aK$.
+The set $\roles \aK$ of roles of $\aK$ is defined in the obvious way.
 
+The syntax of global types features prefix guarded choices, sequential
+composition, and recursion.
+%
 To handle recursive behaviour, the construct $\grec$ singles out a
-role $\arole \in \roles \aK$ and specifies an injective function
-$\aphi : \roles \aK \setminus \{\arole\} \to \locset$ such that the
-locations in $\cod(\aphi)$ do not occur in $\aK$; intuitively,
-$\arole$ is the participant deciding when the recursion ends and, for
-all $\arole' \neq \arole$ in $\aK$, $\aphi(\arole')$ is the location
-used to communicate the decision of $\arole$ to $\arole'$.
+role $\arole \in \roles \aK$
 %
-We omit the decorations $\arole$ and $\aphi$ when $\roles \aK = \{\arole\}$.
+% and specifies an injective function
+% $\aphi : \roles \aK \setminus \{\arole\} \to \locset$ such that the
+% locations in $\cod(\aphi)$ do not occur in $\aK$; intuitively,
+% $\arole$
+deciding when the recursion ends.
+% and, for all $\arole' \neq \arole$ in $\aK$, the location
+% $\aphi(\arole')$ is used to communicate the decision of $\arole$ to
+% $\arole'$.
+%
+We omit the decoration $\arole$ when $\roles \aK = \{\arole\}$.
 
 We extend the notions of defined and free names to global types as
 follows:
 \todo{RB: ma la $\nu$ pu\`o essere usata anche in una tupla di input/read (senza output)?}
+\todo{eM: si, ma poi non sincronizza}
 \[
  \fn{\apref[\arole][@][@][\alocvar]}
  = \fn \atuple \cup \{\alocvar \mapsto \asort[loc]\} 
@@ -126,18 +133,18 @@ omitted prefixes are defined analogously.
     \begin{array}{l@{\ =\ } ll}
       \fn{\asum[@][@][][]} & \displaystyle{\bigcup_{i\in I}} \fn{\apref_i} \cup (\fn{\aK_i}\setminus\dn{\apref_i})
       \\
-      \fn{\aK_1; \aK_2} 
+      \fn{\aK_1 \seqop \aK_2} 
                 &
                   \fn{\aK_1}\cup\fn{\aK_2}
       \\
       \fn \alvar & (\seq \alocvar \cap \varset)
       \\
-      \fn \grec & \fn {\aK} \cup \cod(\aphi)
+      \fn \grec & \fn {\aK}
     \end{array}
     \begin{array}{l@{\ =\ } ll}
       \dn{\asum[@][@][][]} & \displaystyle{\bigcup_{i\in I}} \dn{\apref_i} \cup \dn{\aK_i}
       \\
-      \dn{\aK_1; \aK_2} 
+      \dn{\aK_1 \seqop \aK_2} 
                            &
                              \dn{\aK_1}\cup\dn{\aK_2}
       \\
@@ -147,7 +154,6 @@ omitted prefixes are defined analogously.
     \end{array}
   \end{array}
 \]
-\eMnote{check fn e dn for rec}
 %
 We write $\names \_$ for the set of sorted names of a term, i.e.,
 $\names \apref = \fn\apref \cup \dn\apref$ and similarly
@@ -164,9 +170,8 @@ the names in $\atuple$ and the locality $\alocvar$
 \item $\asum[@][@][][]$ is well-sorted if for all ${i\in I}$ both
   $\apref$ and ${\aK_i}$ are well-sorted and
   $\consistent{\names {\apref_i.\aK_i}}$
-\item $\aK_1;\aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
-  well-sorted and $\consistent{\names{\aK_1;\aK_2}}$
-\eMnote{adapt to new syntax of rec}
+\item $\aK_1 \seqop \aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
+  well-sorted and $\consistent{\names{\aK_1 \seqop \aK_2}}$
 \item $X$ is well-sorted and $\grec$ is well-sorted if $\aK$ is
   well-sorted.
 \end{itemize}
@@ -177,177 +182,7 @@ recursion variables.
 %
 As usual we say that a global type $\aK$ is \emph{closed} when it does
 not contain free occurrences of recursion variables $X$ or free
-occurrences of names, i.e., $\supp{\fn\aK} \cap \varset = \emptyset$.
-
-
-\begin{example}\label{ex:cs}
-  Consider the following global type that describes the interaction of
-  a client $\ptp c$ with a simple service $\ptp s$ that converts
-  integers into strings.
-  \[
-    \aK_\eqref{ex:cs} =
-    \apref[\ptp c][\ptp s][{\asort[int]}][{\aloc[l]}]  \prefop
-    \apref[\ptp s][\ptp c][{\asort[str]}][{\aloc[l]}]
-  \]
-  The client $\ptp c$ produces an integer value on the locality
-  $\aloc$.
-  %
-  This tuple must be consumed by the server $\ptp s$, which produces
-  back the converted string for the client.
-\end{example}
-
-Elaborating on the previous examples we now discuss a few features
-of our setting.
-
-\begin{example}\label{ex:CS}
-  Assume that we consider client and server in \cref{ex:cs} as
-  multiroles instead of single participants, and write
-  \[
-    \aK_\eqref{ex:CS} =
-    \apref[\amulti {C}][\amulti {S}][{\asort[int]}][{\aloc[l]}] \prefop
-    \apref[\amulti {S}][\amulti {C}][{\asort[str]}][{\aloc[l]}]
-  \]
-  In this case, $\aK_\eqref{ex:CS}$ states that each integer produced by a client
-  will be consumed by a server, which will in turn produce a string
-  for one of the clients.
-\end{example}
-The type in \cref{ex:CS} does not ensure that clients consume the
-string conversion of the integer they produced, because all tuples are put at the same location $\aloc[l]$.
-%
-Name binders can be used to correlate tuples.
-%
-\begin{example}\label{ex:CSx}
-  Consider
-  \[
-    \aK_\eqref{ex:CSx} =
-    \apref[\amulti {C}][\amulti {S}][{\nu x:\asort[int]}][{\aloc[l]}] \prefop
-    \apref[\amulti {S}][\amulti {C}][{x : {\asort[int]} \cdot {\asort[str]} }][{\aloc[l]}]
-  \]
-  $\aK_\eqref{ex:CSx}$ associates a fresh identifier $x$ to each value produced by
-  a client and consumed by a server.
-  %
-  Despite the identifier is known only to the communicating instances,
-  this does not forbid two clients to generate the same integer value.
-  %
-  Basically, the name $x$ allows to express constraints about the flow
-  of values.
-  %
-  In particular, $x : \asort[int]$ in the second interaction states
-  that a server must generate a tuple that contains the consumed
-  integer.
-  %
-  Analogously, each client must consume a tuple matching the produced
-  integer.
-  %
-  \finex
-\end{example}
-The choreography in \cref{ex:CSx} does not establishes a one-to-one
-association between instances of $\amulti C$ and $\amulti S$.
-%
-In fact, an instance of $\amulti C$ not necessarily interacts with the
-same instance of $\amulti S$ in the two communications when two
-instances of $\amulti C$ generate the same integer in the first
-interaction.
-%
-A one-to-one correspondence can be achieved by using fresh localities.
-\begin{example}\label{ex:CSl}
-  Consider
-  \[
-    \aK_\eqref{ex:CSl} = 
-    \apref[\amulti {C}][\amulti {S}][{{\asort[int]} \cdot \nu x: {\asort[loc]}}][{\aloc[l]}]  \prefop
-    \apref[\amulti {S}][\amulti {C}][{{\asort[str]}}][{x}]
-  \]
-  %
-  A client generates a fresh locality identified by $x$, which is then
-  used as the locality for the subsequent communication.
-  %
-  Since the name $x$ is known only to the two communicating instances,
-  the second interaction can only take place between the two instances
-  that know the locality $x$.
-  %
-  \finex
-\end{example}
-
-\todo[inline]{We think we can also deal with situations like the following, in which 
-A creates a private session for B and C. 
-%
-\[
-  \apref[\amulti {A}][\amulti {B}][{\nu y: {\asort[loc]}}][{\aloc[l]}] \prefop
-\]
-\[
-  \apref[\amulti {A}][\amulti {C}][{y : {\asort[loc]}}][{\aloc[l]}] \prefop
-\]
-\[
-  \apref[\amulti {B}][\amulti {C}][\asort][{y}]
-\]
-}
-
-\eMnote{{definire $\grec[@][@][i]$ and fare un forward ref a ws}}
-\eMnote{rimossa interazione col broker nella scelta; utile esempio per
-  far vedere che non catturiamo tutti i systemi 'buoni' con wb}
-\begin{example}[Auction]
-\todo[inline]{ma \`e lecito usare $\nu$ in $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]$ o dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$?}
-\[
-  \begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.] \prefop
-  \\  	
-  \grec[][][X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop X}] \seqop
-  \\  	
-  \grec[\aphi_1][\amulti{Buyer}][Y][{\left({
-      	\begin{array}{l}
-          \grec[][][Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.] \prefop Z}] \seqop
-          \\
-          \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-          \\
-          \grec[\aphi_2][\amulti{Seller}][W][\left({
-    	\begin{array}{l}
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \prefop
-	\\
-	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \prefop
-	\\
-	\qquad 
-	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-	\\
-	\qquad
-	Y	
-	\\
-	\qquad
-	\chop
-	\\
-	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\prefop
-%	\\
-%	\qquad 
-%	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\prefop
-%	\\ \qquad
-	Y	
-	\\
-	\qquad
-	\chop
-	\\
-	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \prefop W
-	\\
-	\chop
-	\\
-        \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \prefop
-        \\\qquad
-        \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-          \\\qquad
-          Y
-	\end{array}
-	}\right)]
-     	\end{array}
-  }\right)}]
-  \end{array}
-\]
-where $\aphi_1 : \amulti{Seller} \mapsto \aloc_1$ and
-$\aphi_2 : \amulti{Buyer} \mapsto \aloc_2$.
-%
-\finex
-\end{example}
-
+occurrences of names.%, i.e., $\supp{\fn\aK} \cap \varset = \emptyset$.
 
 
   
