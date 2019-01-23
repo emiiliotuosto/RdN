@@ -20,7 +20,7 @@
 \DeclareMathOperator{\chop}{\mkop{+}}
 \DeclareMathOperator{\inop}{\mkop{?}}
 \DeclareMathOperator{\toop}{\mkop{\to}}
-\DeclareMathOperator{\seqop}{\mkop{;}}
+\DeclareMathOperator{\seqop}{\mkop{\succ}}
 \newcommand{\rec}{\mkop{\mathtt{rec}}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
 \newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\alocvar, usedefault=@]{
@@ -85,9 +85,9 @@
 \newcommandx{\ard}[3][1=\arole,2=\atuple,3=\alocvar,,usedefault=@]{
   \ifempty{#1}{#2 \inop #3}{{#1} \inop {#2} \at {#3}}
 }
-%\newcommandx{\arec}[2][1=X,2=\aK,usedefault=@]{
-%  \rec\ #1 \mkop{.} #2
-%}
+\newcommandx{\grec}[4][1= \aphi, 2= \arole, 3=X, 4=\aK, usedefault=@]{
+  \rec^{#1}_{#2}\ #3 \mkop{.} #4
+}
 \newcommandx{\arec}[6][1=X,2=\aK,3={\arole},4={\aphi},5={\seq\alocvar}, 6={\seq x},usedefault=@]{
   {\big(\rec_{#3}^{#4}\ #1({#6}) \mkop{.} #2}\big)\langle#5\rangle
 }
