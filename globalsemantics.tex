@@ -48,10 +48,10 @@ We will represent pomsets as (a variant\footnote{Edges of Hasse
   order relations between events also horizontally.} of) Hasse
 diagrams of the immediate predecessor relation; for instance, the
 pomset
-\todo{RB: anche $(\ae_1,\ae_5)$ nel pomset (non nelle figure ovviamente)?}
+%\todo{{RB: anche $(\ae_1,\ae_5)$ nel pomset (non nelle figure ovviamente)?}}
 \[
-  \left[\{\ae_1,\ae_2,\ae_3,\ae_4\}, \{(\ae_1,\ae_2),(\ae_1,\ae_3),
-    (\ae_1,\ae_4), (\ae_4,\ae_5)\},
+  \left[\{\ae_1,\ae_2,\ae_3,\ae_4,\ae_5\}, \{(\ae_1,\ae_2),(\ae_1,\ae_3),
+    (\ae_1,\ae_4), (\ae_1,\ae_5), (\ae_4,\ae_5)\},
     \alf% :
     % \begin{cases}
     %   \ae_1 \mapsto \apref[\ptp p][]
@@ -112,6 +112,7 @@ $(\ae,\ae_1) \leq (\ae,\ae_2) \iff \ae_1 \leqof{\apom'} \ae_2$ and
 $\alfof{\apom'_{\ae}} = (\ae,\ae') \mapsto \alfof{\apom'}(\ae')$ for
 all $\ae' \in \esetof{\apom'}$.
 %
+\eMnote{{c'era qualcosa da fare su $\rseq[][]$...}}
 Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and define
 \[
   \rseq[\apom][\apom'] = 
@@ -129,16 +130,16 @@ $\roles{}$ is a singleton).
 %
 \eMnote{{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}}
 %
-Finally, for $h \geq 1$ and a pomset $\apom$ we define
-\[
-  \apom^h =
-  \begin{cases}
-    r & \text{if } h = 1
-    \\
-    r \pomsetcup r^{h-1} & \text{if } h > 1
-  \end{cases}
-\]
-The operation $\_^h$ extends element-wise to sets of pomsets.
+% Finally, for $h \geq 1$ and a pomset $\apom$ we define
+% \[
+%   \apom^h =
+%   \begin{cases}
+%     r & \text{if } h = 1
+%     \\
+%     r \pomsetcup r^{h-1} & \text{if } h > 1
+%   \end{cases}
+% \]
+% The operation $\_^h$ extends element-wise to sets of pomsets.
 
 The labels of the events in our semantics are (decorations of)
 autonomous prefixes $\apref$: labels are either just autonomous
@@ -147,8 +148,8 @@ prefix.
 %
 Intuitively, a label $\alabel[@][][\arole][@][@][.]$
 (resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
-$i^\mathit{th}$ instance of $\arole$ consumed\todo{RB: read?} (resp. produced) a tuple
-of type $\atuple$.
+$i^\mathit{th}$ instance of $\arole$ reads (resp. produced) a tuple of
+type $\atuple$.
 %
 Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
 can be performed by any instance of the role in $\apref$.
@@ -307,7 +308,7 @@ either of the following holds:
   $\aloc$ in $\aK$ and $\atuple \matches \atuple'$
 \item $\aK = \aK_1 \seqop \aK_2$ either $(\atuple, \aloc)$ is local to
   $\aK_1$ or   $(\atuple, \aloc)$ is local to $\aK_2$
-\item $\aK = \arec[@][\aK']$ $(\atuple, \aloc)$ is local to $\aK'$
+\item $\aK = \grec[@][@][@][\aK']$ $(\atuple, \aloc)$ is local to $\aK'$
 \end{itemize}
 %
 A choreography $\aK_1 \seqop \aK_2$ is \emph{conflict-free} if for
@@ -324,7 +325,40 @@ $i \neq j \in \{1,2\}$
 \end{itemize}
 % such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a locality $\aloc$, \eMnote{Problema: $\aloc$ vs $\alocvar$}
 
-Finally, the equations giving the semantics of global types are:
+Finally, we give the semantic equations of global types.
+%
+For the recursive global type $\grec$ we introduce some auxiliary
+functions:
+\begin{align*}
+  \mathit{STOP}(\arole, \aphi) = & \apref[\arole][\arole_1][{\asort[stop]}][\aphi(\arole_1)] \seqop \ldots \seqop \apref[\arole][\arole_n][{\asort[stop]}][\aphi(\arole_n)]
+  \\
+  \mathit{LOOP}(\arole, \aphi, \aK) = & \apref[\arole][\arole_1][{\nu y_1:\asort[loc]}][\aphi(\arole_1)] \seqop \ldots \seqop \apref[\arole][\arole_n][{\nu y_n:\asort[loc]}][\aphi(\arole_n)] \seqop \aK
+\end{align*}
+where $\dom \aphi = \{\arole_1, \ldots, \arole_n\}$ and
+$\aphi : \arole_i \mapsto \aloc_i$ for $i \in \{1, \ldots, n\}$.
+%
+Then, we define
+\begin{align*}
+  \ksem{\grec} =
+  &
+    \begin{cases}
+      \bigcup_{h \geq 0} \ksem{\unfold h \grec} & \text{if } \ws[\aK\sust X \nil][\aK\sust X \nil]
+      \\
+      \mathit{undefined} & \text{otherwise}
+    \end{cases}
+\end{align*}
+where
+\[
+  \unfold h \grec =
+  \begin{cases}
+    \mathit{STOP}(\arole,\aphi) & \text{if } h = 0
+    \\
+    \mathit{LOOP}(\arole,\aphi,\aK) \seqop \unfold{h-1}{\grec} & \text{otherwise}
+  \end{cases}
+\]
+%
+The remaining equations are
+%
 \begin{align*}
   % 
   \ksem{\asum[@][@][][]} =
@@ -344,22 +378,6 @@ Finally, the equations giving the semantics of global types are:
       \rseq[\ksem{\aK_1}][\ksem{\aK_2}] & \text{if } \ws[\aK_1][\aK_2]
       \\
       \mathit{undefined} & \text{otherwise}
-    \end{cases}
-  \\
-  %
-  \ksem{\arec} =
-  &
-    \begin{cases}
-      \bigcup_{h \geq 0} \ksem{\unfold h \arec} & \text{if } \ws[\aK\sust X \nil][\aK\sust X \nil]
-      \\
-      \mathit{undefined} & \text{otherwise}
-    \end{cases}
-  \\
-  & \text{where } \unfold h \arec =
-    \begin{cases}
-      \nil & \text{if } h = 0
-      \\
-      \aK \seqop \unfold{h-1}{\arec} & \text{otherwise}
     \end{cases}
 \end{align*}
 where predicates $\wb[]$ and $\ws[][]$ respectively check the

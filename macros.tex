@@ -21,6 +21,7 @@
 \DeclareMathOperator{\inop}{\mkop{?}}
 \DeclareMathOperator{\toop}{\mkop{\to}}
 \DeclareMathOperator{\seqop}{\mkop{\succ}}
+\DeclareMathOperator{\prefop}{\mkop{.}}
 \newcommand{\rec}{\mkop{\mathtt{rec}}\xspace}
 \newcommand{\nil}{\mkop{\textbf{0}}}
 \newcommandx{\artupleat}[3][1={}, 2=\atuple, 3=\alocvar, usedefault=@]{
@@ -172,7 +173,9 @@
 \newcommand{\al}[1][l]{{\colorE{#1}}}
 \def\colorE{\color{orange}}
 \renewcommand{\ae}[1][e]{{\colorE{#1}}}
-\newcommandx{\rseq}[2][1=\apom,2={\aapom'},usedefault=@]{\gfun{seq}({#1},{#2})}
+\newcommandx{\rseq}[2][1=\apom,2={\aapom'},usedefault=@]{
+  \gfun{seq}(\ifempty{#1}{\_}{#1},\ifempty{#2}{\_}{#2})
+}
 \def\colorFun{\color{black}}
 \newcommand{\gfun}[1]{\ensuremath{\mathsf{\colorFun #1}}}
 \newcommandx{\bp}[2][1={i},2=\apref,usedefault=@]{\gfun{bp}(\ifempty{#1}{\_}{#1}, \ifempty{#2}{\_}{#2})}
@@ -203,10 +206,10 @@
 
 \newcommandx{\alvar}[2][1=X,2={\seq\alocvar},usedefault=@]{#1\langle#2\rangle}
 \newcommandx{\alrec}[5][1=X,2=\seq x,3=\aL,4=\seq\alocvar,5=,usedefault=@]{
-{\big(\rec_{#5}#1({#2}) \mkop{.} #3}\big)\langle#4\rangle}
+{\big(\rec_{#5}#1({#2}) \prefop #3}\big)\langle#4\rangle}
 
 \newcommandx{\abasiclrec}[3][1=X,2=\seq x,3=\aL,usedefault=@]{
-{\big(\rec #1({#2}) \mkop{.} #3}\big)}
+{\big(\rec #1({#2}) \prefop #3}\big)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%                        END POMSETS MACROS                             %%%

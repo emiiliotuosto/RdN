@@ -107,6 +107,8 @@ locations in $\cod(\aphi)$ do not occur in $\aK$; intuitively,
 $\arole$ is the participant deciding when the recursion ends and, for
 all $\arole' \neq \arole$ in $\aK$, $\aphi(\arole')$ is the location
 used to communicate the decision of $\arole$ to $\arole'$.
+%
+We omit the decorations $\arole$ and $\aphi$ when $\roles \aK = \{\arole\}$.
 
 We extend the notions of defined and free names to global types as
 follows:
@@ -184,8 +186,8 @@ occurrences of names, i.e., $\supp{\fn\aK} \cap \varset = \emptyset$.
   integers into strings.
   \[
     \aK_\eqref{ex:cs} =
-    \apref[\ptp c][\ptp s][{\asort[int]}][{\aloc[l]}].    
-    \apref[\ptp s][\ptp c][{\asort[str]}][{\aloc[l]}].\nil
+    \apref[\ptp c][\ptp s][{\asort[int]}][{\aloc[l]}]  \prefop
+    \apref[\ptp s][\ptp c][{\asort[str]}][{\aloc[l]}]
   \]
   The client $\ptp c$ produces an integer value on the locality
   $\aloc$.
@@ -202,8 +204,8 @@ of our setting.
   multiroles instead of single participants, and write
   \[
     \aK_\eqref{ex:CS} =
-    \apref[\amulti {C}][\amulti {S}][{\asort[int]}][{\aloc[l]}].
-    \apref[\amulti {S}][\amulti {C}][{\asort[str]}][{\aloc[l]}].\nil
+    \apref[\amulti {C}][\amulti {S}][{\asort[int]}][{\aloc[l]}] \prefop
+    \apref[\amulti {S}][\amulti {C}][{\asort[str]}][{\aloc[l]}]
   \]
   In this case, $\aK_\eqref{ex:CS}$ states that each integer produced by a client
   will be consumed by a server, which will in turn produce a string
@@ -218,8 +220,8 @@ Name binders can be used to correlate tuples.
   Consider
   \[
     \aK_\eqref{ex:CSx} =
-    \apref[\amulti {C}][\amulti {S}][{\nu x:\asort[int]}][{\aloc[l]}].
-    \apref[\amulti {S}][\amulti {C}][{x : {\asort[int]} \cdot {\asort[str]} }][{\aloc[l]}].\nil
+    \apref[\amulti {C}][\amulti {S}][{\nu x:\asort[int]}][{\aloc[l]}] \prefop
+    \apref[\amulti {S}][\amulti {C}][{x : {\asort[int]} \cdot {\asort[str]} }][{\aloc[l]}]
   \]
   $\aK_\eqref{ex:CSx}$ associates a fresh identifier $x$ to each value produced by
   a client and consumed by a server.
@@ -252,8 +254,8 @@ A one-to-one correspondence can be achieved by using fresh localities.
   Consider
   \[
     \aK_\eqref{ex:CSl} = 
-    \apref[\amulti {C}][\amulti {S}][{{\asort[int]} \cdot \nu x: {\asort[loc]}}][{\aloc[l]}].
-    \apref[\amulti {S}][\amulti {C}][{{\asort[str]}}][{x}].\nil
+    \apref[\amulti {C}][\amulti {S}][{{\asort[int]} \cdot \nu x: {\asort[loc]}}][{\aloc[l]}]  \prefop
+    \apref[\amulti {S}][\amulti {C}][{{\asort[str]}}][{x}]
   \]
   %
   A client generates a fresh locality identified by $x$, which is then
@@ -270,13 +272,13 @@ A one-to-one correspondence can be achieved by using fresh localities.
 A creates a private session for B and C. 
 %
 \[
-  \apref[\amulti {A}][\amulti {B}][{\nu y: {\asort[loc]}}][{\aloc[l]}]
+  \apref[\amulti {A}][\amulti {B}][{\nu y: {\asort[loc]}}][{\aloc[l]}] \prefop
 \]
 \[
-  \apref[\amulti {A}][\amulti {C}][{y : {\asort[loc]}}][{\aloc[l]}].
+  \apref[\amulti {A}][\amulti {C}][{y : {\asort[loc]}}][{\aloc[l]}] \prefop
 \]
 \[
-  \apref[\amulti {B}][\amulti {C}][\asort][{y}]. \nil
+  \apref[\amulti {B}][\amulti {C}][\asort][{y}]
 \]
 }
 
@@ -287,25 +289,25 @@ A creates a private session for B and C.
 \todo[inline]{ma \`e lecito usare $\nu$ in $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]$ o dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$?}
 \[
   \begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.] \mkop{.}
+  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.] \prefop
   \\  	
-  \grec[X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}].X}][1] \seqop
+  \grec[][][X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop X}] \seqop
   \\  	
-  \grec[Y][{\left({
+  \grec[\aphi_1][\amulti{Buyer}][Y][{\left({
       	\begin{array}{l}
-          \grec[Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.].Z}][1] \seqop
+          \grec[][][Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.] \prefop Z}] \seqop
           \\
-          \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
+          \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
           \\
-          \grec[W][\left({
+          \grec[\aphi_2][\amulti{Seller}][W][\left({
     	\begin{array}{l}
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \mkop{.}
+	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \prefop
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \mkop{.}
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \prefop
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
+	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
 	\\
 	\qquad
 	Y	
@@ -314,10 +316,10 @@ A creates a private session for B and C.
 	\chop
 	\\
 	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\mkop{.}
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\prefop
 %	\\
 %	\qquad 
-%	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\mkop{.}
+%	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\prefop
 %	\\ \qquad
 	Y	
 	\\
@@ -325,22 +327,24 @@ A creates a private session for B and C.
 	\chop
 	\\
 	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \mkop{.} W
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \prefop W
 	\\
 	\chop
 	\\
-        \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \mkop{.}
+        \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \prefop
         \\\qquad
-        \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \mkop{.}
+        \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
           \\\qquad
           Y
 	\end{array}
-	}\right)][1]
+	}\right)]
      	\end{array}
-  }\right)}][1]
+  }\right)}]
   \end{array}
 \]
-\eMnote{gli l non devono essere diversi?}
+where $\aphi_1 : \amulti{Seller} \mapsto \aloc_1$ and
+$\aphi_2 : \amulti{Buyer} \mapsto \aloc_2$.
+%
 \finex
 \end{example}
 
