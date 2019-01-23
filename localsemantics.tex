@@ -22,8 +22,13 @@ Prefixes $\arout[]$, $\ain[]$ and $\ard[]$ respectively stands for the productio
 of a tuple $\atuple$ at the locality $\alocvar$. Differently from global types, local types 
 do not distinguish the generation of  read-only tuples from the ones that can be consumed.
 
-Formation rules for local types $\aL$ are exactly the same as for 
+Formation rules for branching and sequential local types $\aL$ are exactly the same as for 
 global types; analogously we write $\nil$ for an empty sum. 
+For recursive terms  $\arec$, we assume $|\seq x| = |\seq \alocvar|$, 
+ variables in $\seq x$ pair-wise different, 
+$\phi$ injective, $\dom(\phi) = \roles \aK$, ${\it range}(\phi) = [0..|\seq x|]$ 
+and $\phi(\rho) = 0$.
+
 
 The notions of free and defined names, well-sorted and closed terms are straightforwardly 
 extended to local types. 
@@ -174,7 +179,7 @@ its enabled branches.
 	{LSum}
 \\[25pt]
 \mathrule
-	{\envmv, \arole : \aL\sust X{\arec[X(\seq x)][\aL]}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
+	{\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
 	{\envmv, \arole : \alrec \red[\alpha] \envmv'}
 	{LRec}
 \end{array}
@@ -188,8 +193,8 @@ its enabled branches.
 The projection $\proj$ of a global type $\aK$ on a role
 $\arole \in \participants \cup \multiroles$ is defined as
 \[
-  \proj =
-  \begin{cases}
+  \proj =\left\{
+  \begin{array}{ll}
     \nil & \text{if }\ \arole \not \in \roles \aK
     \\
     \displaystyle{\sum_{i\in I}{\proj[(\apref_i.\aK_i)]}}
@@ -234,13 +239,30 @@ $\arole \in \participants \cup \multiroles$ is defined as
 %    &
 %    \text{if } \aK = \apref[\arole'][\arole][@][\aloc][.].\aK'
 %    \\
-    X
+    \alvar [@][\eta \rho]
     & \text{if }\ \aK = X
     \\
-    \arec[@][{(\proj[\aK'])}]
+    \multicolumn{2}{l}{
+     \alrec [@][x][{
+    	\ain[][{\asort[stop]}][x].\nil 
+	+ 
+	(\ain[][{\nu y:\asort[loc]}][x]. \proj[\aK'][@][\eta,X\mapsto y])}] [\phi \arole]}
+\\
     &
-    \text{if }\ \aK = \arec[@][\aK']
-  \end{cases}
+    \text{if }\ \aK = \arec[@][\aK'][\arole'],  \arole \neq \arole', x \textit{ and }  y \textit{ fresh}, 
+     \\
+    \multicolumn{2}{l}{
+     \alrec [@][@][{
+    	\arout[][{\asort[stop]}][x_1]\ldots\arout[][{\asort[stop]}][x_n].\nil 
+	+ 
+	\arout[][{\nu y_1:\asort[loc]}][x]\ldots\arout[][{\nu y_n:\asort[loc]}][x]. \proj[\aK'][@][\eta,X\mapsto \seq y]}] [\phi \arole]}
+\\
+    &
+    \text{if }\ \aK = \arec[@][\aK'][\arole], \dom{\phi} = \rho_1\ldots\rho_n, \seq x = x_1\ldots x_n, \seq y = y_1\ldots y_n,
+    \\
+    & \textit{ and }  \seq x  \textit{ and } \seq y \textit{ fresh}, 
+  \end{array}
+  \right.
 \]
 
 
