@@ -93,80 +93,131 @@ A one-to-one correspondence can be achieved by using fresh localities.
   \finex
 \end{example}
 
-\todo[inline]{We think we can also deal with situations like the following, in which 
-A creates a private session for B and C. 
-%
-\[
-  \apref[\amulti {A}][\amulti {B}][{\nu y: {\asort[loc]}}][{\aloc[l]}] \prefop
-\]
-\[
-  \apref[\amulti {A}][\amulti {C}][{y : {\asort[loc]}}][{\aloc[l]}] \prefop
-\]
-\[
-  \apref[\amulti {B}][\amulti {C}][\asort][{y}]
-\]
-}
+% \todo[inline]{{We think we can also deal with situations like the following, in which 
+% A creates a private session for B and C. 
+% %
+% \[
+%   \apref[\amulti {A}][\amulti {B}][{\nu y: {\asort[loc]}}][{\aloc[l]}] \prefop
+% \]
+% \[
+%   \apref[\amulti {A}][\amulti {C}][{y : {\asort[loc]}}][{\aloc[l]}] \prefop
+% \]
+% \[
+%   \apref[\amulti {B}][\amulti {C}][\asort][{y}]
+% \]
+% }}
 
-\eMnote{{definire $\grec[@][@][i]$ and fare un forward ref a ws}}
-\eMnote{rimossa interazione col broker nella scelta; utile esempio per
-  far vedere che non catturiamo tutti i systemi 'buoni' con wb}
-\begin{example}[Auction]\label{ex:auction}
-\todo[inline]{ma \`e lecito usare $\nu$ in $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]$ o dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$?}
+
+The following example shows the kind of protocols that our global
+types can model in a realistic scenario allowing us to combine
+together most of the features of our framework.
+%
+For readability, give $h \geq 0$, we use the notation
+$\grec[@][@][@][h]$ for a recursive protocol where the body $\aK$ is
+repeated at least $h$ times.
+%
+Formally,
 \[
-  \begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.] \prefop
+\grec[@][@][@][h] =
+\begin{cases}
+  \grec[@][@][@] & \text{if } h = 0
+  \\
+  \aK \sust{X}{\grec[@][@][@][h-1]} & \text{otherwise}
+\end{cases}
+\]
+%
+\eMnote{forse non e' un'asta...ma una contrattazione}
+\begin{example}[Auction]\label{ex:auction}
+\todo{ma \`e lecito usare $\nu$ in $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]$ o dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$?}
+%
+Several sellers and buyers participate to an auction
+triggered by a broker.
+%
+Sellers can offer many items and buyers can inspect the items and,
+when an item of interest is found, start a negotiation with the
+seller.
+\[
+\begin{array}{l}
+  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[start]}][{\aloc[m]}][.] \prefop
   \\  	
-  \grec[][X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop X}] \seqop
+  \grec[][X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop X}][1] \seqop
   \\  	
   \grec[\amulti{Buyer}][Y][{\left({
-      	\begin{array}{l}
-          \grec[][Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.] \prefop Z}] \seqop
+  \begin{array}{l}
+    \grec[][Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.] \prefop Z}] \seqop
+    \\
+    \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+    \\
+    \grec[\amulti{Seller}][W][\left({
+    \begin{array}{l}
+      \apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \prefop
+      \\
+      \qquad 
+      \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \prefop
+      \\
+      \qquad 
+      \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+      \\
+      \qquad
+          Y	
+      \\
+      \qquad
+      \chop
           \\
-          \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-          \\
-          \grec[\amulti{Seller}][W][\left({
-    	\begin{array}{l}
-	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \prefop
-	\\
-	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \prefop
-	\\
-	\qquad 
-	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-	\\
-	\qquad
-	Y	
-	\\
-	\qquad
-	\chop
-	\\
-	\qquad 
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\prefop
-%	\\
-%	\qquad 
-%	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\prefop
-%	\\ \qquad
-	Y	
-	\\
-	\qquad
-	\chop
-	\\
-	\qquad
-	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \prefop W
-	\\
-	\chop
-	\\
-        \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \prefop
-        \\\qquad
-        \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-          \\\qquad
-          Y
-	\end{array}
-	}\right)]
-     	\end{array}
-  }\right)}]
+      \qquad 
+      \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\prefop
+      %	\\
+      %	\qquad \apref[\amulti {Seller}][\ptp {broker}][i :
+      % {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\prefop
+      % \\ \qquad
+      Y	
+      \\
+      \qquad
+      \chop
+      \\
+      \qquad
+      \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \prefop W
+      \\
+      \chop
+      \\
+      \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \prefop
+      \\\qquad
+      \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+      \\
+      \qquad
+      Y
+    \end{array}
+    }\right)][1]
   \end{array}
+  }\right)}][1]
+\end{array}
 \]
+%
+The above global type captures the behaviour sketched above.
+%
+The broker is a participant an triggers sellers to start advertising
+their items on the marketplace location $\aloc[m]$.
+%
+Sellers and buyers are modelled as multiroles.
+%
+Each seller advertises one or more items at $\aloc[m]$
+%
+Each buyer can inspect the advertised items (line 3) and eventually
+start bargaining on a selected item of interest.
+%
+Note that the consumption at line 4 instantiates a private location
+$l$ between the instance of $\amulti{Seller}$ advertising the item and
+the instance of $\amulti{Buyer}$ interested in buying it.
+%
+Location $l$ is used to perform the bargaining phase.
+
+The seller instance controls the recursion
+$\grec[\amulti{Seller}][W][\cdots][1]$; the body of the recursive type
+lets the buyer sharing location $l$ to decide whether to stop the
+bargaining (by exchanging a $\asort[noway]$ tuple, in which case the
+seller re-advertises the unsold item at $\aloc[m]$) or to make an
+offer to the seller (which can then decide either to stop the
+bargaining, or to struck a deal, or ask for an higher offer).
 %
 \finex
 \end{example}

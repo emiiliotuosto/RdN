@@ -94,17 +94,18 @@ is more conveniently written as
 % Given an autonomous prefix $\apref$, we let $\pomsetsingle$ to be
 % the pomset with a single event labelled by $\apref$.
 %
-We will use the auxiliary operations on pomsets described below.
+%We will use the auxiliary operations on pomsets described below.
 %
-Define the (disjoint) union of two pomsets $\apom$ and $\apom'$ as
-\[
-  \apom \pomsetcup \apom' =
-  [\esetof{\apom} \uplus \esetof{\apom'},
-  \leqof{\apom} \uplus \leqof{\apom'},
-  \alfof{\apom} \uplus \alfof{\apom'}]
-\]
+% Define the (disjoint) union of two pomsets $\apom$ and $\apom'$ as
+% \[
+%   \apom \pomsetcup \apom' =
+%   [\esetof{\apom} \uplus \esetof{\apom'},
+%   \leqof{\apom} \uplus \leqof{\apom'},
+%   \alfof{\apom} \uplus \alfof{\apom'}]
+% \]
+%
 The sequential composition of $\apom$ and $\apom'$ composes an
-instance of $\apom'$ with every maximal event of $\apom$.
+\quo{copy} of $\apom'$ with every maximal event of $\apom$.
 %
 Formally, for each $\ae \in \max \apom$, let
 $\apom'_{\ae} = [\{\ae\} \times \eset_{\apom'}, \leq, \alf]$ where
@@ -121,11 +122,21 @@ Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and define
   \alfof{\apom} \uplus \bigcup_{\ae \in \max \apom}\alfof{\apom'_{\ae}}]
 \]
 where $\leq$ is the reflexo-transitive closure of
-$\leqof{\apom} \cup \bigcup_{\ae \in \max \apom}\leqof{\apom'_{\ae}}
-\cup \leqof{\apom'} \cup \{(\ae,(\ae,\ae')) \sst \ae \in
-\esetof{\apom} \land (\ae,\ae') \in \esetof{\apom'_{\ae}} \land
-\roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae')}\}$ (recall
-that the labels of events are autonomous prefixes for which
+\[
+\leqof{\apom} \cup \leqof{\apom'} \cup
+\bigcup_{\ae \in \max \apom}\leqof{\apom'_{\ae}}
+\cup
+\bigcup_{\scriptsize
+  \begin{array}{c}
+\ae \in
+\esetof{\apom}
+\\
+(\ae_1,\ae_2) \in \esetof{\apom'_{\ae}}
+  \end{array}
+} \{(\ae,(\ae_1,\ae_2)) \sst 
+\roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae_2)}\}
+\]
+(recall that the labels of events are autonomous prefixes for which
 $\roles{}$ is a singleton).
 %
 \eMnote{{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}}
@@ -227,6 +238,7 @@ and
     }[]
     \right\}
 \end{align*}
+\eMnote{le label delle $\ae_i$ forse dovrebbero essere $\arole''$}
 
 We first give semantics of prefixes.
 \begin{align*}
