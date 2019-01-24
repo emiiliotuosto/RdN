@@ -1,0 +1,179 @@
+We give a few simple global types (\cref{ex:cs,ex:CS,ex:CSx,ex:CSl})
+to highlight some peculiarities of our choreographies as well as a
+more complex example (\cref{ex:auction}) to illustrate the type of
+protocol our choreographies can capture.
+
+\begin{example}\label{ex:cs}
+  Consider the following global type that describes the interaction of
+  a client $\ptp c$ with a simple service $\ptp s$ that converts
+  integers into strings.
+  \[
+    \aK_\eqref{ex:cs} =
+    \apref[\ptp c][\ptp s][{\asort[int]}][{\aloc[l]}]  \prefop
+    \apref[\ptp s][\ptp c][{\asort[str]}][{\aloc[l]}]
+  \]
+  The client $\ptp c$ produces an integer value on the locality
+  $\aloc$.
+  %
+  This tuple must be consumed by the server $\ptp s$, which produces
+  back the converted string for the client.
+  %
+  \finex
+\end{example}
+
+Elaborating on the previous example we now discuss a few features of
+our setting.
+
+\begin{example}\label{ex:CS}
+  Assume that we consider client and server in \cref{ex:cs} as
+  multiroles instead of single participants, and write
+  \[
+    \aK_\eqref{ex:CS} =
+    \apref[\amulti {C}][\amulti {S}][{\asort[int]}][{\aloc[l]}] \prefop
+    \apref[\amulti {S}][\amulti {C}][{\asort[str]}][{\aloc[l]}]
+  \]
+  In this case, $\aK_\eqref{ex:CS}$ states that each integer produced by a client
+  will be consumed by a server, which will in turn produce a string
+  for one of the clients.
+\end{example}
+The type in \cref{ex:CS} does not ensure that clients consume the
+string conversion of the integer they produced, because all tuples are put at the same location $\aloc[l]$.
+%
+Name binders can be used to correlate tuples.
+%
+\begin{example}\label{ex:CSx}
+  Consider
+  \[
+    \aK_\eqref{ex:CSx} =
+    \apref[\amulti {C}][\amulti {S}][{\nu x:\asort[int]}][{\aloc[l]}] \prefop
+    \apref[\amulti {S}][\amulti {C}][{x : {\asort[int]} \cdot {\asort[str]} }][{\aloc[l]}]
+  \]
+  $\aK_\eqref{ex:CSx}$ associates a fresh identifier $x$ to each value produced by
+  a client and consumed by a server.
+  %
+  Despite the identifier is known only to the communicating instances,
+  this does not forbid two clients to generate the same integer value.
+  %
+  Basically, the name $x$ allows to express constraints about the flow
+  of values.
+  %
+  In particular, $x : \asort[int]$ in the second interaction states
+  that a server must generate a tuple that contains the consumed
+  integer.
+  %
+  Analogously, each client must consume a tuple matching the produced
+  integer.
+  %
+  \finex
+\end{example}
+The choreography in \cref{ex:CSx} does not establishes a one-to-one
+association between instances of $\amulti C$ and $\amulti S$.
+%
+In fact, an instance of $\amulti C$ not necessarily interacts with the
+same instance of $\amulti S$ in the two communications when two
+instances of $\amulti C$ generate the same integer in the first
+interaction.
+%
+A one-to-one correspondence can be achieved by using fresh localities.
+\begin{example}\label{ex:CSl}
+  Consider
+  \[
+    \aK_\eqref{ex:CSl} = 
+    \apref[\amulti {C}][\amulti {S}][{{\asort[int]} \cdot \nu x: {\asort[loc]}}][{\aloc[l]}]  \prefop
+    \apref[\amulti {S}][\amulti {C}][{{\asort[str]}}][{x}]
+  \]
+  %
+  A client generates a fresh locality identified by $x$, which is then
+  used as the locality for the subsequent communication.
+  %
+  Since the name $x$ is known only to the two communicating instances,
+  the second interaction can only take place between the two instances
+  that know the locality $x$.
+  %
+  \finex
+\end{example}
+
+\todo[inline]{We think we can also deal with situations like the following, in which 
+A creates a private session for B and C. 
+%
+\[
+  \apref[\amulti {A}][\amulti {B}][{\nu y: {\asort[loc]}}][{\aloc[l]}] \prefop
+\]
+\[
+  \apref[\amulti {A}][\amulti {C}][{y : {\asort[loc]}}][{\aloc[l]}] \prefop
+\]
+\[
+  \apref[\amulti {B}][\amulti {C}][\asort][{y}]
+\]
+}
+
+\eMnote{{definire $\grec[@][@][i]$ and fare un forward ref a ws}}
+\eMnote{rimossa interazione col broker nella scelta; utile esempio per
+  far vedere che non catturiamo tutti i systemi 'buoni' con wb}
+\begin{example}[Auction]\label{ex:auction}
+\todo[inline]{ma \`e lecito usare $\nu$ in $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]$ o dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$?}
+\[
+  \begin{array}{l}
+  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[makeOffer]}][{\aloc[m]}][.] \prefop
+  \\  	
+  \grec[][X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop X}] \seqop
+  \\  	
+  \grec[\amulti{Buyer}][Y][{\left({
+      	\begin{array}{l}
+          \grec[][Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.] \prefop Z}] \seqop
+          \\
+          \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+          \\
+          \grec[\amulti{Seller}][W][\left({
+    	\begin{array}{l}
+	\apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \prefop
+	\\
+	\qquad 
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \prefop
+	\\
+	\qquad 
+	\apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+	\\
+	\qquad
+	Y	
+	\\
+	\qquad
+	\chop
+	\\
+	\qquad 
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\prefop
+%	\\
+%	\qquad 
+%	\apref[\amulti {Seller}][\ptp {broker}][i : {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\prefop
+%	\\ \qquad
+	Y	
+	\\
+	\qquad
+	\chop
+	\\
+	\qquad
+	\apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \prefop W
+	\\
+	\chop
+	\\
+        \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \prefop
+        \\\qquad
+        \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+          \\\qquad
+          Y
+	\end{array}
+	}\right)]
+     	\end{array}
+  }\right)}]
+  \end{array}
+\]
+%
+\finex
+\end{example}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
