@@ -1,3 +1,5 @@
+% !TEX root =  main.tex
+
 We give a few simple global types (\cref{ex:cs,ex:CS,ex:CSx,ex:CSl})
 to highlight some peculiarities of our choreographies as well as a
 more complex example (\cref{ex:auction}) to illustrate the type of
@@ -83,7 +85,7 @@ A one-to-one correspondence can be achieved by using fresh localities.
     \apref[\amulti {S}][\amulti {C}][{{\asort[str]}}][{x}]
   \]
   %
-  A client generates a fresh locality identified by $x$, which is then
+  Each client generates a fresh locality identified by $x$, which is then
   used as the locality for the subsequent communication.
   %
   Since the name $x$ is known only to the two communicating instances,
@@ -112,7 +114,7 @@ The following example shows the kind of protocols that our global
 types can model in a realistic scenario allowing us to combine
 together most of the features of our framework.
 %
-For readability, give $h \geq 0$, we use the notation
+For readability, given $h \geq 0$, we use the notation
 $\grec[@][@][@][h]$ for a recursive protocol where the body $\aK$ is
 repeated at least $h$ times.
 %
@@ -128,7 +130,6 @@ Formally,
 %
 \eMnote{forse non e' un'asta...ma una contrattazione}
 \begin{example}[Auction]\label{ex:auction}
-\todo{ma \`e lecito usare $\nu$ in $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}]$ o dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$?}
 %
 Several sellers and buyers participate to an auction
 triggered by a broker.
@@ -193,21 +194,23 @@ seller.
 \end{array}
 \]
 %
-The above global type captures the behaviour sketched above.
+The above global type formalises the protocol that participants should follow.
+%captures the behaviour sketched above.
 %
-The broker is a participant an triggers sellers to start advertising
+The broker is a participant that triggers sellers to start advertising
 their items on the marketplace location $\aloc[m]$.
 %
 Sellers and buyers are modelled as multiroles.
 %
-Each seller advertises one or more items at $\aloc[m]$
+Each seller advertises one or more items at $\aloc[m]$ (see recursion at line~2).
 %
-Each buyer can inspect the advertised items (line 3) and eventually
+Each buyer can inspect the advertised items (line~3) and eventually
 start bargaining on a selected item of interest.
 %
-Note that the consumption at line 4 instantiates a private location
+Note that the consumption at line~4 instantiates a private location
 $l$ between the instance of $\amulti{Seller}$ advertising the item and
 the instance of $\amulti{Buyer}$ interested in buying it.
+\todo{RB: ma nella linea 4 perch\'e serve $\nu$ davanti a $l$? non dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$? il valore \`e quello settato dal seller come per $i$ e $p$.}
 %
 Location $l$ is used to perform the bargaining phase.
 
