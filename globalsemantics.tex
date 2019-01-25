@@ -90,6 +90,22 @@ is more conveniently written as
     \draw[->] (out2) -- (in3);
   }[][][node distance = .5cm and .1cm]
 \]
+
+The labels of the events in our semantics are (decorations of)
+autonomous prefixes $\apref$: labels are either just autonomous
+prefixes $\apref$ or of the form $\alabel$ with $\apref$ an autonomous
+prefix.
+%
+Intuitively, a label $\alabel[@][][\arole][@][@][.]$
+(resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
+$i^\mathit{th}$ instance of $\arole$ reads (resp. produced) a tuple of
+type $\atuple$.
+%
+Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
+can be performed by any instance of the role in $\apref$.
+% 
+Hereafter, we only deal with pomsets labelled by a decorated
+autonomous prefix as described above.
   
 % Given an autonomous prefix $\apref$, we let $\pomsetsingle$ to be
 % the pomset with a single event labelled by $\apref$.
@@ -152,19 +168,6 @@ $\roles{}$ is a singleton).
 % \]
 % The operation $\_^h$ extends element-wise to sets of pomsets.
 
-The labels of the events in our semantics are (decorations of)
-autonomous prefixes $\apref$: labels are either just autonomous
-prefixes $\apref$ or of the form $\alabel$ with $\apref$ an autonomous
-prefix.
-%
-Intuitively, a label $\alabel[@][][\arole][@][@][.]$
-(resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
-$i^\mathit{th}$ instance of $\arole$ reads (resp. produced) a tuple of
-type $\atuple$.
-%
-Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
-can be performed by any instance of the role in $\apref$.
-% 
 The semantics of a global type builds upon \emph{basic pomsets} $\bp$
 of prefixes $\apref$; in fact, the semantics of a global type is build
 by taking sets of disjoint unions of basic pomsets of prefixes
