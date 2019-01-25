@@ -30,8 +30,8 @@ processes enacting the behaviour specified in a choreography.
 Participants are unit types while multiroles account for multiple
 instances of processes all performing actions according to their role.
 %
-\todo{RB: forse \`e importante dire che tutti i multiruoli sono disgiunti, giusto?}
-\todo{eM: direi di no; in the long run vorremmo che un processo possa coprire piu' ruoli}
+%\todo{RB: forse \`e importante dire che tutti i multiruoli sono disgiunti, giusto?}
+%\todo{eM: direi di no; in the long run vorremmo che un processo possa coprire piu' ruoli}
 
 %
 Let us first define the \emph{prefixes} used in global types
@@ -76,7 +76,9 @@ More precisely, when a prefix surrounds a tuple $\atuple$ with round
 brackets then $\atuple$ is meant to be consumed otherwise it is meant
 to be read-only.
 %
-We call \emph{read-only outputs} and \emph{reads}) the autonomous
+We call \emph{read-only outputs} and \emph{reads})
+\todo{RB: parentesi da rimuovere? controllare tutta la frase}
+ the autonomous
 read-only prefixes, outputs and inputs prefixes those prescribing the
 consumption of tuples, and consuming (resp. read-only) interactions
 the interations prescribing inputs (resp. reads).
@@ -91,13 +93,13 @@ Global types $\aK$ have the following syntax
                   X \bnfmid
                   \grec
 \end{eqnarray*}
-% \todo{RB: forse il simbolo $\seqop$ \`e misleading: se ho capito bene parlando con Emilio di tratta di un una specie di parallelo asimmetrico, potremmo usare $>$ o qualche simbolo simile?}
+\todo{RB: avendo $\seqop$ direi che il parallelo non \`e necessario}
 where $I$ is a finite set of indexes; we write $\nil$ for
 $\asum[@][@][][]$ when $I = \emptyset$ (we omit trailing occurrences
 of $\nil$) and $\apref_j.\aK_j$ instead of $\asum[@][@][][]$ when
 $I = \{j\}$.
 %
-The set $\roles \aK$ of roles of $\aK$ is defined in the obvious way.
+The set $\roles \aK$ of roles of $\aK$ is the set of roles that are mentioned in $\aK$ and it is defined in the obvious way.
 
 The syntax of global types features prefix guarded choices, sequential
 composition, and recursion.
@@ -110,6 +112,7 @@ role $\arole \in \roles \aK$
 % locations in $\cod(\aphi)$ do not occur in $\aK$; intuitively,
 % $\arole$
 deciding when the recursion ends.
+\todo{RB: pi\`u sotto viene usata la notazione $\alvar$ invece di $X$: bisogna cambiare la grammatica delle coreografie?}
 % and, for all $\arole' \neq \arole$ in $\aK$, the location
 % $\aphi(\arole')$ is used to communicate the decision of $\arole$ to
 % $\arole'$.
@@ -118,8 +121,8 @@ We omit the decoration $\arole$ when $\roles \aK = \{\arole\}$.
 
 We extend the notions of defined and free names to global types as
 follows:
-\todo{RB: ma la $\nu$ pu\`o essere usata anche in una tupla di input/read (senza output)?}
-\todo{eM: si, ma poi non sincronizza}
+%\todo{RB: ma la $\nu$ pu\`o essere usata anche in una tupla di input/read (senza output)?}
+%\todo{eM: si, ma poi non sincronizza}
 \[
  \fn{\apref[\arole][@][@][\alocvar]}
  = \fn \atuple \cup \{\alocvar \mapsto \asort[loc]\} 
@@ -166,12 +169,12 @@ The set of well-sorted terms are defined inductively as follows:
 \begin{itemize}
 \item $\apref$ is well-sorted if $\fn\apref\cap\dn\apref = \emptyset$ and  
 $\consistent{\names\apref}$, i.e., there are no clashes/inconsistencies in the sorts of 
-the names in $\atuple$ and the locality $\alocvar$
+the names in the component $\atuple$ of $\pi$ and the locality $\alocvar$ mentioned in $\pi$;
 \item $\asum[@][@][][]$ is well-sorted if for all ${i\in I}$ both
-  $\apref$ and ${\aK_i}$ are well-sorted and
-  $\consistent{\names {\apref_i.\aK_i}}$
+  $\apref_i$ and ${\aK_i}$ are well-sorted and
+  $\consistent{\names {\apref_i.\aK_i}}$;
 \item $\aK_1 \seqop \aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
-  well-sorted and $\consistent{\names{\aK_1 \seqop \aK_2}}$
+  well-sorted and $\consistent{\names{\aK_1 \seqop \aK_2}}$;
 \item $X$ is well-sorted and $\grec$ is well-sorted if $\aK$ is
   well-sorted.
 \end{itemize}
@@ -179,6 +182,9 @@ the names in $\atuple$ and the locality $\alocvar$
 
 We consider terms up-to $\alpha$-renaming of defined names and
 recursion variables.
+%
+Correspondingly, substitutions are capture avoiding, in the sense that defined names can be renamed to fresh names before any substitution is applied to a term.
+\todo{RB: aggiunto}
 %
 As usual we say that a global type $\aK$ is \emph{closed} when it does
 not contain free occurrences of recursion variables $X$ or free

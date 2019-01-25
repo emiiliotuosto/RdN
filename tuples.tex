@@ -1,9 +1,9 @@
 % !TEX root =  main.tex
 %
 
-We consider 
-
-We consider a set of localities $\locset$ ranged over by $\aloc$ (and
+We consider a set of variables $\varset$ 
+\todo{RB: aggiunto}
+and a set of localities $\locset$ ranged over by $\aloc$ (and
 use $\alocvar$ to range over $\locset\cup\varset$) and we let $\asort$
 range over basic sorts which include $\asort[int]$, $\asort[bool]$,
 $\asort[str]$ and sort $\asort[loc]$ of \emph{localities}.
@@ -19,6 +19,7 @@ derived from the following grammar:
                       \atuple \cdot \atuple \bnfmid
                       \wildcard
 \end{eqnarray*}
+\todo{RB: spiegare il tipo $\wildcard$ (any type? empty tuple?)}
 Fields $\nu x : \asort$ are binders that \emph{define}
 $x \in \varset$.
 %
@@ -74,9 +75,9 @@ conditions hold:
 %
 Hereafter, we assume all tuples to be well-sorted.
 %
-Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions for
-well-sorted tuples.
-\todo{RB: in che senso funzioni parziali? perch\'e assegnano sort a nomi? HM: Si, in questo senso.}
+Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions (from names to sorts)
+\todo{RB: aggiunto}
+for well-sorted tuples.
 
 A capture-avoiding
 \todo{RB: toglierei capture-avoiding aggiungendo condizioni esplicite su $x,y,\atuple$.}
@@ -143,7 +144,9 @@ with $\sigma_2$.
 
 Tuple types \emph{match} by producing a substitution; formally given
 by the partial function
-$\matches : \tupleset \times \tupleset \to \Sigma$ defined such as
+$\matches : \tupleset \times \tupleset \to \Sigma$ defined 
+\todo{RB: in $\atuple \matches \atuple'$ si richiede anche che i defined names di $\atuple$ e $\atuple'$ siano diversi?}
+such as
 %\eMnote{add typing env}
 \[
   \atuple \matches \atuple' \generates
@@ -173,7 +176,7 @@ $\matches : \tupleset \times \tupleset \to \Sigma$ defined such as
     \textit{undef} & \textit{otherwise}
    \end{cases}
 \]
-\todo{RB: cambiato caso $\atuple = \atuple_1 \cdot \atuple_2$}
+\todo{RB: cambiato caso $\atuple = \atuple_1 \cdot \atuple_2$: controllare se la definizione \`e corretta}
 
 %
 %
