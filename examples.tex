@@ -2,7 +2,7 @@
 
 We give a few simple global types (\cref{ex:cs,ex:CS,ex:CSx,ex:CSl})
 to highlight some peculiarities of our choreographies as well as a
-more complex example (\cref{ex:auction}) to illustrate the type of
+more complex example (\cref{ex:market}) to illustrate the type of
 protocol our choreographies can capture.
 
 \begin{example}\label{ex:cs}
@@ -128,77 +128,78 @@ Formally,
 \end{cases}
 \]
 %
-\eMnote{forse non e' un'asta...ma una contrattazione}
-\begin{example}[Auction]\label{ex:auction}
-%
-Several sellers and buyers participate to an auction
-triggered by a broker.
-%
-Sellers can offer many items and buyers can inspect the items and,
-when an item of interest is found, start a negotiation with the
-seller.
-\[
-\begin{array}{l}
-  \apref[\ptp {broker}][\amulti {Seller}][{\atuple[start]}][{\aloc[m]}][.] \prefop
-  \\  	
-  \grec[][X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop X}][1] \seqop
-  \\  	
-  \grec[\amulti{Buyer}][Y][{\left({
-  \begin{array}{l}
-    \grec[][Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.] \prefop Z}] \seqop
-    \\
-    \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-    \\
-    \grec[\amulti{Seller}][W][\left({
+% \eMnote{forse non e' un'asta...ma una contrattazione}
+\begin{example}[Market place]\label{ex:market}
+  % 
+  Several sellers and buyers use a market place provided by a
+  broker.
+  % 
+  Sellers can put on sale (several) items and buyers can inspect them.
+  %
+  When an item of interest is found, the client can starts a negotiation
+  with the seller.
+  % 
+  This protocol can be formalised by the following global type.
+  \[
     \begin{array}{l}
-      \apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \prefop
+      \apref[\ptp {broker}][\amulti {Seller}][{\atuple[start]}][{\aloc[m]}][.] \prefop
       \\
-      \qquad 
-      \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \prefop
-      \\
-      \qquad 
-      \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-      \\
-      \qquad
-          Y	
-      \\
-      \qquad
-      \chop
+      \grec[][X][{\apref[\amulti {Seller}][@][{{\asort[str]} \cdot {\asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop X}][1] \seqop
+      \\  	
+      \grec[\amulti{Buyer}][Y][{\left({
+      \begin{array}{l}
+        \grec[][Z][{\apref[@][\amulti {Buyer}][{{\asort[str]} \cdot {\asort[int]} \cdot {\asort[loc]}}][{\aloc[m]}][.] \prefop Z}] \seqop
+        \\
+        \apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+        \\
+        \grec[\amulti{Seller}][W][\left({
+        \begin{array}{l}
+          \apref[\amulti {Buyer}][\amulti {Seller}][{i : \asort[{str}] \cdot {o : \asort[int]} }][{l}] \prefop
           \\
-      \qquad 
-      \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\prefop
-      %	\\
-      %	\qquad \apref[\amulti {Seller}][\ptp {broker}][i :
-      % {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\prefop
-      % \\ \qquad
-      Y	
-      \\
-      \qquad
-      \chop
-      \\
-      \qquad
-      \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \prefop W
-      \\
-      \chop
-      \\
-      \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \prefop
-      \\\qquad
-      \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
-      \\
-      \qquad
-      Y
+          \qquad 
+          \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[quit]}][{l}] \prefop
+          \\
+          \qquad 
+          \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+          \\
+          \qquad
+          Y	
+          \\
+          \qquad
+          \chop
+          \\
+          \qquad 
+          \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[sold]}][{l}]\prefop
+          %	\\
+          %	\qquad \apref[\amulti {Seller}][\ptp {broker}][i :
+          % {\asort[str]} \cdot o : {\asort[int]} ][{\aloc[m]}]\prefop
+          % \\ \qquad
+          Y	
+          \\
+          \qquad
+          \chop
+          \\
+          \qquad
+          \apref[\amulti {Seller}][\amulti {Buyer}][{\asort[more]}][{l}] \prefop W
+          \\
+          \chop
+          \\
+          \apref[\amulti {Buyer}][\amulti {Seller}][{\asort[{noway}]}][{l}] \prefop
+          \\\qquad
+          \apref[\amulti {Seller}][@][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l : \asort[loc]}}][{\aloc[m]}] \prefop
+          \\
+          \qquad
+          Y
+        \end{array}
+        }\right)][1]
+      \end{array}
+      }\right)}][1]
     \end{array}
-    }\right)][1]
-  \end{array}
-  }\right)}][1]
-\end{array}
-\]
-%
-The above global type formalises the protocol that participants should follow.
-%captures the behaviour sketched above.
-%
-The broker is a participant that triggers sellers to start advertising
-their items on the marketplace location $\aloc[m]$.
+  \]
+  % captures the behaviour sketched above.
+  % 
+  The broker is a participant that triggers sellers to start
+  advertising their items on the marketplace location $\aloc[m]$.
 %
 Sellers and buyers are modelled as multiroles.
 %

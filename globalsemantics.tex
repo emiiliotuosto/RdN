@@ -173,18 +173,36 @@ of prefixes $\apref$; in fact, the semantics of a global type is build
 by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
 %
-Let us define
-$\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$ for an
-autonomous prefix $\apref[@][@][][]$, whereas for $h \geq 1$ and 
-$\arole,\arole' \in \roleset$,
+The intended semantics of an autonomous output is that the generated
+tuple type can be accessed by any instance of another role but this is
+not compulsory.
+%
+Hence, a tuple generated with an autonomous output may also not be
+accessed at all.
+%
+To capture this semantics for an autonomous prefix $\apref[@][@][][]$
+we define $\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$.
+%
+The semantics interactions is slightly more subtle.
+%
+Firstly, tuple types generated in an interaction are meant to be
+eventually accessed by the some instance of a role unless they are
+read-only (in which case they can be also not accessed); secondly, for
+consuming interactions we require that the tuple type is actually
+consumed by an instance of the receiving role, but allow other an
+arbitrary read-only access to such tuple types by other instance of
+the receiving role.
+%
+Therefore, we allow $\asort$ to include element of $\roleset$ and for
+$h \geq 1$ and $\arole,\arole' \in \roleset$, we let
 \begin{align*}
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
   &
     \begin{cases}
       \left\{
         \pomsetrep{
-        \node (out) {$\alabel[@][\arole][][@][@][.]$};
-        \node[below = of out] (in) {$\alabel[@][][\arole'][@][@][.]$};
+        \node (out) {$\alabel[@][\arole][][\arole' \cdot \atuple][@][.]$};
+        \node[below = of out] (in) {$\alabel[@][][\arole'][\arole' \cdot \atuple][@][.]$};
         \draw[->] (out) -- (in);
       }[]\right\}
       &
@@ -193,7 +211,7 @@ $\arole,\arole' \in \roleset$,
       \bigcup_{h \geq 1}
       \left\{
         \pomsetrep{
-          \node (out) {$\alabel[@][\arole][][@][@][.]$};
+          \node (out) {$\alabel[@][\arole][][\arole' \cdot \atuple][@][.]$};
           \node[below left = of out] (rd1) {$\ae_1$};
           \node[below = of out] (dots) {};
           \node[below right = of out] (rd2) {$\ae_h$};
@@ -202,12 +220,12 @@ $\arole,\arole' \in \roleset$,
           \draw[dotted] (rd1) -- (rd2);
         }[{\big(\scriptsize
         \begin{array}[c]{l}
-          \ae_j \mapsto \\ \apref[][\arole'][@][@][.]
+          \ae_j \mapsto \\ \apref[][\arole'][\arole' \cdot \atuple][@][.]
         \end{array}
         \big)_{1 \leq j \leq h}}][][node distance = 1cm and -.25cm]\right\}
       \cup
       \left\{
-        \pomsetrep{\node {$\alabel[@][\arole][][@][@][.]$}}[]
+        \pomsetrep{\node {$\alabel[@][\arole][][\arole' \cdot \atuple][@][.]$}}[]
       \right\}
     &
     \text{otherwise}
@@ -221,22 +239,22 @@ and
   &
     \bigcup_{h \geq 1}\left\{
     \pomsetrep{
-    \node (out) {$\alabel[@][\arole][]$};
+    \node (out) {$\alabel[@][\arole][][\arole' \cdot \atuple]$};
     \node[below left = of out] (rd1) {$\ae_1$};
     \node[below = of out] (dots) {};
     \node[below right = of out] (rd2) {$\ae_h$};
-    \node[below = of dots] (in) {$\alabel[@][][\arole']$};
+    \node[below = of dots] (in) {$\alabel[@][][\arole'][\arole' \cdot \atuple]$};
     \draw[->] (out) -- (rd1);
     \draw[->] (out) -- (rd2);
     \draw[->] (rd1) -- (in);
     \draw[->] (rd2) -- (in);
     \draw[dotted] (rd1) -- (rd2);
-    }[(\ae_j \mapsto {\apref[][\arole'][@][@][.]})_{1 \leq j \leq h}][][node distance = 1cm and -.25cm]\right\}
+    }[(\ae_j \mapsto {\apref[][\arole'][\arole' \cdot \atuple][@][.]})_{1 \leq j \leq h}][][node distance = 1cm and -.25cm]\right\}
     \cup
     \left\{
     \pomsetrep{
-    \node (out) {$\alabel[@][\arole][]$};
-    \node[below = of out] (in) {$\alabel[@][][\arole']$};
+    \node (out) {$\alabel[@][\arole][][\arole' \cdot \atuple]$};
+    \node[below = of out] (in) {$\alabel[@][][\arole'][\arole' \cdot \atuple]$};
     \draw[->] (out) -- (in);
     }[]
     \right\}
