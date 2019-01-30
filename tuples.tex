@@ -171,7 +171,7 @@ such as
     \\
     \sust x y 
     &
-    \text{if  } (\atuple = \nu x : \asort \land \atuple' = y: \asort) \vee  (\atuple' = \nu y : \asort \land \atuple = x: \asort) 
+    \text{if  } (\atuple = \nu y : \asort \land \atuple' = x: \asort) \vee  (\atuple' = \nu y : \asort \land \atuple = x: \asort) 
     \\
     \textit{undef} & \textit{otherwise}
    \end{cases}
@@ -179,7 +179,7 @@ such as
 \todo{RB: cambiato caso $\atuple = \atuple_1 \cdot \atuple_2$:
   controllare se la definizione \`e corretta}
 %
-\todo{eM: non dovrebbe essere $\sust y x$?}
+\todo{eM: non dovrebbe essere $\sust y x$? RB: cambiato come suggerisce eM}
 %
 We write $\atuple \matches \atuple'$ when
 $\atuple \matches \atuple' = \sigma$ for a substitution
