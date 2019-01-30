@@ -1,7 +1,7 @@
 % !TEX root =  main.tex
 
 We give semantics to global types using \emph{partially-ordered
-  multi-set} (pomsets for short).
+  multi-sets} (pomsets for short).
 %
 Following~\cite{gaifman1987partial}, a \emph{pomset} is an isomorphism
 class of labelled partially-ordered sets (lposet) where, fixed a set
@@ -31,7 +31,7 @@ and $\ae'$ model different occurrences of the same action.
 In the following, $[\eset, \leq, \alf]$ denotes the isomorphism class
 of $(\eset, \leq, \alf)$, symbols $\apom,\apom', \dots$ (resp.
 $\aR, \aR', \dots$) range over (resp. sets of) pomsets, and we assume
-that pomsets $\apom$ contain at least one lposet which will possibly
+that pomset $\apom$ contains at least one lposet which will possibly
 be referred to as $(\esetof \apom$, $\leqof \apom, \alfof \apom)$.
 %
 The empty pomset is denoted as $\emptypom$.
@@ -91,6 +91,23 @@ is more conveniently written as
   }[][][node distance = .5cm and .1cm]
 \]
 
+The labels of the events in our semantics are (decorations of)
+autonomous prefixes $\apref$: labels are either just autonomous
+prefixes $\apref$ or of the form $\alabel$ with $\apref$ an autonomous
+prefix.
+%
+Intuitively, a label $\alabel[@][][\arole][@][@][.]$
+(resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
+$i^\mathit{th}$ instance of $\arole$ reads (resp. produces) a tuple of
+type $\atuple$.
+%
+Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
+can be performed by any instance of the role in $\apref$.
+% 
+Hereafter, we only deal with pomsets labelled by a decorated
+autonomous prefix as described above.
+  
+
 % Given an autonomous prefix $\apref$, we let $\pomsetsingle$ to be
 % the pomset with a single event labelled by $\apref$.
 %
@@ -103,6 +120,7 @@ is more conveniently written as
 %   \leqof{\apom} \uplus \leqof{\apom'},
 %   \alfof{\apom} \uplus \alfof{\apom'}]
 % \]
+
 
 In the definition of our semantics we follow a principle that
 distinguishes the nature of autonomous and interaction prefixes.
@@ -129,6 +147,19 @@ To capture this semantics we label events with (decorations of)
 autonomous prefixes $\apref$: labels are either just autonomous
 prefixes $\apref$ or of the form $\alabel$ with $\apref$ an autonomous
 prefix.
+\todo{eM: qui}
+%
+%
+% Finally, for $h \geq 1$ and a pomset $\apom$ we define
+% \[
+%   \apom^h =
+%   \begin{cases}
+%     r & \text{if } h = 1
+%     \\
+%     r \pomsetcup r^{h-1} & \text{if } h > 1
+%   \end{cases}
+% \]
+% The operation $\_^h$ extends element-wise to sets of pomsets.
 %
 Intuitively, a label $\alabel[@][][\arole][@][@][.]$
 (resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
@@ -184,12 +215,14 @@ include elements of $\roleset$ and define
     \cup
     \left\{
     \pomsetrep{
-    \node (out) {$\alabel[@][\arole][][\arole' \cdot \atuple]$};
+    \node (out) {$\alabel[@][\arole][][\arole' \cdot \atuple']$};
     \node[below = of out] (in) {$\alabel[@][][\arole'][\arole' \cdot \atuple]$};
     \draw[->] (out) -- (in);
     }[]
     \right\}
 \end{align*}
+where $\atuple'$ is obtained by removing $\nu$-bound names with
+$\wildcard$ in $\atuple$.
 
 We can now give the semantics of prefixes as follows
 \begin{align*}
@@ -236,61 +269,8 @@ types namely those enjoying \emph{well-sequencedness} and
 With respect to standard notions, however, these concepts have some
 peculiarities which we now discuss.
 
-Let us start with well-sequencedness.
 %
-The sequential composition of pomsets $\apom$ and $\apom'$ has to
-order the events triggered by a some instance and those corresponding
-to autonomous outputs in $\apom$ with those corresponding to
-autonomous accesses in $\apom'$.
-% \quo{copy} of $\apom'$ with every maximal event of $\apom$.
-%
-Formally, given a pomset $\apom$, call \emph{unmatched output} an
-event $\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an
-output with tuple type $\atuple$ and for all $\ae'$ successors of
-$\ae$ in $\apom$, if $\alfof{\apom}(\ae')$ is an input with tuple type
-$\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$;
-similarly, call \emph{unmatched input} an event
-$\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an output
-with tuple type $\atuple$ and for all $\ae' \leqof \apom \ae$ in
-$\apom$, if $\alfof \apom (\ae')$ is an input with tuple type
-$\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$.
-%
-% for each $\ae \in \max \apom$, let
-% $\apom'_{\ae} = [\{\ae\} \times \eset_{\apom'}, \leq, \alf]$ where
-% $(\ae,\ae_1) \leq (\ae,\ae_2) \iff \ae_1 \leqof{\apom'} \ae_2$ and
-% $\alfof{\apom'_{\ae}} = (\ae,\ae') \mapsto \alfof{\apom'}(\ae')$ for
-% all $\ae' \in \esetof{\apom'}$.
-% %
-% Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and
-Assuming that $\apom$ and $\apom'$ are such that
-$\esetof \apom \cap \eset \apom' = \emptyset$, define
-\[
-  \rseq[\apom][\apom'] = 
-  [\esetof{\apom} \uplus \bigcup_{\ae \in \max \apom}\esetof{\apom'_{\ae}},
-  \leq,
-  \alfof{\apom} \uplus \bigcup_{\ae \in \max \apom}\alfof{\apom'_{\ae}}]
-\]
-where $\leq$ is the reflexo-transitive closure of
-$  \leqof{\apom} \cup
-  \leqof{\apom'} \cup \leq$
-where
-\[
-  \leq = 
-  \big\{(\ae, \ae') \in \esetof \apom \times \esetof{\apom'} \sst 
-  \begin{array}{l}
-    \roles{\alfof{\apom}(\ae)} = \roles{\alfof{\apom'}(\ae')}
-    \text{ or}
-    \\
-    (\ae \text{ unmatched output of $\atuple$} \land
-    \\
-    \ae' \text{ unmatched input of $\atuple'$} \land
-    \atuple \matches \atuple')
-  \end{array}
-  \big\}
-\]
-(recall that the labels of events are autonomous prefixes for which
-$\roles{}$ is a singleton).
-%
+% 
 %\eMnote{{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}}
 %
 % Finally, for $h \geq 1$ and a pomset $\apom$ we define
@@ -304,6 +284,10 @@ $\roles{}$ is a singleton).
 % \]
 % The operation $\_^h$ extends element-wise to sets of pomsets.
 
+\bigskip
+
+Let us start with well-sequencedness.
+%
 To explain the peculiarities of well-sequencedness, let us consider
 the following choreography
 \begin{align}\label{eq:seq}
@@ -335,24 +319,83 @@ either of the following holds:
   $\aloc$ in $\aK$ and $\atuple \matches \atuple'$
 \item $\aK = \aK_1 \seqop \aK_2$ and either $(\atuple, \aloc)$ is local to
   $\aK_1$ or   $(\atuple, \aloc)$ is local to $\aK_2$
-\item $\aK = \grec[@][@][@][\aK']$ and $(\atuple, \aloc)$ is local to
+\item $\aK = \grec[@][@][\aK']$ and $(\atuple, \aloc)$ is local to
   $\aK'$.
+% \todo{AC+RB: sintassi della ricorsione cambiata? A cosa serve $\aK'$?}
 \end{itemize}
 %
-A choreography $\aK_1 \seqop \aK_2$ is \emph{conflict-free} if for
-$i \neq j \in \{1,2\}$
+Our notion of well-sequencedness requires that there are no races
+tuple types: a choreography $\aK_1 \seqop \aK_2$ is
+\emph{conflict-free} if for $i \neq j \in \{1,2\}$
 %
 \begin{itemize}
 \item for all $(\atuple,\aloc)$ local to $\aK_i$ and for all
   $(\atuple', \aloc) \in \aK_j$, $\atuple \matches \atuple'$ implies
   $(\atuple', \aloc)$ is in a read-only prefix in $\aK_j$
-\item for all $(\atuple,\aloc)$ in a non-local consuming-input prefix
-  of $\aK_i$ and for all $(\atuple', \aloc)$ in an output prefix of
-  $\aK_j$, $\atuple \matches \atuple'$ implies $(\atuple',\aloc)$ is
-  in a consuming output prefix in $\aK_j$.
+\item for all $(\atuple,\aloc)$ in a consuming-input prefix of $\aK_i$
+  and non-local in $\aK_i$ and for all $(\atuple', \aloc)$ in an
+  output prefix of $\aK_j$, $\atuple \matches \atuple'$ implies
+  $(\atuple',\aloc)$ is in a consuming output prefix in $\aK_j$.
 \end{itemize}
-% such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a locality $\aloc$, \eMnote{Problema: $\aloc$ vs $\alocvar$}
+% such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a
+% locality $\aloc$, \eMnote{Problema: $\aloc$ vs $\alocvar$}
 
+We introduce the auxiliary operation $\rseq[][]$ that sequentially
+composes pomsets.
+%
+The sequential composition of $\apom$ and $\apom'$ has to order the
+events triggered by a some instance and those corresponding to
+autonomous outputs in $\apom$ with those corresponding to autonomous
+accesses in $\apom'$.
+% \quo{copy} of $\apom'$ with every maximal event of $\apom$.
+%
+Formally, given a pomset $\apom$, call \emph{unmatched output} an
+event $\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an
+output with tuple type $\atuple$ and for all $\ae'$ successors of
+$\ae$ in $\apom$, if $\alfof{\apom}(\ae')$ is an input with tuple type
+$\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$;
+similarly, call \emph{unmatched input} an event
+$\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an output
+with tuple type $\atuple$ and for all $\ae' \leqof \apom \ae$ in
+$\apom$, if $\alfof \apom (\ae')$ is an input with tuple type
+$\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$.
+%
+% for each $\ae \in \max \apom$, let
+% $\apom'_{\ae} = [\{\ae\} \times \eset_{\apom'}, \leq, \alf]$ where
+% $(\ae,\ae_1) \leq (\ae,\ae_2) \iff \ae_1 \leqof{\apom'} \ae_2$ and
+% $\alfof{\apom'_{\ae}} = (\ae,\ae') \mapsto \alfof{\apom'}(\ae')$ for
+% all $\ae' \in \esetof{\apom'}$.
+% %
+% Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and
+Assuming that $\apom$ and $\apom'$ are such that
+$\esetof \apom \cap \eset \apom' = \emptyset$,
+recall that the
+labels of events are autonomous prefixes for which $\roles{}$ is a
+singleton
+%
+\todo{AC: dove \`e scritto?}
+%
+and define
+\[
+  \rseq[\apom][\apom'] = 
+  \bigcup_{\scriptsize
+    \begin{array}{c}
+      \ae \text{ unmatched output of $\atuple$},
+      \\
+      \ae' \text{ unmatched input of $\atuple'$},
+      \\
+      \atuple \matches \atuple'
+    \end{array}
+  } \big\{
+  [\esetof{\apom} \uplus \esetof{\apom'},
+  \leq_{\ae,\ae'},
+  \alfof{\apom} \uplus \alfof{\apom'}]
+  \big\}
+\]
+where $\leq_{\ae,\ae'}$ is the reflexo-transitive closure of
+$\leqof{\apom} \cup \leqof{\apom'} \cup \{(e,e')\}$.
+%
+Finally,
 \begin{align*}
   \ksem{\aK_1 \seqop \aK_2} =
   &
@@ -362,83 +405,21 @@ $i \neq j \in \{1,2\}$
       \mathit{undefined} & \text{otherwise}
     \end{cases}
 \end{align*}
+where the well-sequencedness condition $\ws[\aK_1][\aK_2]$ holds when
+$\aK_1 \seqop \aK_2$ is conflict-free and any participant $\ptp a$
+performing actions in $\aK_2$ acts in $\aK_1$ as well and all the
+first actions of $\ptp a$ in $\aK_2$ causally depend on all last
+actions of $\ptp a$ in $\aK_1$ in each pomset in
+$\rseq[\ksem{\aK_1}][{\ksem{\aK_2}}]$.
 
-$\ws[\aK_1][\aK_2]$ holds when $\aK_1 \seqop \aK_2$ is conflict-free
-and any participant $\ptp a$ performing actions in $\aK_2$ acts in
-$\aK_1$ as well and all the first actions of $\ptp a$ in $\aK_2$
-causally depend on all last actions of $\ptp a$ in $\aK_1$ in the
-pomset $\rseq[\ksem{\aK_1}][{\ksem{\aK_2}}]$
-
-
-\hsl
-
-Finally, we give the semantic equations of global types.
-%
-For the recursive global type $\grec$ we introduce some auxiliary
-functions:
-\begin{align*}
-  \mathit{STOP}(\arole, \aK, \seq y) = & \apref[\arole][\arole_1][{\asort[stop]}][y_1] \seqop \ldots \seqop \apref[\arole][\arole_n][{\asort[stop]}][y_n]
-  \\
-  \mathit{LOOP}(\arole, \aK, \seq y, \seq y') = & \apref[\arole][\arole_1][{\nu y'_1:\asort[loc]}][y_1)] \seqop \ldots \seqop \apref[\arole][\arole_n][{\nu y'_n:\asort[loc]}][y_n]
-\end{align*}
-where $\roles \aK = \{\arole, \arole_1, \ldots, \arole_n\}$ with
-$\arole \not\in \{\arole_1, \ldots, \arole_n\}$ and
-$\seq y = y_1 \cdots y_n$ and 
-$\seq y' = y'_1 \cdots y'_n$.
-%
-Then, we define
-\begin{align*}
-  \ksem{\grec} =
-  &
-    \begin{cases}
-      \bigcup_{h \geq 0} \ksem{\unfold h \grec {\fn{\aK}} {\seq y}  {\seq y'}} & \text{if } \ws[\aK\sust X \nil][\aK\sust X \nil]
-      \\ & \text{ and } \seq y \cap \fn{\aK} = \emptyset
-      \\
-      \mathit{undefined} & \text{otherwise}
-    \end{cases}
-\end{align*}
-where
-\[
-  \unfold h \grec L {\seq y} {\seq y'} =
-  \begin{cases}
-    \mathit{STOP}(\arole,\seq y) & \text{if } h = 0
-    \\
-    \mathit{LOOP}(\arole,\aK, \seq y, \seq y') \seqop \aK \sust X {\aK'} & \text{otherwise}
-  \end{cases}
-\]
-%
-where $\aK' = \unfold{h-1}{\grec}{L \cup \seq y \cup \seq y'}{\seq y'}{\seq y''}$
-with $\seq y''$ fresh.
-
-The remaining equations are
-%
-\begin{align*}
-  % 
-  \ksem{\asum[@][@][][]} =
-  &
-    \begin{cases}
-      \{ \emptypom \} & \text{if } I = \emptyset
-      \\
-      \bigcup_{\apom \in \ksem{\apref_i},\apom' \in \ksem{\aK_i}} \rseq[\apom][\apom']
-      & \wb[{\big\{\bigcup_{i \in I}\apref_i\mkop{.}\aK_i\big\}}]
-      \\
-      \mathit{undefined} & \text{otherwise}
-    \end{cases}
-  \\
-\end{align*}
-where predicates $\wb[]$ and $\ws[][]$ respectively check the
-\emph{well-branchedness} and \emph{well-sequencedness} conditions.
-%
-The former is defined below whereas
-
-\hsl
+\bigskip
 
 % To avoid this problem we introduce \emph{run-time} tuples
 We now consider well-branchedness, the other condition of
 well-formedness.
 %
-Well-branchedness requires two conditions: single selector and knowledge of 
-choices.
+As usual, well-branchedness requires two conditions: single selector
+and knowledge of choices.
 %
 This can be formalised by requiring that one process in the choice is
 \emph{active}, namely it selects the branch to take, while the others
@@ -446,18 +427,19 @@ are \emph{passive}, namely they are informed of the chosed branch by
 inputting some information that unambiguously identifies each branch
 of the choice.
 %
+We syntactically\footnote{
 %
-We syntactically enforce uniqueness of selectors; a choice with
-several branches, takes the form
+  This is just for simplicity as we could adopt definitions similar to
+  the ones in \cite{gt16,gt17} at the cost of higher technical
+  complexity.
+%
+} enforce uniqueness of selectors; a choice with several branches,
+takes the form
 \begin{align}
   \asum\label{eq:ch}
 \end{align}
 namely the instance of $\arole$ act a \emph{unique} selectors.
 %
-This is just for simplicity as we could adopt definitions similar to
-the ones in \cite{gt16,gt17} at the cost of higher technical
-complexity.
-
 Intuitively, a passive instance (for example one enacting role
 $\arole_i$) in \eqref{eq:ch} has to be able to ascertain which branch
 the selector decided when the choice was taken.
@@ -466,8 +448,9 @@ A simple way to ensure this is to require that the first input actions
 of their roles in the branches are \quo{disjoint} (\ie\ non matching
 tuples or different locations).
 %
-This is just for simplicity as we could adopt more general definitions
-similar to the one based on divergence points in \cite{gt16,gt17}.
+% This is just for simplicity as we could adopt more general
+% definitions similar to the one based on divergence points in
+% \cite{gt16,gt17}.
 
 The conditions on active and passive processes alone are not enough:
 in our framework, the notion of well-branchedness is slightly
@@ -521,6 +504,26 @@ To sum up, a choice as in~\eqref{eq:ch} is \emph{well-branched},
 written $\wb[{\big\{\bigcup_{i \in I}\apref_i\mkop{.}\aK_i\big\}}]$,
 when it is confusion free, there is a unique active role, all other
 roles are passive.
+%
+So we define
+%
+\begin{align*}
+  % 
+  \ksem{\asum[@][@][][]} =
+  &
+    \begin{cases}
+      \{ \emptypom \} & \text{if } I = \emptyset
+      \\
+      \bigcup_{\apom \in \ksem{\apref_i},\apom' \in \ksem{\aK_i}} \rseq[\apom][\apom']
+      & \wb[{\big\{\bigcup_{i \in I}\apref_i\mkop{.}\aK_i\big\}}]
+      \\
+      \mathit{undef} & \text{otherwise}
+    \end{cases}
+  \\
+\end{align*}
+
+\bigskip
+
 
 
   %
@@ -546,8 +549,43 @@ of correctness we can guarantee is that any set of instances taking a
 choice will fully execute a branch.
 }
 
+\bigskip
 
-
+Finally, the semantic equation for the recursive global type $\grec$
+require some auxiliary functions:
+\begin{align*}
+  \mathit{STOP}(\arole, \aK, \seq y) = & \apref[\arole][\arole_1][{\asort[stop]}][y_1] \seqop \ldots \seqop \apref[\arole][\arole_n][{\asort[stop]}][y_n]
+  \\
+  \mathit{LOOP}(\arole, \aK, \seq y, \seq y') = & \apref[\arole][\arole_1][{\nu y'_1:\asort[loc]}][y_1)] \seqop \ldots \seqop \apref[\arole][\arole_n][{\nu y'_n:\asort[loc]}][y_n]
+\end{align*}
+where $\roles \aK = \{\arole, \arole_1, \ldots, \arole_n\}$ with
+$\arole \not\in \{\arole_1, \ldots, \arole_n\}$ and
+$\seq y = y_1 \cdots y_n$ and 
+$\seq y' = y'_1 \cdots y'_n$.
+%
+Then, we define
+\begin{align*}
+  \ksem{\grec} =
+  &
+    \begin{cases}
+      \bigcup_{h \geq 0} \ksem{\unfold h \grec {\fn{\aK}} {\seq y}  {\seq y'}} & \text{if } \ws[\aK\sust X \nil][\aK\sust X \nil]
+      \\ & \text{ and } \seq y \cap \fn{\aK} = \emptyset
+      \\
+      \mathit{undefined} & \text{otherwise}
+    \end{cases}
+\end{align*}
+where
+\[
+  \unfold h \grec L {\seq y} {\seq y'} =
+  \begin{cases}
+    \mathit{STOP}(\arole,\seq y) & \text{if } h = 0
+    \\
+    \mathit{LOOP}(\arole,\aK, \seq y, \seq y') \seqop \aK \sust X {\aK'} & \text{otherwise}
+  \end{cases}
+\]
+%
+where $\aK' = \unfold{h-1}{\grec}{L \cup \seq y \cup \seq y'}{\seq y'}{\seq y''}$
+with $\seq y''$ fresh.
 
 %%% Local Variables:
 %%% mode: latex
