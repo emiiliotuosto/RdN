@@ -1,7 +1,7 @@
 % !TEX root =  main.tex
 %
 
-We consider a set of variables $\varset$ 
+We consider a set of variables $\varset$  ranged over by $x$
 \todo{RB: aggiunto}
 and a set of localities $\locset$ ranged over by $\aloc$ (and
 use $\alocvar$ to range over $\locset\cup\varset$) and we let $\asort$
@@ -19,7 +19,7 @@ derived from the following grammar:
                       \atuple \cdot \atuple \bnfmid
                       \wildcard
 \end{eqnarray*}
-\todo{RB: spiegare il tipo $\wildcard$ (any type? empty tuple?)}
+\todo{RB: spiegare il tipo $\wildcard$ (any type? unit type?)}
 Fields $\nu x : \asort$ are binders that \emph{define}
 $x \in \varset$.
 %
@@ -76,7 +76,7 @@ conditions hold:
 Hereafter, we assume all tuples to be well-sorted.
 %
 Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions (from names to sorts)
-\todo{RB: aggiunto}
+\todo{AC+RB: la tupla $x:\asort \cdot x:\asort'$ con $\asort \neq \asort'$ sarebbe well-sorted in accordo alla definizione, ma forse non la vorremmo? (sembra violare la condizione su partial functions)}
 for well-sorted tuples.
 
 A capture-avoiding
@@ -144,9 +144,9 @@ with $\sigma_2$.
 
 Tuple types \emph{match} by producing a substitution; formally given
 by the partial function
-$\matches : \tupleset \times \tupleset \to \Sigma$ defined 
+$\matches : \tupleset \times \tupleset \to \Sigma$  
 \todo{RB: in $\atuple \matches \atuple'$ si richiede anche che i defined names di $\atuple$ e $\atuple'$ siano diversi?}
-such as
+defined such as
 %\eMnote{add typing env}
 \[
   \atuple \matches \atuple' \generates

@@ -1,7 +1,7 @@
 % !TEX root =  main.tex
 
 We give semantics to global types using \emph{partially-ordered
-  multi-set} (pomsets for short).
+  multi-sets} (pomsets for short).
 %
 Following~\cite{gaifman1987partial}, a \emph{pomset} is an isomorphism
 class of labelled partially-ordered sets (lposet) where, fixed a set
@@ -31,7 +31,7 @@ and $\ae'$ model different occurrences of the same action.
 In the following, $[\eset, \leq, \alf]$ denotes the isomorphism class
 of $(\eset, \leq, \alf)$, symbols $\apom,\apom', \dots$ (resp.
 $\aR, \aR', \dots$) range over (resp. sets of) pomsets, and we assume
-that pomsets $\apom$ contain at least one lposet which will possibly
+that pomset $\apom$ contains at least one lposet which will possibly
 be referred to as $(\esetof \apom$, $\leqof \apom, \alfof \apom)$.
 %
 The empty pomset is denoted as $\emptypom$.
@@ -98,7 +98,7 @@ prefix.
 %
 Intuitively, a label $\alabel[@][][\arole][@][@][.]$
 (resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
-$i^\mathit{th}$ instance of $\arole$ reads (resp. produced) a tuple of
+$i^\mathit{th}$ instance of $\arole$ reads (resp. produces) a tuple of
 type $\atuple$.
 %
 Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
@@ -137,7 +137,8 @@ Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and define
   \leq,
   \alfof{\apom} \uplus \bigcup_{\ae \in \max \apom}\alfof{\apom'_{\ae}}]
 \]
-where $\leq$ is the reflexo-transitive closure of
+where $\leq$ is the reflexive-transitive closure of
+\todo{AC+RB: sembra che $\leqof{\apom'}$ non possa essere usato perch\'e riguarda gli elementi di $\eset_{\apom'}$ noo quelli delle sue copie. Questo vuol dire che difficilmente possiamo catturare il parallelo...}
 \[
 \leqof{\apom} \cup \leqof{\apom'} \cup
 \bigcup_{\ae \in \max \apom}\leqof{\apom'_{\ae}}
@@ -154,6 +155,7 @@ where $\leq$ is the reflexo-transitive closure of
 \]
 (recall that the labels of events are autonomous prefixes for which
 $\roles{}$ is a singleton).
+\todo{AC: dove \`e scritto?}
 %
 \eMnote{{quando $\leq = \leqof{\apom} \uplus \leqof{\apom'}$ abbiamo il parallelo}}
 %
@@ -169,7 +171,7 @@ $\roles{}$ is a singleton).
 % The operation $\_^h$ extends element-wise to sets of pomsets.
 
 The semantics of a global type builds upon \emph{basic pomsets} $\bp$
-of prefixes $\apref$; in fact, the semantics of a global type is build
+of prefixes $\apref$; in fact, the semantics of a global type is built
 by taking sets of disjoint unions of basic pomsets of prefixes
 sequentially composed together.
 %
@@ -338,10 +340,13 @@ either of the following holds:
 \item $\aK = \asum[@][@][][]$ there is $i \in I$ such that either
   $(\atuple, \aloc)$ is local to $\aK_i$ or $\apref_i$ outputs
   $\atuple$ at $\aloc$ and there is $\atuple'$ in an input from
-  $\aloc$ in $\aK$ and $\atuple \matches \atuple'$
+  $\aloc$ in $\aK$
+\todo{AC+RB: $\aK$ o $\aK_i$?}
+   and $\atuple \matches \atuple'$
 \item $\aK = \aK_1 \seqop \aK_2$ either $(\atuple, \aloc)$ is local to
   $\aK_1$ or   $(\atuple, \aloc)$ is local to $\aK_2$
-\item $\aK = \grec[@][@][@][\aK']$ $(\atuple, \aloc)$ is local to $\aK'$
+\item $\aK = \grec[@][@][@][\aK']$ and $(\atuple, \aloc)$ is local to $\aK'$
+\todo{AC+RB: sintassi della ricorsione cambiata? A cosa serve $\aK'$?}
 \end{itemize}
 %
 A choreography $\aK_1 \seqop \aK_2$ is \emph{conflict-free} if for

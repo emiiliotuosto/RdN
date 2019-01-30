@@ -5,6 +5,7 @@ We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$
 and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
 \emph{participants} and \emph{multiple} roles, and define the set of
 \emph{roles} $\roleset = \participants \cup \multiroles$.
+\todo{AC+RB: forse sarebbe meglio parlare di \emph{unique roles} o \emph{unit roles} invece che di \emph{pariticipants}? la terminologia sarebbe pi\`u uniforme}
 % \cup \multiroles^\unknownstarop \cup
 % \multiroles^\unknownop$ (ranged over by $\arole, \arole_1,
 % \ldots$) where $\multiroles^{\unknownstarop} = \{\unknownstar \sst
@@ -109,8 +110,9 @@ The set $\roles \aK$ of roles of $\aK$ is the set of roles that are mentioned in
 The syntax of global types features prefix guarded choices, sequential
 composition, and recursion.
 %
-To handle recursive behaviour, the construct $\grec$ singles out a
-role $\arole \in \roles \aK$
+To handle recursive behaviour, 
+\todo{AC+RB: il comportamento della ricorsione si intuisce solo dopo aver visto la semantica. Forse bisognerebbe tentare di spiegarlo intuitivamente?}
+the construct $\grec$ singles out a role $\arole \in \roles \aK$
 %
 % and specifies an injective function
 % $\aphi : \roles \aK \setminus \{\arole\} \to \locset$ such that the
