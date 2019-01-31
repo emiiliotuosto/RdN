@@ -50,22 +50,26 @@ Name binders can be used to correlate tuples.
     \apref[\amulti {C}][\amulti {S}][{\nu x:\asort[int]}][{\aloc[l]}] \prefop
     \apref[\amulti {S}][\amulti {C}][{x : {\asort[int]} \cdot {\asort[str]} }][{\aloc[l]}]
   \]
-  $\aK_\eqref{ex:CSx}$ associates a fresh identifier $x$ with each value produced by
-  a client and consumed by a server.
+%  $\aK_\eqref{ex:CSx}$ specifies that a fresh identifier $x$ is established between the 
+% instances of $\amulti C$ and $\amulti S$ so that they refer to the same integer value.
+  The first interaction binds the occurrence of $x$ in the second interaction. 
+  The use of $x$ in the second interaction constraints the 
+  instances of $\amulti S$ and $\amulti C$ to share a tuple 
+  whose integer expression matches the integer shared in the first interaction.
   %
   Despite the identifier is known only to the communicating instances,
   this does not forbid two clients to generate the same integer value.
-  \todo{RB: questo \`e controintuitivo: quando usiamo il $\nu$ sulle locazioni non vogliamo che sia possibile generare due volte la stessa locazione, altrimenti non risolveremmo il problema. Sostituirei $\nu x$ con Solo $x$: mettere $\nu x$ costringerebbe a generare interi diversi, ma questo non \`e desiderabile}
+  %\todo{RB: questo \`e controintuitivo: quando usiamo il $\nu$ sulle locazioni non vogliamo che sia possibile generare due volte la stessa locazione, altrimenti non risolveremmo il problema. Sostituirei $\nu x$ con Solo $x$: mettere $\nu x$ costringerebbe a generare interi diversi, ma questo non \`e desiderabile}
   %
-  Basically, the name $x$ allows to express constraints about the flow
-  of values.
+ % Basically, the name $x$ allows to express constraints about the flow
+ %of values.
   %
-  In particular, $x : \asort[int]$ in the second interaction states
-  that a server must generate a tuple that contains the consumed
-  integer.
+  %In particular, $x : \asort[int]$ in the second interaction states
+  %that a server must generate a tuple that contains the consumed
+  %integer.
   %
-  Analogously, each client must consume a tuple matching the produced
-  integer.
+  %Analogously, each client must consume a tuple matching the produced
+  %integer.
   %
   \finex
 \end{example}
@@ -115,20 +119,30 @@ The following example shows the kind of protocols that our global
 types can model in a realistic scenario allowing us to combine
 together most of the features of our framework.
 %
-For readability, given $h \geq 0$, we use the notation
-$\grec[@][@][@][h]$ for a recursive protocol where the body $\aK$ is
-repeated at least $h$ times.
-\todo{RB: visto che la notazione ci serve solo per $h=1$ possiamo semplificare definendo solo questo caso (motivandolo col fatto che nell'esempio usiamo una forma di do-while invece che di while-do)}
+For readability,  we use the notation
+$\grec[@][@][@][1]$ for a recursive protocol where the body $\aK$ is
+repeated at least once.
 %
 Formally,
 \[
-\grec[@][@][@][h] =
-\begin{cases}
-  \grec[@][@][@] & \text{if } h = 0
-  \\
-  \aK \sust{X}{\grec[@][@][@][h-1]} & \text{otherwise}
-\end{cases}
+\grec[@][@][@][1] =
+  \aK \sust{X}{\grec} 
 \]
+
+%For readability, given $h \geq 0$, we use the notation
+%$\grec[@][@][@][h]$ for a recursive protocol where the body $\aK$ is
+%repeated at least $h$ times.
+%\todo{RB: visto che la notazione ci serve solo per $h=1$ possiamo semplificare definendo solo questo caso (motivandolo col fatto che nell'esempio usiamo una forma di do-while invece che di while-do)}
+%
+%Formally,
+%\[
+%\grec[@][@][@][h] =
+%\begin{cases}
+%  \grec[@][@][@] & \text{if } h = 0
+%  \\
+%  \aK \sust{X}{\grec[@][@][@][h-1]} & \text{otherwise}
+%\end{cases}
+%\]
 %
 % \eMnote{forse non e' un'asta...ma una contrattazione}
 \begin{example}[Market place]\label{ex:market}

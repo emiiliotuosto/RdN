@@ -20,7 +20,8 @@ derived from the following grammar:
 \end{eqnarray*}
 Tuple types are trees  $\atuple \cdot \atuple$  where leaves are
  either a sort $\asort$, any type $\wildcard$,  a sorted variable $x : \asort$,
-or a fresh sorted variables $\nu x : \asort$.
+or a fresh sorted variables $\nu x : \asort$ 
+(the difference between $x : \asort$ and $\nu x : \asort$ is clarified in \cref{sec:examples}).
 Note that $\nu x : \asort$ are binders that \emph{define}
 $x \in \varset$. 
 %
@@ -80,8 +81,7 @@ Hereafter, we assume all tuples to be well-sorted.
 Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions (from names to sorts)
 for well-sorted tuples.
 
-A 
-substitution of the free occurrences of a variable
+A substitution of the free occurrences of a variable
 $x$ in a (well-sorted) tuple $\atuple$ such that $x\not\in \dn{\atuple}$
  by a variable $y\not\in \dn{\atuple}$, written
 $\atuple \sust x y$, is defined such that

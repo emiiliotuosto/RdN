@@ -110,8 +110,8 @@ The syntax of global types features prefix guarded choices, sequential
 composition, and recursion.
 %
 To handle recursive behaviour, 
-\todo{AC+RB: il comportamento della ricorsione si intuisce solo dopo aver visto la semantica. Forse bisognerebbe tentare di spiegarlo intuitivamente?}
-\todo{eM: ora?}
+%\todo{AC+RB: il comportamento della ricorsione si intuisce solo dopo aver visto la semantica. Forse bisognerebbe tentare di spiegarlo intuitivamente?}
+%\todo{eM: ora?}
 the construct $\grec$ singles out a role $\arole \in \roles \aK$
 %
 % and specifies an injective function
@@ -119,19 +119,18 @@ the construct $\grec$ singles out a role $\arole \in \roles \aK$
 % locations in $\cod(\aphi)$ do not occur in $\aK$; intuitively,
 % $\arole$
 deciding when the recursion ends.
-\todo{RB: pi\`u sotto viene usata la notazione $\alvar$ invece di $X$: bisogna cambiare la grammatica delle coreografie?}
+%\todo{RB: pi\`u sotto viene usata la notazione $\alvar$ invece di $X$: bisogna cambiare la grammatica delle coreografie?}
 % and, for all $\arole' \neq \arole$ in $\aK$, the location
 % $\aphi(\arole')$ is used to communicate the decision of $\arole$ to
 % $\arole'$.
 %
+Intuitively, in $\grec$ role  $\arole$ non-deterministically decides whether 
+to repeat the execution of  the body $\aK$  or (if ever) to end it.
+%
+To achieve this,  $\arole$ notifies the decision by generating tuple types for the
+other roles (this is formally defined in \cref{sec:globsem}).
+%
 We omit the decoration $\arole$ when $\roles \aK = \{\arole\}$.
-%
-Intuitively, in $\grec$ the body $\aK$ is each time $\arole$ decides
-to repeat the execution and ends when $\arole$ non-deterministically
-decides (if ever) to stop it.
-%
-This is achieved by letting $\arole$ to generate tuple types for the
-other roles that notify them about the decision of $\arole$.
 
 We extend the notions of defined and free names to global types as
 follows:
@@ -154,7 +153,7 @@ omitted prefixes are defined analogously.
                 &
                   \fn{\aK_1}\cup\fn{\aK_2}
       \\
-      \fn \alvar & (\seq \alocvar \cap \varset)
+      \fn X & (\seq \alocvar \cap \varset)
       \\
       \fn \grec & \fn {\aK}
     \end{array}
@@ -165,7 +164,7 @@ omitted prefixes are defined analogously.
                            &
                              \dn{\aK_1}\cup\dn{\aK_2}
       \\
-      \dn \alvar & \emptyset
+      \dn X & \emptyset
       \\
       \dn \grec & \dn {\aK}
     \end{array}
