@@ -2,21 +2,22 @@
 
 Communication-centered programming is playing a tremendous role in the production of nowadays software. Programming peers that need to exchange information is an error-prone activity and the behaviour of even small system is subject to a combinatorial blow-up as the number of peers increases.
 Therefore well-structured principles and rigorous foundations are needed to develop well-engineered, trustworthy software. 
-One possibility is to exploit some sort of behavioural types to manage abstract descriptions of peers and formally study their properties such as communication safety, absence of deadlocks, progress or session fidelity: given the types of the peers the emerging behaviour of their composition is analysed.
+One possibility is to exploit some sort of behavioural types~\cite{} to manage abstract descriptions of peers and formally study their properties such as communication safety, absence of deadlocks, progress or session fidelity: given the types of the peers the emerging behaviour of their composition is analysed.
 In the seminal paper~\cite{DBLP:conf/popl/HondaYC08}, recently nominated the \emph{most influential POPL paper (Award 2018)}, the authors push forward an abstract notion of global type of interaction that represents a sort of contract between the communicating peers. This is paired with the notion of local type that gives an abstract description of the behaviour of each peer, as taken in isolation.
 Interestingly, local types can be obtained for free by projection from global types, while the properties of interest can be studied and guaranteed just at the level of global types, without the need of studying the composition of local types. The conformance of peers implementation w.r.t. the global type can be studied instead at the level of local types, allowing a more efficient form of type checking. Roughly this means that properties are stated globally but checked locally. Global types have been inspired by choreography languages in service oriented computing, where complex interactions are modelled from the point of view of the global sequence of events that must take place in order to successfully complete the computation.
 
-In the literature, global/local types have been studied mostly in the context of dyadic, message-passing interactions. This means that the main action in a choreography is the sending of one message from one peer to another (on a given channel of a given type). In this paper we explore a different setting, where interaction over tuple-spaces replaces message passing, in the style of Linda-like languages~\cite{}.
-Instead of primitives for sending and receiving messages, here there are primitive for inserting a tuple on a tuple space, for reading (without consuming) a tuple from a tuple space or for retrieving a tuple from a tuple space. We call these interactions data-driven, as decisions will be taken on the basis of the type of the tuples that are manipulated. We coined the term Klaimographies in honour of the process language KLAIM~\cite{DBLP:journals/tse/NicolaFP98}, one of the main contributions of Rocco De Nicola in the field of tuple-space programming. Like in KLAIM, Klaimographies exploit the notion of distributed tuple-space localities to separate the access to data on the basis of the interactions that are carried out. Localities can be communicated in tuples, allowing name mobility.
+In the literature, global/local types have been studied mostly in the context of dyadic, message-passing interactions. This means that the main action in a choreography is the sending of one message from one peer to another (on a given channel of a given type). In this paper we explore a different setting, where interaction over tuple-spaces replaces message passing, in the style of Linda-like languages~\cite{DBLP:journals/toplas/Gelernter85}.
+Instead of primitives for sending and receiving messages, here there are primitive for inserting a tuple on a tuple space, for reading (without consuming) a tuple from a tuple space or for retrieving a tuple from a tuple space. We call these interactions data-driven, as decisions will be taken on the basis of the type of the tuples that are manipulated. We coined the term Klaimographies in honour of the process language Klaim~\cite{DBLP:journals/tse/NicolaFP98}, one of the main contributions of Rocco De Nicola in the field of tuple-space programming. Inspired by Klaim, Klaimographies exploit the notion of distributed tuple-space localities to separate the access to data on the basis of the interactions that are carried out. Localities can be communicated in tuples, allowing name mobility.
 
 There are several major advances w.r.t. to the literature on global types.
 First, Klaimographies can have an arbitrary number of participants, while in global types the number of participant is usually fixed a priori.
-Second, interactions are not dyadic because each tuple can be read many times, while messages have exactly one producer and one consumer, even with asynchronous communication.
+Second, interactions are not dyadic because each tuple can be read many times, while messages have exactly one producer and one consumer, even when asynchronous communication is considered.
 Third, all interactions involve a tuple space locality instead of a channel name.
-\todo{RB: ho provato a mettere una bozza di intro... tutta da rivedere e completare col contributo}
+Fourth, Klaimographies are data-driven.
 
-\eMnote{provo a dare qualche spunto}
-%
+The main contribution of this paper is to set up the formal setting of Klaimographies and prepare the ground for several interesting research directions: we fix the syntax of global and local type description and define the projection from global type to local types as typical of choreographic frameworks.
+Global types are equipped with a partial order semantics of events and local types with an ordinary operational semantics. Then the conditions under which the behaviour of projected local types are faithful to the semantics of global types are spelled out. 
+
 Shifting the focus from control to data in choreographic framework has
 several implications.
 %
@@ -24,10 +25,10 @@ Firstly, the emphasis is no longer on properties related to
 computational actors.
 %
 For instance, Klaimographies admit computations where some processes
-may not terminate and left waiting for some data.
+may not terminate and is left waiting for some data.
 %
 In standard choreographic framework those would be undesired behaviour
-to rule with suitable typing disciplines.
+to rule out with suitable typing disciplines.
 %
 Nonetheless, we claim that in some application domain computations with
 deadlocked processes have to be considered non-erroneous.
@@ -36,8 +37,9 @@ For instance, in reactive systems based on event-notification
 frameworks some \quo{listener} components must be kept waiting for
 events to occur.
 %
+Our work paves the way to the formal study of properties of data, like consumption, persistence and availability, in a choreographic setting.
 
-Another advantage of klaimographies is that they allows us to easily
+Another main innovation of klaimographies is that they allows us to easily
 represent protocols where an arbitrary number of components can
 play a role in the choreography.
 %
@@ -47,6 +49,11 @@ Remarkably, those protocols can be specified in some existing
 choreographic frameworks~\cite{ydbh10,chjny19} in a less abstract way
 that requires the explicit quantification on components.
 
+\paragraph{Structure of the paper}
+In Section~\ref{sec:klaimographies} we define Klaimographies as global types and give some examples.
+In Section~\ref{sec:globsem} we define the semantics of global types and give the adequacy conditions for projecting global types to local tyes.
+In Section~\ref{sec:locsem} we define the operational semantics of local types and state its correspondence with the global semantics.
+Some concluding remarks together with the discussion of related and future work is in Section~\ref{sec:conc}.
 
 %%% Local Variables:
 %%% mode: latex
