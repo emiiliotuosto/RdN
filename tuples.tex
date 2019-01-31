@@ -2,7 +2,6 @@
 %
 
 We consider a set of variables $\varset$  ranged over by $x$
-\todo{RB: aggiunto}
 and a set of localities $\locset$ ranged over by $\aloc$ (and
 use $\alocvar$ to range over $\locset\cup\varset$) and we let $\asort$
 range over basic sorts which include $\asort[int]$, $\asort[bool]$,
@@ -12,16 +11,18 @@ The set $\tupleset$ of \emph{(tuple) types} consists of the terms
 derived from the following grammar:
 \begin{eqnarray*}
   \atuple & \bnfdef & \asort \bnfmid
+                        \wildcard\bnfmid
                       x : \asort \bnfmid
                       \nu x : \asort  \bnfmid
 %                      \nu \aloc \bnfmid
 %                      \aloc \bnfmid
-                      \atuple \cdot \atuple \bnfmid
-                      \wildcard
+                      \atuple \cdot \atuple 
 \end{eqnarray*}
-\todo{RB: spiegare il tipo $\wildcard$ (any type? unit type?)}
-Fields $\nu x : \asort$ are binders that \emph{define}
-$x \in \varset$.
+Tuple types are trees  $\atuple \cdot \atuple$  where leaves are
+ either a sort $\asort$, any type $\wildcard$,  a sorted variable $x : \asort$,
+or a fresh sorted variables $\nu x : \asort$.
+Note that $\nu x : \asort$ are binders that \emph{define}
+$x \in \varset$. 
 %
 Hence, we talk about \emph{free} and \emph{defined} (sorted) names occurring in
 tuples.
@@ -29,7 +30,7 @@ tuples.
 %We assume that in a tuple there is at most one occurrence of $\nu x$,
 %for each $x \in \varset$.
 %
-Formally, the functions $\fn{\_}$ and $\dn{\_}$ returns sets of pairs
+The functions $\fn{\_}$ and $\dn{\_}$ returns sets of pairs
 $x \mapsto \asort$ assigning sort $\asort$ to $x \in \varset$.
 \[
 \begin{array}{l@{\hspace{1cm}}l}
@@ -68,22 +69,20 @@ conditions hold:
   defined names are disjoint; and
 \item
   $\atuple = \atuple_1 \cdot \atuple_2$ implies $\atuple_1$ and
-  $\atuple_2$ well-sorted and $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =
-  \emptyset$, i.e., defined names are all different.
-%  \todo{RB: non \`e conseguenza del fatto che ``We assume that in a tuple there is at most one occurrence of $\nu x$, for each $x \in \varset$''}
+  $\atuple_2$ well-sorted and  names are disjoint, namely, 
+  $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =  \emptyset$
+  and 
+  $\supp{\fn{\atuple_1}} \cap \supp{\fn{\atuple_2}} =  \emptyset$.
 \end{itemize}
 %
 Hereafter, we assume all tuples to be well-sorted.
 %
 Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions (from names to sorts)
-\todo{AC+RB: la tupla $x:\asort \cdot x:\asort'$ con $\asort \neq \asort'$ sarebbe well-sorted in accordo alla definizione, ma forse non la vorremmo? (sembra violare la condizione su partial functions)}
 for well-sorted tuples.
 
-A capture-avoiding
-\todo{RB: toglierei capture-avoiding aggiungendo condizioni esplicite su $x,y,\atuple$.}
+A 
 substitution of the free occurrences of a variable
 $x$ in a (well-sorted) tuple $\atuple$ such that $x\not\in \dn{\atuple}$
-\todo{RB: aggiunto}
  by a variable $y\not\in \dn{\atuple}$, written
 $\atuple \sust x y$, is defined such that
 %
@@ -142,10 +141,10 @@ disjoint domain, and $\sigma_1[\sigma_2]$ for the update of $\sigma_1$
 with $\sigma_2$.
 
 
-Tuple types \emph{match} by producing a substitution; formally given
+Tuple types $\atuple$ and $\atuple'$ s.t.
+$\dn{\atuple}\cap\dn{\atuple'}$ \emph{match} by producing a substitution; formally given
 by the partial function
-$\matches : \tupleset \times \tupleset \to \Sigma$  
-\todo{RB: in $\atuple \matches \atuple'$ si richiede anche che i defined names di $\atuple$ e $\atuple'$ siano diversi?}
+$\matches : \tupleset \times \tupleset \to \Sigma$ 
 defined such as
 %\eMnote{add typing env}
 \[
@@ -176,10 +175,6 @@ defined such as
     \textit{undef} & \textit{otherwise}
    \end{cases}
 \]
-\todo{RB: cambiato caso $\atuple = \atuple_1 \cdot \atuple_2$:
-  controllare se la definizione \`e corretta}
-%
-\todo{eM: non dovrebbe essere $\sust y x$? RB: cambiato come suggerisce eM}
 %
 We write $\atuple \matches \atuple'$ when
 $\atuple \matches \atuple' = \sigma$ for a substitution

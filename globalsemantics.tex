@@ -406,7 +406,7 @@ Finally,
     \end{cases}
 \end{align*}
 where the well-sequencedness condition $\ws[\aK_1][\aK_2]$ holds when
-$\aK_1 \seqop \aK_2$ is conflict-free and any participant $\ptp a$
+$\aK_1 \seqop \aK_2$ is conflict-free and any unit role $\ptp a$
 performing actions in $\aK_2$ acts in $\aK_1$ as well and all the
 first actions of $\ptp a$ in $\aK_2$ causally depend on all last
 actions of $\ptp a$ in $\aK_1$ in each pomset in
@@ -454,7 +454,7 @@ tuples or different locations).
 
 The conditions on active and passive processes alone are not enough:
 in our framework, the notion of well-branchedness is slightly
-complicated by the presence of multiroles.
+complicated by the presence of multiple roles.
 %
 For instance, even assuming unique selectors, many instances of a
 selector role could exercise choices concurrently.
@@ -486,14 +486,14 @@ tuples on a locality as illustrated by next example.
 %
 Therefore we require that tuples types in different branches of a
 choice do not match when they are at the same locality and that if a
-branch of a choice involves a participant then none of the branches of
-the choice involves multiroles.
+branch of a choice involves a unit role then none of the branches of
+the choice involves multiple roles.
 %
 This condition, dubbed \emph{confusion-free branching} ensures that
 different \quo{groups} of instances involved in concurrent resolutions
 of a choice do not \quo{interfere} with each other and such groups can
 execute the choice many times only if none of the processes implements
-a participant.
+a unit role.
 %
 We remark that the above condition is not a limitation; in fact, we
 can pre-process branches of choices by adding an extra field in all
