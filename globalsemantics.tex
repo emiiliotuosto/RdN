@@ -310,7 +310,9 @@ either of the following holds:
 \item $\aK = \asum[@][@][][]$ and there is $i \in I$ such that either
   $(\atuple, \aloc)$ is local to $\aK_i$ or $\apref_i$ outputs
   $\atuple$ at $\aloc$, there is $\atuple'$ in an input from
-  $\aloc$ in $\aK$, and $\atuple \matches \atuple'$
+  $\aloc$ in $\aK$,
+\todo{RB: $\aK_i$?}
+ and $\atuple \matches \atuple'$
 \item $\aK = \aK_1 \seqop \aK_2$ and either $(\atuple, \aloc)$ is local to
   $\aK_1$ or   $(\atuple, \aloc)$ is local to $\aK_2$
 \item $\aK = \grec[@][@][\aK']$ and $(\atuple, \aloc)$ is local to
@@ -328,7 +330,9 @@ on tuple types: a choreography $\aK_1 \seqop \aK_2$ is
   $(\atuple', \aloc)$ is in a read-only prefix in $\aK_j$
 \item for all $(\atuple,\aloc)$ in an autonomous input prefix of $\aK_i$ and for all $(\atuple', \aloc)$ in an
   output prefix of $\aK_j$, $\atuple \matches \atuple'$ implies
-  $(\atuple',\aloc)$ is in a consuming output prefix in $\aK_j$.
+  $(\atuple',\aloc)$ is in a consuming
+\todo{RB: togliere ``consuming''? (la terminologia \`e cambiata)}
+ output prefix in $\aK_j$.
 \end{itemize}
 % such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a
 % locality $\aloc$, \eMnote{Problema: $\aloc$ vs $\alocvar$}
