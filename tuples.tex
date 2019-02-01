@@ -61,7 +61,7 @@ $x \mapsto \asort$ assigning sort $\asort$ to $x \in \varset$.
 \end{array}
 \]
 We write $\supp{\_}$ to denote the projection of a set of pairs over its first component. 
-
+%
 We say a tuple $\atuple$ is {\em well-sorted} if the following two
 conditions hold:
 \begin{itemize}
@@ -84,7 +84,7 @@ for well-sorted tuples.
 A substitution of the free occurrences of a variable
 $x$ in a (well-sorted) tuple $\atuple$ such that $x\not\in \dn{\atuple}$
  by a variable $y\not\in \dn{\atuple}$, written
-$\atuple \sust x y$, is defined such that
+$\atuple \sust x y$, is defined such that \todo{AC: a substitution can make the tuple non-well-sorted. Is this a problem?}
 %
 \[
 \begin{array}{r@{}l@{\ = \ } ll}
@@ -142,7 +142,7 @@ with $\sigma_2$.
 
 
 Tuple types $\atuple$ and $\atuple'$ s.t.
-$\dn{\atuple}\cap\dn{\atuple'}$ \emph{match} by producing a substitution; formally given
+$\dn{\atuple}\cap\dn{\atuple'} = \emptyset$ \todo{AC:aggiunto $=\emptyset$} \emph{match} by producing a substitution; formally given
 by the partial function
 $\matches : \tupleset \times \tupleset \to \Sigma$ 
 defined such as
@@ -179,7 +179,7 @@ defined such as
 We write $\atuple \matches \atuple'$ when
 $\atuple \matches \atuple' = \sigma$ for a substitution
 $\sigma \in \Sigma$.
-
+%
 %
 %
 %\[
@@ -198,9 +198,9 @@ $\sigma \in \Sigma$.
 %    \atuple = \wildcard \vee \atuple' = \wildcard & \text{otherwise}
 %  \end{cases}
 %\]
+%%
 
-
-%
+\noindent
 We say that $\atuple$ \emph{generates} when in one of its fields there
 is a $\nu x: \asort[loc]$ type. 
 %\todo{RB: meglio dire $\nu \aloc: \asort[loc]$}
