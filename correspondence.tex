@@ -1,0 +1,46 @@
+This section establishes the correspondence between the denotational
+semantics of global types and the operational semantics of local
+types.
+%
+The partial order on the events of a pomset yields an interpretation
+of linear executions in terms of \emph{linearisations} similar to
+interleaved semantics of concurrent systems.
+%
+Intuitively a linearisation of a pomset $\apom$ is a sequence of the
+events $\esetof \apom$ that preserve the pomset's order
+$\leqof \apom$.
+%
+We show that traces of projections of a global type correspond to
+linearisations of its pomset semantics and that for each linearisation
+in the pomset semantics there is a system executing a corresponding
+trace.
+%
+We first formalise the notion of linearisation.
+
+Given a pomset $\apom$ and a set of its $\aE \subseteq \esetof \apom$,
+a permutation $\ae_1 \cdots \ae_n$ of the events in $\aE$ is a
+\emph{linearisation of $\apom$} if
+\begin{itemize}
+\item $\aE \subseteq \esetof \apom$ preserves $\leqof \apom$ namely
+  $\forall 1 \leq i < j \leq n \qst \neg (\ae_j \leqof \apom \ae_i)$
+\item each event in $\esetof \apom$ corresponding to an access of an
+  interaction is in $\aE$, namely
+  if $\ae \in \esetof \apom$ and the tuple type in $\alfof \apom(\ae)$
+  if of the form $\arole \cdot \atuple$ then $\ae \in \aE$
+\item each output event in $\esetof \apom$ is in $\aE$ and, letting
+  $I(\ae)$ be the set of events in $\esetof \apom$ which are labelled
+  by inputs of a tuple type matching the one in $\alfof \apom(\ae)$,
+  $I(\ae) \cap \aE = \emptyset \iff I(\ae) = \emptyset$
+\item accesses in $\ae_1 \cdots \ae_n$ are preceded by a matching
+  output, namely ($i$) for each $1 \leq i \leq n$ if $\ae_i$ accesses
+  $\atuple$ at $\aloc$ then there is $1 \leq j < i$ such that $\ae_j$
+  outputs $\atuple'$ at $\aloc$ with $\atuple' \matches \atuple$ and
+  ($ii$) for all $j < h < i$ if $\ae_h$ inputs $\atuple''$ at $\aloc$
+  then $\neg (\atuple' \matches \atuple'')$.
+\end{itemize}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

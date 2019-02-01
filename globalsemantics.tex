@@ -309,9 +309,9 @@ either of the following holds:
 \begin{itemize}
 \item $\aK = \asum[@][@][][]$ and there is $i \in I$ such that either
   $(\atuple, \aloc)$ is local to $\aK_i$ or $\apref_i$ outputs
-  $\atuple$ at $\aloc$, there is $\atuple'$ in an input from
-  $\aloc$ in $\aK$,
-\todo{RB: $\aK_i$?}
+  $\atuple$ at $\aloc$, there is $\atuple'$ in an input from $\aloc$
+  in $\aK_i$,
+%\todo{RB: $\aK_i$?}
  and $\atuple \matches \atuple'$
 \item $\aK = \aK_1 \seqop \aK_2$ and either $(\atuple, \aloc)$ is local to
   $\aK_1$ or   $(\atuple, \aloc)$ is local to $\aK_2$
@@ -320,43 +320,65 @@ either of the following holds:
 % \todo{AC+RB: sintassi della ricorsione cambiata? A cosa serve $\aK'$?}
 \end{itemize}
 %
-Our notion of well-sequencedness requires that there are no races
-on tuple types: a choreography $\aK_1 \seqop \aK_2$ is
-\emph{conflict-free} if for $i \neq j \in \{1,2\}$
+Our notion of well-sequencedness requires that there are no races on
+tuple types: we say that $\aK_1$ and $\aK_2$ are \emph{well-sequenced}
+($\ws[\aK_1][\aK_2]$ in symbols) if, for $i \neq j \in \{1,2\}$,
 %
 \begin{itemize}
 \item for all $(\atuple,\aloc)$ local to $\aK_i$ and for all
   $(\atuple', \aloc) \in \aK_j$, $\atuple \matches \atuple'$ implies
   $(\atuple', \aloc)$ is in a read-only prefix in $\aK_j$
-\item for all $(\atuple,\aloc)$ in an autonomous input prefix of $\aK_i$ and for all $(\atuple', \aloc)$ in an
-  output prefix of $\aK_j$, $\atuple \matches \atuple'$ implies
-  $(\atuple',\aloc)$ is in a consuming
-\todo{RB: togliere ``consuming''? (la terminologia \`e cambiata)}
- output prefix in $\aK_j$.
+\item for all $(\atuple,\aloc)$ in an autonomous input prefix of
+  $\aK_i$ and for all $(\atuple', \aloc)$ in an output prefix of
+  $\aK_j$, $\atuple \matches \atuple'$ implies $(\atuple',\aloc)$ is
+  in an output prefix in $\aK_j$.
+  % \todo{RB: togliere ``consuming''? (la terminologia \`e cambiata)}
 \end{itemize}
 % such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a
 % locality $\aloc$, \eMnote{Problema: $\aloc$ vs $\alocvar$}
-
-We introduce the auxiliary operation $\rseq[][]$ that sequentially
-composes pomsets.
 %
-The sequential composition of $\apom$ and $\apom'$ has to make the
-actions of a role in $\apom$ to precede its actions in $\apom'$ and
-to make
-autonomous outputs in $\apom$ to precede autonomous
-matching accesses in $\apom'$.
+Finally,
+\begin{align*}
+  \ksem{\aK_1 \seqop \aK_2} =
+  &
+    \begin{cases}
+      \big\{
+      \rseq[\ksem{\aK_1}][\ksem{\aK_2}] & \text{if } \ws[\aK_1][\aK_2]
+      \big\}
+      \\
+      \mathit{undef} & \text{otherwise}
+    \end{cases}
+\end{align*}
+where the auxiliary operation $\rseq[][]$ that sequentially composes
+pomsets $\apom$ and $\apom'$ so to make the actions of a role in
+$\apom$ to precede its actions in $\apom'$:
+\[
+  \rseq[\apom][\apom'] = 
+  [\esetof{\apom} \uplus \esetof{\apom'},
+  \leq_{\ae,\ae'} \cup \{(\ae,\ae') \in \esetof \apom \times \esetof{\apom'} \sst \roles{\ae} = \roles{\ae'}\},
+  \alfof{\apom} \uplus \alfof{\apom'}]
+\]
+assuming that $\esetof \apom \cap \esetof{\apom'} = \emptyset$ (recall
+that the labels of events are autonomous prefixes for which $\roles{}$
+is a singleton).
+% \todo{AC: dove \`e scritto?}
+%
+% and
+% to make
+% autonomous outputs in $\apom$ to precede autonomous
+% matching accesses in $\apom'$.
 % \quo{copy} of $\apom'$ with every maximal event of $\apom$.
 %
-Formally, an \emph{unmatched output of a pomset $\apom$} is an
-event $\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an
-output with tuple type $\atuple$ and for all $\ae'$ successors of
-$\ae$ in $\apom$, if $\alfof{\apom}(\ae')$ is an input with tuple type
-$\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$;
-similarly, call \emph{unmatched input of $\apom$} an event
-$\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an output
-with tuple type $\atuple$ and for all $\ae' \leqof \apom \ae$ in
-$\apom$, if $\alfof \apom (\ae')$ is an input with tuple type
-$\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$.
+% Formally, an \emph{unmatched output of a pomset $\apom$} is an
+% event $\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an
+% output with tuple type $\atuple$ and for all $\ae'$ successors of
+% $\ae$ in $\apom$, if $\alfof{\apom}(\ae')$ is an input with tuple type
+% $\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$;
+% similarly, call \emph{unmatched input of $\apom$} an event
+% $\ae \in \esetof \apom$ such that $\alfof \apom(\ae)$ is an output
+% with tuple type $\atuple$ and for all $\ae' \leqof \apom \ae$ in
+% $\apom$, if $\alfof \apom (\ae')$ is an input with tuple type
+% $\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$.
 %
 % for each $\ae \in \max \apom$, let
 % $\apom'_{\ae} = [\{\ae\} \times \eset_{\apom'}, \leq, \alf]$ where
@@ -365,50 +387,9 @@ $\atuple'$ then $\atuple \matches \atuple' = \textit{undef}$.
 % all $\ae' \in \esetof{\apom'}$.
 % %
 % Observe that $\apom'_{\ae}$ is isomorphic to $\apom'$, and
-Let $\apom$ and $\apom'$ such that
-$\esetof \apom \cap \esetof{\apom'} = \emptyset$,
-recall that the
-labels of events are autonomous prefixes for which $\roles{}$ is a
-singleton,
 %
-\todo{AC: dove \`e scritto?}
 %
-and define
-\[
-  \rseq[\apom][\apom'] = 
-  \bigcup_{\scriptsize
-    \begin{array}{c}
-      \ae \text{ unmatched output of $\atuple$},
-      \\
-      \ae' \text{ unmatched input of $\atuple'$},
-      \\
-      \atuple \matches \atuple'
-    \end{array}
-  } \big\{
-  [\esetof{\apom} \uplus \esetof{\apom'},
-  \leq_{\ae,\ae'},
-  \alfof{\apom} \uplus \alfof{\apom'}]
-  \big\}
-\]
-where $\leq_{\ae,\ae'}$ is the reflexo-transitive closure of
-$\leqof{\apom} \cup \leqof{\apom'} \cup \{(e,e')\}$.
-%
-Finally,
-\begin{align*}
-  \ksem{\aK_1 \seqop \aK_2} =
-  &
-    \begin{cases}
-      \rseq[\ksem{\aK_1}][\ksem{\aK_2}] & \text{if } \ws[\aK_1][\aK_2]
-      \\
-      \mathit{undef} & \text{otherwise}
-    \end{cases}
-\end{align*}
-where the well-sequencedness condition $\ws[\aK_1][\aK_2]$ holds when
-$\aK_1 \seqop \aK_2$ is conflict-free and any unit role $\ptp a$
-performing actions in $\aK_2$ acts in $\aK_1$ as well and all the
-first actions of $\ptp a$ in $\aK_2$ causally depend on all last
-actions of $\ptp a$ in $\aK_1$ in each pomset in
-$\rseq[\ksem{\aK_1}][{\ksem{\aK_2}}]$.
+
 
 \bigskip
 
