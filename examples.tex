@@ -81,8 +81,10 @@ same instance of $\amulti S$ in the two communications when two
 instances of $\amulti C$ generate the same integer in the first
 interaction.
 %
-A one-to-one correspondence can be achieved by using fresh localities.
 \begin{example}\label{ex:CSl}
+  A one-to-one correspondence can be achieved by using defined names
+  for localities.
+  %
   Consider
   \[
     \aK_\eqref{ex:CSl} = 
@@ -90,12 +92,11 @@ A one-to-one correspondence can be achieved by using fresh localities.
     \apref[\amulti {S}][\amulti {C}][{{\asort[str]}}][{x}]
   \]
   %
-  Each client generates a fresh locality identified by $x$, which is then
-  used as the locality for the subsequent communication.
-  %
-  Since the name $x$ is known only to the two communicating instances,
-  the second interaction can only take place between the two instances
-  that know the locality $x$.
+  As in \cref{ex:CSx}, client and server instances establish a common
+  fresh identity $x$ in the first interaction; this time the identity
+  is a locality meant to share tuples in subsequent communication: the
+  second interaction can only take place between the two instances
+  sharing $x$ since such locality is known only to them.
   %
   \finex
 \end{example}
@@ -227,7 +228,7 @@ start bargaining on a selected item of interest.
 Note that the consumption at line~4 instantiates a private location
 $l$ between the instance of $\amulti{Seller}$ advertising the item and
 the instance of $\amulti{Buyer}$ interested in buying it.
-\todo{RB: ma nella linea 4 perch\'e serve $\nu$ davanti a $l$? non dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$? il valore \`e quello settato dal seller come per $i$ e $p$.}
+% \todo{RB: ma nella linea 4 perch\'e serve $\nu$ davanti a $l$? non dovrebbe essere $\apref[@][\amulti {Buyer}][{{i : \asort[str]} \cdot {p : \asort[int]} \cdot {l : \asort[loc]}}][{\aloc[m]}]$? il valore \`e quello settato dal seller come per $i$ e $p$.}
 %
 Location $l$ is used to perform the bargaining phase.
 
