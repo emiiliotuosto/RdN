@@ -96,7 +96,7 @@ As for global types, we consider terms up-to $\alpha$-renaming.
  
 We consider the following syntax for the run-time semantics of a set of local types running on a 
 tuple space, called {\em specification}.
-%
+
 \begin{eqnarray*}
   \envmv & \bnfdef & \emptyset \bnfmid
                   \envmv, \arole :  \aL \bnfmid
@@ -120,77 +120,7 @@ We give an operational semantics to local types defined inductively by
 the rules in \cref{fig:local-types-sem}, where labels $\alpha$ are of the form 
 $\arole : \aLpref$. Rule $\rulename{LOut}$ 
 accounts  for the behaviour of a role $\rho$ that  generates a tuple $\atuple$ at the 
-locality $\aloc$.
-%
-\eMnote{nelle etichette delle conclusioni di Lin e LRd non dovrebbe essere $\atuple$ invece di $\atuple'$?} 
-\begin{figure} 
-\[
-\begin{array}{l@{\hspace{.7cm}}l}
-%\mathrule{\dn\atuple\ {\it fresh}}
-%	{\envmv, \arole : \aout[][@][\aloc].\aL 
-%	 \red[\arole : {\aout[][\eraseB\atuple][\aloc]}]
-%	 \envmv, \arole : \aL , \atupleat[@][\eraseB\atuple][\aloc]}
-%	{LOut_1} 
-%\\[25pt]
-\mathrule{\dn\atuple\ {\it fresh}}
-	{\envmv, \arole : \arout[][@][\aloc].\aL 
-	 \red[\arole : {\arout[][\eraseB\atuple][\aloc]}]
-	 \envmv, \arole : \aL , \artupleat[@][\eraseB\atuple][\aloc]}
-	{LOut}
-& %\\[25pt]
-\mathrule
-	{\atuple \matches \atuple' \generates \sigma}
-	{\envmv, \arole : \ain[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc]
-	 \red[\arole : {\ain[][\atuple'][\aloc]}]
-	 \envmv, \arole : \aL\sigma}
-	{LIn}
-\\[25pt]
-%\mathrule
-%	{\atuple \matches \atuple' \generates \sigma}
-%	{\envmv, \arole : \ard[][@][\aloc].\aL, \atupleat[][\atuple'][\aloc] 
-%	 \red[\arole : {\ard[][\atuple'\sigma][\aloc]}]
-%	 \envmv, \arole : \aL\sigma,  \atupleat[][\atuple'][\aloc] }
-%	{LRd_1}
-%\\[25pt]
-\mathrule
-	{\atuple \matches \atuple'\generates \sigma}
-	{\envmv, \arole : \ard[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc] 
-	 \red[\arole : {\ard[][\atuple'][\aloc]}]
-	 \envmv, \arole : \aL\sigma,  \artupleat[][\atuple'][\aloc] }
-	{LRd}
-&%\\[25pt]
-\mathrule
-	{\envtuple, \arole : \aLpref_j.\aL_j \red[\alpha] \envmv'}
-	{\envmv, \envtuple, \arole : \aLsum
-	 \red[\alpha]
-	 \envmv,\envmv'}
-	{LSum} \quad j\in I
-\\[25pt]
-\mathrule
-	{\envmv, \arole : \aL_1  \red[\alpha] \envmv', \arole : \aL'_1 }
-	{\envmv, \arole : \aL_1\seqop\aL_2
-	 \red[\alpha]
-	 \envmv', \arole : \aL'_1\seqop\aL_2}
-	{LSeq_1} 
-&%\\[25pt]
-\mathrule
-	{\envmv, \arole : \aL_1  \red[\alpha] \envmv', \arole : \nil }
-	{\envmv, \arole : \aL_1\seqop\aL_2
-	 \red[\alpha]
-	 \envmv', \arole : \aL_2}
-	{LSeq_2} 
-\\[25pt]
-\multicolumn 2 c {\mathrule
-	{\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
-	{\envmv, \arole : \alrec \red[\alpha] \envmv'}
-  {LRec}
-  }
-\end{array}
-\]
-\caption{Semantics of local types}
-\label{fig:local-types-sem}
-\end{figure}
- The operational semantics for the generation of a tuple $\atuple$ that 
+locality $\aloc$. The operational semantics for the generation of a tuple $\atuple$ that 
 contains binders ensures that  each defined name  is substituted by a fresh free variable 
  (i.e., a variable that does not occur free in $\envmv, \arole : \arout[][@][\aloc].\aL$).
 This is achieved by requiring  (i) all bound names in $\atuple$ to be fresh (i.e., $\dn\atuple$  fresh) and 
@@ -214,30 +144,112 @@ The semantics of a recursive term $\alrec$ is given by the rule
  and substitutes the formal parameters $\seq x$ of the recursive
  definition by the actual parameters $\seq\alocvar$, i.e., it applies
  the substitution $\sust {\seq x}{\seq \alocvar}$.
+ 
+
+%\eMnote{nelle etichette delle conclusioni di Lin e LRd non dovrebbe essere $\atuple$ invece di $\atuple'$?} 
+\begin{figure}[t]
+\[
+\begin{array}{l@{\quad\quad}l}
+%\mathrule{\dn\atuple\ {\it fresh}}
+%	{\envmv, \arole : \aout[][@][\aloc].\aL 
+%	 \red[\arole : {\aout[][\eraseB\atuple][\aloc]}]
+%	 \envmv, \arole : \aL , \atupleat[@][\eraseB\atuple][\aloc]}
+%	{LOut_1} 
+%\\[25pt]
+\mathrule{\dn\atuple\ {\it fresh}}
+	{\envmv, \arole : \arout[][@][\aloc].\aL 
+	 \red[\arole : {\arout[][\eraseB\atuple][\aloc]}]
+	 \envmv, \arole : \aL , \artupleat[@][\eraseB\atuple][\aloc]}
+	{LOut}
+&
+\mathrule
+	{\atuple \matches \atuple' \generates \sigma}
+	{\envmv, \arole : \ain[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc]
+	 \red[\arole : {\ain[][\atuple'][\aloc]}]
+	 \envmv, \arole : \aL\sigma}
+	{LIn}
+\\[25pt]
+%\mathrule
+%	{\atuple \matches \atuple' \generates \sigma}
+%	{\envmv, \arole : \ard[][@][\aloc].\aL, \atupleat[][\atuple'][\aloc] 
+%	 \red[\arole : {\ard[][\atuple'\sigma][\aloc]}]
+%	 \envmv, \arole : \aL\sigma,  \atupleat[][\atuple'][\aloc] }
+%	{LRd_1}
+%\\[25pt]
+\mathrule
+	{\atuple \matches \atuple'\generates \sigma}
+	{\envmv, \arole : \ard[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc] 
+	 \red[\arole : {\ard[][\atuple'][\aloc]}]
+	 \envmv, \arole : \aL\sigma,  \artupleat[][\atuple'][\aloc] }
+	{LRd}
+&
+\mathrule
+	{\envtuple, \arole : \aLpref_j.\aL_j \red[\alpha] \envmv'}
+	{\envmv, \envtuple, \arole : \aLsum
+	 \red[\alpha]
+	 \envmv,\envmv'}
+	{LSum} \qquad j\in I
+\\[25pt]
+\mathrule
+	{\envmv, \arole : \aL_1  \red[\alpha] \envmv', \arole : \aL'_1 }
+	{\envmv, \arole : \aL_1\seqop\aL_2
+	 \red[\alpha]
+	 \envmv', \arole : \aL'_1\seqop\aL_2}
+	{LSeq_1} 
+&
+\mathrule
+	{\envmv, \arole : \aL_1  \red[\alpha] \envmv', \arole : \nil }
+	{\envmv, \arole : \aL_1\seqop\aL_2
+	 \red[\alpha]
+	 \envmv', \arole : \aL_2}
+	{LSeq_2} 
+\\[25pt]
+\mathrule
+	{\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
+	{\envmv, \arole : \alrec \red[\alpha] \envmv'}
+	{LRec}
+\end{array}
+\]
+\caption{Semantics of local types}
+\label{fig:local-types-sem}
+\end{figure}
 
 
 \subsection{Obtaining local types out of global types}
-\eMnote{differenza sulle $\aphi$ globali e locali; fissare}
 
-We know introduce the projection operation that  
-obtains the local type of a role from a  global type. 
+The projection of a global type $\aK$ over a role $\arole$, 
+written $\proj[@][@][\ ]$,  denotes the local type that specifies 
+the behaviour of  $\arole$ in $\aK$. 
 % 
-While the syntax of global types abstracts away from the 
- channels used for  coordinating the execution of 
-a recursive global type (i.e., $\grec$), the syntax of 
-local types makes them explicit (i.e., $\seq\alocvar$ in $\alrec$). 
-In order to fill this gap, we define projection over 
-decorated global types that are obtained by annotating
- each recursive term $\grec$  with a function
- $\aphi:\roleset \mapsto \locset$, i.e., $\grec[@][@][@][\aphi]$, 
- defined such that $\dom\aphi = \roles\aK$ and $\forall \arole\in\dom\aphi. \aphi(\arole)\not\in\fn\aK$.
- Note that such annotations can be added straightforwardly by a recursive 
- procedure. Hereafter, we focused on decorated global types. 
+Projection in our setting is fairly standard but for the case of
+recursive types,  which coordinate their execution by communicating 
+over dedicated locations.
+%
+Note that the syntax of recursive global types $\grec$ abstract away from 
+the auxiliary locations used in the semantics  (see 
+ $\mathit{STOP}(\arole, \aK, \seq y)$ and
+ $\mathit{LOOP}(\arole, \aK, \seq y, \seq y')$ in \cref{sec:globsem}) while 
+local types $\alrec$ make them explicit (i.e., $\seq\alocvar$). 
+We fill this gap by defining projection over a
+decorated version of global types, where 
+each recursive sub-term $\grec$ is annotated with a function
+$\aphi:\roleset \mapsto \locset$
+ defined such that $\dom\aphi = \roles\aK\cup\{\arole\}$ and 
+ for all $\arole\in\dom\aphi$,  $\aphi(\arole)$ is globally fresh.
+ Such annotations can be  straightforwardly added by a recursive 
+ procedure that associates fresh locations to the roles involved in a 
+ recursive type.  Hence, we just consider decorated recursive global types
+ $\grec[@][@][@][\aphi]$. 
+ %
+
+ Note also that process variables are parametric in local types while this is 
+ not the case in global types. Hence, projection needs to keep
+ track of the parameters associated to process 
+ variables. Formally, this is given by a partial function $\eta$ that maps process variables into sequences of locations, i.e., 
+ $\eta X \in\locset^*$. Hence, projection is given by  $\proj[@][@][\ ] = \proj[@][@][\emptyset]$ where $\proj$
+is in \cref{fig:projection}.
  
- The projection of a global type $\aK$ over a role $\arole$ is given by $\proj[@][@][\ ]$. Its formal definition
- relies on an auxiliary parameter $\eta$ that maps process variables into sequences of locations, where 
- $\eta$ keeps track of the locations used for coordination of each recursive variable. Projection $\proj$
-is defined as follows.  
+ \begin{figure}[t]
  \[
   \proj =\left\{
   \begin{array}{ll}
@@ -290,7 +302,7 @@ is defined as follows.
 %    &
 %    \text{if } \aK = \apref[\arole'][\arole][@][\aloc][.].\aK'
 %    \\
-    \alvar [@][\eta \rho]
+    \alvar [@][\eta X]
     & \text{if }\ \aK = X
     \\
     \multicolumn{2}{l}{
@@ -315,7 +327,9 @@ is defined as follows.
   \end{array}
   \right.
 \]
-\eMnote{{farei input di stop e $\nu y_n:\asort[loc]$ non read}}
+\caption{Projection}
+\label{fig:projection}
+\end{figure}
 
 The projection of prefixes, sums and sequential composition are rather standard; they keep 
 write and read actions of the projected role. We just remark that the production of a tuple is 
