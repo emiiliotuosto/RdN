@@ -97,8 +97,37 @@
 \label{sec:intro}
 \input{intro}
 
-\section{Klaim-inspired Choreographies}
+\section{Klaimographies}
 \label{sec:klaimographies}
+Our type system hinges on the basic notions of Klaim which are based
+on tuples, localities, and operations to generate and access tuple
+spaces.
+%
+We recall that Klaim features two kinds of accesses to tuples located
+on a tuple space dubbed \emph{input} and \emph{read} access and often
+denoted at $\textbf{in}\ t \at \aloc$ and
+$\textbf{rd}\ t \at \aloc$ in Klaim's literature.
+%
+An input access $\textbf{in}\ t \at \aloc$ instantiates the
+variables in $t$ corresponding to the fields in the matching
+tuple at $\aloc$ and then removes the such tuple from $\aloc$, while
+a read access $\textbf{rd}\ t \at \aloc$ does not remove the
+tuple from $\aloc$ after instantiating the variables in $t$.
+%
+\cref{sec:tuples} introduces \emph{tuple types} which basically
+abstract away from values in Klaim's tuples.
+%
+\cref{sec:tuples} introduces \emph{global types} meant to specify
+Klaim system from an global point of view that, using \emph{roles},
+abstracts away from the actual instances of processes executing a
+protocol.
+%
+Clearly, the forms of interactions features in the global types are
+inspired by Klaim\footnote{Klaim allows code mobility, which for
+  simplicity we disregard here.} operations.
+%
+\cref{sec:examples} gives a taste of the expressiveness of our global
+types.
 \subsection{Tuple types}
 \label{sec:tuples}
 \input{tuples}
@@ -110,10 +139,14 @@
 \input{examples}
 %\input{klaimographies}
 
-\subsection{Semantics of global types}
+\section{Semantics}
+We now provide a denotational semantics of global types based on
+pomsets, show how to project global types on local types (that is
+abstractions of claim processes enacting the roles of a global types),
+and give an operational semantics of local types.
+\subsection{Pomsets for klaimographies}
 \label{sec:globsem}
 \input{globalsemantics}
-
 \subsection{Local types}
 \label{sec:locsem}
 \input{localsemantics}

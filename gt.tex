@@ -4,7 +4,8 @@
 We fix two disjoint sets $\participants = \{\ptp p, \ptp q, \ldots\}$
 and $\multiroles = \{\amulti P, \amulti Q, \ldots \}$, respectively of
 \emph{unit} roles and \emph{multiple} roles, and define the set of
-\emph{roles} $\roleset = \participants\, \cup\, \multiroles$, ranged over by $\arole$. \todo{AC: aggiunto}
+\emph{roles} $\roleset = \participants\, \cup\, \multiroles$, ranged over by $\arole$.
+% \todo{AC: aggiunto}
 % \cup \multiroles^\unknownstarop \cup
 % \multiroles^\unknownop$ (ranged over by $\arole, \arole_1,
 % \ldots$) where $\multiroles^{\unknownstarop} = \{\unknownstar \sst
@@ -84,11 +85,12 @@ to be read-only.
 % and consuming (resp. read-only) interactions the interations
 % prescribing inputs (resp. reads).
 %
-We assume that tuple types used in read-only modalities do not
-generate.
+\eMnote{Una variante interessante e' quella dove questo vincolo e' rilassato.}
+{
+  We assume that tuple types used in read-only modalities do not
+  generate.
+}
 %
-\eMnote{Una variante interessante e' quella dove questo vincolo e'
-  rilassato.}
 
 Global types $\aK$ have the following syntax
 % \eMnote{non e' chiaro se vogliamo $\aK \parop \aK $}
@@ -179,8 +181,9 @@ $\names \aK = \fn\aK \cup \dn\aK$. A set $S$ of sorted names is
 consistent, written $\consistent S$, if $x\mapsto \asort \in S$ and
 $x\mapsto \asort' \in S$ implies $\asort = \asort'$.
  
-The sets of well-sorted prefixes and terms are defined inductively as follows:
-
+The sets of well-sorted prefixes and terms are defined inductively as
+follows:
+\todo{{eM: $\consistent \_$ e' usato solo qui; rimuovere la notazione? cosi' evitiamo confusione con $\eraseB{\_}$ avanti}}
 \begin{itemize}
 \item $\apref$ is well-sorted if $\fn\apref\cap\dn\apref = \emptyset$ and  
 $\consistent{\names\apref}$, i.e., there are no clashes/inconsistencies in the sorts of 

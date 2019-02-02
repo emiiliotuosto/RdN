@@ -96,7 +96,7 @@ As for global types, we consider terms up-to $\alpha$-renaming.
  
 We consider the following syntax for the run-time semantics of a set of local types running on a 
 tuple space, called {\em specification}.
-
+%
 \begin{eqnarray*}
   \envmv & \bnfdef & \emptyset \bnfmid
                   \envmv, \arole :  \aL \bnfmid
@@ -120,7 +120,63 @@ We give an operational semantics to local types defined inductively by
 the rules in \cref{fig:local-types-sem}, where labels $\alpha$ are of the form 
 $\arole : \aLpref$. Rule $\rulename{LOut}$ 
 accounts  for the behaviour of a role $\rho$ that  generates a tuple $\atuple$ at the 
-locality $\aloc$. The operational semantics for the generation of a tuple $\atuple$ that 
+locality $\aloc$.
+%
+\eMnote{nelle etichette delle conclusioni di Lin e LRd non dovrebbe essere $\atuple$ invece di $\atuple'$?} 
+\begin{figure} 
+\[
+\begin{array}{l@{\hspace{.7cm}}l}
+%\mathrule{\dn\atuple\ {\it fresh}}
+%	{\envmv, \arole : \aout[][@][\aloc].\aL 
+%	 \red[\arole : {\aout[][\eraseB\atuple][\aloc]}]
+%	 \envmv, \arole : \aL , \atupleat[@][\eraseB\atuple][\aloc]}
+%	{LOut_1} 
+%\\[25pt]
+\mathrule{\dn\atuple\ {\it fresh}}
+	{\envmv, \arole : \arout[][@][\aloc].\aL 
+	 \red[\arole : {\arout[][\eraseB\atuple][\aloc]}]
+	 \envmv, \arole : \aL , \artupleat[@][\eraseB\atuple][\aloc]}
+	{LOut}
+& %\\[25pt]
+\mathrule
+	{\atuple \matches \atuple' \generates \sigma}
+	{\envmv, \arole : \ain[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc]
+	 \red[\arole : {\ain[][\atuple'][\aloc]}]
+	 \envmv, \arole : \aL\sigma}
+	{LIn}
+\\[25pt]
+%\mathrule
+%	{\atuple \matches \atuple' \generates \sigma}
+%	{\envmv, \arole : \ard[][@][\aloc].\aL, \atupleat[][\atuple'][\aloc] 
+%	 \red[\arole : {\ard[][\atuple'\sigma][\aloc]}]
+%	 \envmv, \arole : \aL\sigma,  \atupleat[][\atuple'][\aloc] }
+%	{LRd_1}
+%\\[25pt]
+\mathrule
+	{\atuple \matches \atuple'\generates \sigma}
+	{\envmv, \arole : \ard[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc] 
+	 \red[\arole : {\ard[][\atuple'][\aloc]}]
+	 \envmv, \arole : \aL\sigma,  \artupleat[][\atuple'][\aloc] }
+	{LRd}
+&%\\[25pt]
+\mathrule
+	{\envtuple, \arole : \aLpref_j.\aL_j \red[\alpha] \envmv'}
+	{\envmv, \envtuple, \arole : \aLsum
+	 \red[\alpha]
+	 \envmv,\envmv'}
+	{LSum} \quad j\in I
+\\[25pt]
+\multicolumn 2 c {\mathrule
+	{\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
+	{\envmv, \arole : \alrec \red[\alpha] \envmv'}
+  {LRec}
+  }
+\end{array}
+\]
+\caption{Semantics of local types}
+\label{fig:local-types-sem}
+\end{figure}
+ The operational semantics for the generation of a tuple $\atuple$ that 
 contains binders ensures that  each defined name  is substituted by a fresh free variable 
  (i.e., a variable that does not occur free in $\envmv, \arole : \arout[][@][\aloc].\aL$).
 This is achieved by requiring  (i) all bound names in $\atuple$ to be fresh (i.e., $\dn\atuple$  fresh) and 
@@ -144,61 +200,6 @@ The semantics of a recursive term $\alrec$ is given by the rule
  and substitutes the formal parameters $\seq x$ of the recursive
  definition by the actual parameters $\seq\alocvar$, i.e., it applies
  the substitution $\sust {\seq x}{\seq \alocvar}$.
- 
-
-\eMnote{nelle etichette delle conclusioni di Lin e LRd non dovrebbe essere $\atuple$ invece di $\atuple'$?} 
-\begin{figure} 
-\[
-\begin{array}{l@{\hspace{1cm}}l}
-%\mathrule{\dn\atuple\ {\it fresh}}
-%	{\envmv, \arole : \aout[][@][\aloc].\aL 
-%	 \red[\arole : {\aout[][\eraseB\atuple][\aloc]}]
-%	 \envmv, \arole : \aL , \atupleat[@][\eraseB\atuple][\aloc]}
-%	{LOut_1} 
-%\\[25pt]
-\mathrule{\dn\atuple\ {\it fresh}}
-	{\envmv, \arole : \arout[][@][\aloc].\aL 
-	 \red[\arole : {\arout[][\eraseB\atuple][\aloc]}]
-	 \envmv, \arole : \aL , \artupleat[@][\eraseB\atuple][\aloc]}
-	{LOut}
-\\[25pt]
-\mathrule
-	{\atuple \matches \atuple' \generates \sigma}
-	{\envmv, \arole : \ain[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc]
-	 \red[\arole : {\ain[][\atuple'][\aloc]}]
-	 \envmv, \arole : \aL\sigma}
-	{LIn}
-\\[25pt]
-%\mathrule
-%	{\atuple \matches \atuple' \generates \sigma}
-%	{\envmv, \arole : \ard[][@][\aloc].\aL, \atupleat[][\atuple'][\aloc] 
-%	 \red[\arole : {\ard[][\atuple'\sigma][\aloc]}]
-%	 \envmv, \arole : \aL\sigma,  \atupleat[][\atuple'][\aloc] }
-%	{LRd_1}
-%\\[25pt]
-\mathrule
-	{\atuple \matches \atuple'\generates \sigma}
-	{\envmv, \arole : \ard[][@][\aloc].\aL, \artupleat[][\atuple'][\aloc] 
-	 \red[\arole : {\ard[][\atuple'][\aloc]}]
-	 \envmv, \arole : \aL\sigma,  \artupleat[][\atuple'][\aloc] }
-	{LRd}
-\\[25pt]
-\mathrule
-	{\envtuple, \arole : \aLpref_j.\aL_j \red[\alpha] \envmv'}
-	{\envmv, \envtuple, \arole : \aLsum
-	 \red[\alpha]
-	 \envmv,\envmv'}
-	{LSum} \qquad j\in I
-\\[25pt]
-\mathrule
-	{\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
-	{\envmv, \arole : \alrec \red[\alpha] \envmv'}
-	{LRec}
-\end{array}
-\]
-\caption{Semantics of local types}
-\label{fig:local-types-sem}
-\end{figure}
 
 
 \subsection{Obtaining local types out of global types}

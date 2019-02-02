@@ -106,6 +106,7 @@ is more conveniently written as
 %   \alfof{\apom} \uplus \alfof{\apom'}]
 % \]
 
+\bigskip
 
 In the definition of our semantics we follow a principle that
 distinguishes the nature of autonomous and interaction prefixes.
@@ -125,7 +126,8 @@ distinguishes the nature of autonomous and interaction prefixes.
   be eventually consumed by an instance of the receiving role.
   %
   Thirdly, if $\atuple$ is in a consuming interaction any instance of
-  the receiving role is allowed to read $\atuple$.
+  the receiving role is allowed to read $\atuple$ prior to its
+  consumption.
 \end{itemize}
 
 To capture this semantics we label events with 
@@ -141,7 +143,7 @@ can be performed by any instance of the role in $\apref$.
 % 
 Hereafter, we only deal with pomsets labelled  as  above.
 %
-\todo{eM: qui}
+% \todo{eM: qui}
 %
 %
 % Finally, for $h \geq 1$ and a pomset $\apom$ we define
