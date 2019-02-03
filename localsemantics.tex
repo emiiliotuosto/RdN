@@ -226,22 +226,22 @@ The projection of a global type $\aK$ over a role $\arole$,
 written $\proj[@][@][\ ]$,  denotes the local type that specifies 
 the behaviour of  $\arole$ in $\aK$. 
 % 
-Projection in our setting is fairly standard but for the case of
-recursive types,  which coordinate their execution by communicating 
+Our projection operation is fairly standard but for the case of
+recursive types, which coordinate their execution by communicating
 over dedicated locations.
 %
-Note that  the semantics of recursive global types $\grec$ introduces  
-auxiliary interactions  
-    to coordinate their execution (see 
+%
+Note that the semantics of recursive global types $\grec$ introduces
+auxiliary interactions to coordinate their execution (see
 $\mathit{STOP}(\arole, \aK, \seq y)$ and
-$\mathit{LOOP}(\arole, \aK, \seq y, \seq y')$ in \cref{sec:globsem}). 
+$\mathit{LOOP}(\arole, \aK, \seq y, \seq y')$ in \cref{sec:globsem}).
 %
 However, there is not such an implicit mechanism in the 
 execution of local types, where recursion is standard. 
 %
-Consequently, those auxiliary interactions need to be    
-defined explicitly in local types; and consequently, they are 
-introduced by projection. 
+Consequently, those auxiliary interactions need to be defined
+explicitly in local types; and consequently, they are introduced by
+projection (similarly to the approach in~\cite{bmt14}).
 %
 Another subtle aspect of the semantics of a recursive global type is that 
 each iteration  is parametric with respect to the set of localities used 
@@ -254,7 +254,7 @@ of process variables. Hence, $\proj[@][@][\ ]$ is defined in terms
 of $\proj$, where $\eta$ is a partial function that maps 
 process variables into sequences of locations, i.e., 
 $\eta X = \seq\alocvar$; and $\proj[@][@][\ ] = \proj[@][@][\emptyset]$.
- 
+\todo{eM: portando fuori i casi 3,4,5 si risparmia il caso 2}
  \begin{figure}[t]
  \[
   \proj =\left\{
