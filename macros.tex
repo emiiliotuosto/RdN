@@ -76,6 +76,13 @@
     \ifempty{#5}{}{\mkop{.} #5_{#1}}
   }
 }
+\newcommandx{\gtrace}[3][1=1,2=n,3=\dummypar{},usedefault=@]{
+  \alabel[{#3}]_{#1} \cdots \alabel[{#3}]_{#2}
+}
+\newcommandx{\ltrace}[2][1=1,2=n,usedefault=@]{
+  \alpha_{#1} \cdots \alpha_{#2}
+}
+
 \newcommandx{\arout}[3][1=\arole,2=\atuple,3=\alocvar,usedefault=@]{
   \ifempty{#1}{#2 \outop #3}{{#1} \outop {#2} \at {#3}}
 }

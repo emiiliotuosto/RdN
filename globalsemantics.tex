@@ -311,10 +311,8 @@ either of the following holds:
 \begin{itemize}
 \item $\aK = \asum[@][@][][]$ and there is $i \in I$ such that either
   $(\atuple, \aloc)$ is local to $\aK_i$ or $\apref_i$ outputs
-  $\atuple$ at $\aloc$, there is $\atuple'$ in an input from $\aloc$
-  in $\aK_i$,
-%\todo{RB: $\aK_i$?}
- and $\atuple \matches \atuple'$
+  $\atuple$ at $\aloc$ for consumption and  there is $\atuple'$ in an
+  input from $\aloc$ in $\aK_i$ such that $\atuple \matches \atuple'$
 \item $\aK = \aK_1 \seqop \aK_2$ and either $(\atuple, \aloc)$ is local to
   $\aK_1$ or   $(\atuple, \aloc)$ is local to $\aK_2$
 \item $\aK = \grec[@][@][\aK']$ and $(\atuple, \aloc)$ is local to
@@ -331,9 +329,9 @@ tuple types: we say that $\aK_1$ and $\aK_2$ are \emph{well-sequenced}
   $(\atuple', \aloc) \in \aK_j$, $\atuple \matches \atuple'$ implies
   $(\atuple', \aloc)$ is in a read-only prefix in $\aK_j$
 \item for all $(\atuple,\aloc)$ in an autonomous input prefix of
-  $\aK_i$ and for all $(\atuple', \aloc)$ in an output prefix of
-  $\aK_j$, $\atuple \matches \atuple'$ implies $(\atuple',\aloc)$ is
-  in an output prefix in $\aK_j$.
+  $\aK_i$ and for all $(\atuple', \aloc)$ generated in $\aK_j$,
+  $\atuple \matches \atuple'$ implies $(\atuple',\aloc)$ is in an
+  autonomous output prefix in $\aK_j$ for consumption.
   % \todo{RB: togliere ``consuming''? (la terminologia \`e cambiata)}
 \end{itemize}
 % such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a
