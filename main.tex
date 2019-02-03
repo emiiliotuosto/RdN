@@ -110,19 +110,19 @@ $\textbf{rd}\ t \at \aloc$ in Klaim's literature.
 %
 An input access $\textbf{in}\ t \at \aloc$ instantiates the
 variables in $t$ corresponding to the fields in the matching
-tuple at $\aloc$ and then removes the such tuple from $\aloc$, while
+tuple at locality $\aloc$ and then removes the such tuple from $\aloc$, while
 a read access $\textbf{rd}\ t \at \aloc$ does not remove the
 tuple from $\aloc$ after instantiating the variables in $t$.
 %
 \cref{sec:tuples} introduces \emph{tuple types} which basically
 abstract away from values in Klaim's tuples.
 %
-\cref{sec:tuples} introduces \emph{global types} meant to specify
+\cref{sec:gt} introduces \emph{global types} meant to specify
 Klaim system from an global point of view that, using \emph{roles},
 abstracts away from the actual instances of processes executing a
 protocol.
 %
-Clearly, the forms of interactions features in the global types are
+Clearly, the forms of interactions featured in the global types are
 inspired by Klaim\footnote{Klaim allows code mobility, which for
   simplicity we disregard here.} operations.
 %

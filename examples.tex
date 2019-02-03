@@ -1,9 +1,9 @@
 % !TEX root =  main.tex
 
 We give a few simple global types (\cref{ex:cs,ex:CS,ex:CSx,ex:CSl})
-to highlight some peculiarities of our choreographies as well as a
-more complex example (\cref{ex:market}) to illustrate the type of
-protocols our choreographies can capture.
+to highlight some peculiarities of Klaimographies as well as a
+more complex example (\cref{ex:market}) to illustrate the kind of
+protocols our global types can capture.
 
 \begin{example}\label{ex:cs}
   Consider the following global type that describes the interaction of
@@ -73,7 +73,7 @@ Name binders can be used to correlate tuples.
   %
   \finex
 \end{example}
-The choreography in \cref{ex:CSx} does not establishes a one-to-one
+The Klaimography in \cref{ex:CSx} does not establishes a one-to-one
 association between instances of $\amulti C$ and $\amulti S$.
 %
 In fact, an instance of $\amulti C$ not necessarily interacts with the
@@ -116,15 +116,14 @@ interaction.
 % }}
 
 
-The following example shows the kind of protocols that our global
-types can model in a realistic scenario allowing us to combine
+The following example focuses on a more realistic scenario, allowing us to combine
 together most of the features of our framework.
 %
 For readability,  we use the notation
 $\grec[@][@][@][1]$ for a recursive protocol where the body $\aK$ is
 repeated at least once.
 %
-Formally,
+Formally,\footnote{The reader should not be confused by the fact that the meaning of $\grec$ is different from that of $\aK \sust{X}{\grec}$: this is because iteration and termination require some implicit interactions driven by $\arole$ towards the other roles in $\aK$.}
 \[
 \grec[@][@][@][1] =
   \aK \sust{X}{\grec} 
