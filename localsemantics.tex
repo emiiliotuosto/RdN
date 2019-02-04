@@ -10,6 +10,7 @@ grammar.
   che poi nella definizione di $\proj$ (caso 7) si usa ;
 }
 \todo{eM \& HM: ci avevamo pensato, ma poi abbiamo optato per consistenza; se volete cambiate pure.}
+\todo{RB: cambiato con macro}
 \begin{eqnarray*}
   \aLpref & \bnfdef &
 %                  \aout[] \bnfmid
@@ -19,7 +20,7 @@ grammar.
 \\
   \aL & \bnfdef &
                   \aLsum \bnfmid
-                  \aL \seqop \aL \bnfmid
+                  \aL \lseqop \aL \bnfmid
                    \alrec \bnfmid
   	        \alvar%[{\alvar[@][x_1,\ldots,x_n]}][\aL]
 \end{eqnarray*}
@@ -30,6 +31,9 @@ production, consumption and read of a tuple $\atuple$ at the locality
 $\alocvar$. Differently from global types, local types do not
 distinguish the generation of read-only tuples from the ones that can
 be consumed.
+%
+Also, we use the symbol $\lseqop$ instead of $\seqop$ to remark the fact that,
+on local types, the sequential operator $\lseqop$ serialises all activities.
 
 Formation rules for branching and sequential local types $\aL$ are
 exactly the same as for global types; analogously we write $\nil$ for
@@ -83,7 +87,7 @@ Substitution on local types is defined as follows.
    (\aLsum)\sust x y  = & \displaystyle{\sum_{i\in I} {(\aLpref_{i}\sust x y).(\aL_{i}\sust x y)}}
    &  {\it if}\  \forall i. x\not\in\dn{\aLpref_i}
   \\
-  (\aL_1\seqop\aL_2)\sust x y  = &  \aL_1\sust x y\seqop  \aL_2\sust x y 
+  (\aL_1\lseqop\aL_2)\sust x y  = &  \aL_1\sust x y\lseqop  \aL_2\sust x y 
   \\
   \alvar\sust x y  = & \alvar[@][\seq\alocvar\sust x y]  
   \\
@@ -139,7 +143,7 @@ accounts  for the behaviour of a role $\rho$ that  generates a tuple type $\atup
 locality $\aloc$. The operational semantics for the generation of a tuple $\atuple$ that 
 contains binders ensures that  each defined name  is substituted by a fresh free variable 
  (i.e., a variable that does not occur free in $\envmv, \arole : \arout[][@][\aloc].\aL$).
-This is achieved by requiring  (i) all bound names in $\atuple$ to be fresh (i.e., $\dn\atuple$  fresh) and 
+This is achieved by requiring  (i) all bound names in $\atuple$ to be fresh by $\alpha$-renaming them if necessary (i.e., $\dn\atuple$  fresh) and 
 (ii)  the generated tuple $\eraseB\atuple$ is the binder-free version of $\atuple$. 
 Rule $\rulename{LIn}$ handles the case in which a role $\arole$
 consumes  a tuple specified as $\atuple$ from locality $\aloc$. In order for the consumption to
@@ -159,7 +163,7 @@ The semantics of a recursive term $\alrec[@][@][@][\seq \aloc]$ is
 given by the rule $\rulename{LRec}$, which unfolds the definition,
 i.e., $\aL\sust X{\abasiclrec}$ and substitutes the formal parameters
 $\seq x$ of the recursive definition by the actual parameters
-$\seq\aloc$, i.e., it applies the substitution
+$\seq\aloc$ via the substitution
 $\sust {\seq x}{\seq \aloc}$.
  
 
@@ -209,14 +213,14 @@ $\sust {\seq x}{\seq \aloc}$.
 \\[25pt]
 \mathrule
 	{\envmv, \arole : \aL_1  \red[\alpha] \envmv', \arole : \aL'_1 }
-	{\envmv, \arole : \aL_1\seqop\aL_2
+	{\envmv, \arole : \aL_1\lseqop\aL_2
 	 \red[\alpha]
-	 \envmv', \arole : \aL'_1\seqop\aL_2}
+	 \envmv', \arole : \aL'_1\lseqop\aL_2}
 	{LSeq_1} 
 &
 \mathrule
 	{\envmv, \arole : \aL_1  \red[\alpha] \envmv', \arole : \nil }
-	{\envmv, \arole : \aL_1\seqop\aL_2
+	{\envmv, \arole : \aL_1\lseqop\aL_2
 	 \red[\alpha]
 	 \envmv', \arole : \aL_2}
 	{LSeq_2} 
@@ -317,7 +321,7 @@ $\eta X = \seq\alocvar$; and $\proj[@][@][\ ] = \proj[@][@][\emptyset]$.
      \text{if }\ \aK = \asum[@][@][][]
      }
     \\[10pt]
-    \proj[\aK_1];\proj[\aK_2] 
+    \proj[\aK_1]\lseqop \proj[\aK_2] 
     & 
     \multicolumn{2}{l}{
      \text{if }\  \aK = \aK_1 \seqop \aK_2

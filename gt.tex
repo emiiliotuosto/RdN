@@ -115,6 +115,9 @@ The set $\roles \aK \subseteq \roleset$ of roles of $\aK$ is the set of roles th
 The syntax of global types features prefix guarded choices, sequential
 composition, and recursion.
 %
+The semantics in \cref{sec:globsem} will make clear that sequential composition $\seqop$ allows for some concurrency between actions in the absence of role dependencies and communication dependencies.
+\todo{RB: aggiunta frase su $\seqop$}
+%
 To handle recursive behaviour, 
 %\todo{AC+RB: il comportamento della ricorsione si intuisce solo dopo aver visto la semantica. Forse bisognerebbe tentare di spiegarlo intuitivamente?}
 %\todo{eM: ora?}
@@ -124,13 +127,15 @@ the construct $\grec$ singles out a role $\arole \in \roles \aK$
 % $\aphi : \roles \aK \setminus \{\arole\} \to \locset$ such that the
 % locations in $\cod(\aphi)$ do not occur in $\aK$; intuitively,
 % $\arole$
-deciding when the recursion ends.
+deciding 
+%when the recursion ends.
 %\todo{RB: pi\`u sotto viene usata la notazione $\alvar$ invece di $X$: bisogna cambiare la grammatica delle coreografie?}
 % and, for all $\arole' \neq \arole$ in $\aK$, the location
 % $\aphi(\arole')$ is used to communicate the decision of $\arole$ to
 % $\arole'$.
 %
-Intuitively, in $\grec$ role  $\arole$ non-deterministically decides whether 
+%Intuitively, in $\grec$ role  $\arole$ non-deterministically decides 
+whether 
 to repeat the execution of  the body $\aK$  or (if ever) to end it.
 %
 To achieve this,  $\arole$ notifies the decision to stop or to do a next iteration by generating tuple types for the
@@ -179,9 +184,10 @@ omitted prefixes are defined analogously.
 \]
 %
 We remark that in $\aK_1 \seqop \aK_2$ the scope of names defined in $\aK_1$ does not include $\aK_2$.
-We write $\names \_$ for the set of sorted names of a term, i.e.,
-$\names \apref = \fn\apref \cup \dn\apref$ and similarly
-$\names \aK = \fn\aK \cup \dn\aK$.
+We write $\names \_$ for the set of (sorted) defined and free names of a term.
+%, i.e.,
+%$\names \apref = \fn\apref \cup \dn\apref$ and similarly
+%$\names \aK = \fn\aK \cup \dn\aK$.
 %
 A set $S$ of sorted names is \emph{consistent} if
 $x\mapsto \asort \in S$ and $x\mapsto \asort' \in S$ implies
@@ -207,6 +213,7 @@ follows:
     %
     This does not look reasonable.}
   \todo{eM \& HM: non capiamo il problema sollevato da Andrea}
+  \todo{RB: credo che AC si riferisca al fatto che nella regola per la somma viene permesso di usare lo stesso nome con tipi diversi in due rami diversi. Invece di richiedere ``$\names {\apref_i.\aK_i}$ is consistent'' si dovrebbe richiedere ``$\names {\asum[@][@][][]}$ is consistent''}
   \item $\aK_1 \seqop \aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
   well-sorted and $\names{\aK_1 \seqop \aK_2}$ is consistent;
 \item $X$ is well-sorted and $\grec$ is well-sorted if $\aK$ is
