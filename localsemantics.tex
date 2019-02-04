@@ -9,6 +9,7 @@ grammar.
   sequenziale: meglio usare un simbolo diverso, ad esempio ;? Notare
   che poi nella definizione di $\proj$ (caso 7) si usa ;
 }
+\todo{eM \& HM: ci avevamo pensato, ma poi abbiamo optato per consistenza; se volete cambiate pure.}
 \begin{eqnarray*}
   \aLpref & \bnfdef &
 %                  \aout[] \bnfmid
@@ -35,7 +36,7 @@ exactly the same as for global types; analogously we write $\nil$ for
 an empty sum.  The syntax of recursive local types deviates from
 global types to make explicit the localities used for coordinating the
 execution; consequently, process variables are parametric (the syntax
-for recursive types is borrowed from~\cite{}).  The term $\alrec$
+for recursive types is borrowed from~\cite{bhty10}).  The term $\alrec$
 defines a process variable $X$ with parameters $\seq x$ to be used in
 $\aL$; the initial values of $\seq x$ are given by
 $\seq\alocvar$. Accordingly, the usage of a process variable is
@@ -105,27 +106,29 @@ Substitution on local types is defined as follows.
 %
 As for global types, we consider terms up-to $\alpha$-renaming.
  
-We consider the following syntax for the run-time semantics of a set of local types running on a 
-tuple space, called a {\em specification}.
-
+We consider the following syntax for the run-time semantics of a set
+of local types running on a tuple space, dubbed \emph{specification}.
+%
 \begin{eqnarray*}
   \envmv & \bnfdef & \emptyset \bnfmid
                   \envmv, \arole :  \aL \bnfmid
 %                  \envmv, \atupleat \bnfmid
-                  \envmv, \artupleat                  
+                  \envmv, \artupleat[@][@][\aloc]                  
 \end{eqnarray*}
 %
-\todo{eM: $\alocvar$ non dovrebbe comparire nelle tuple locate delle specifiche}
-\todo{RB: credo che possa succedere: solo a livello delle etichette delle transizioni le variabili sono istanziate a locazioni}
-A specification is a multiset containing two kind of pairs:  $\arole :  \aL$   associates a 
-role with a local type; while $\artupleat$  indicates that a 
-tuple of type $\atuple$ is available at locality $\alocvar$. 
+% \todo{eM: $\alocvar$ non dovrebbe comparire nelle tuple locate delle specifiche}
+% \todo{RB: credo che possa succedere: solo a livello delle etichette delle transizioni le variabili sono istanziate a locazioni}
+%
+A specification is a multiset containing two kind of pairs:
+$\arole : \aL$ associates a role with a local type; while $\artupleat[@][@][\aloc]$
+indicates that a tuple of type $\atuple$ is available at locality
+$\aloc$.
 %In $\arole :  \aL$  we assume
 %$\arole \in \participants \cup \multiroles$  and $\arole \eqR \arole'$ for any $\arole'$
 %occurring in $\aL$.
 %
 We sometimes write $\envtuple$ to denote a specification containing only
-terms of the form $\artupleat$. 
+terms of the form $\artupleat[@][@][\aloc]$. 
 
 The definition of $\fn{\_}$ is straightforwardly  extended to specifications. 
 
@@ -152,11 +155,12 @@ read tuple is not removed from the tuple space.
 Rule $\rulename{LSum}$ accounts for a role that follows by choosing one of 
 its enabled branches. 
 %
-The semantics of a recursive term $\alrec$ is given by the rule
- $\rulename{LRec}$, which unfolds the  definition, i.e., $\aL\sust X{\abasiclrec}$
- and substitutes the formal parameters $\seq x$ of the recursive
- definition by the actual parameters $\seq\alocvar$, i.e., it applies
- the substitution $\sust {\seq x}{\seq \alocvar}$.
+The semantics of a recursive term $\alrec[@][@][@][\seq \aloc]$ is
+given by the rule $\rulename{LRec}$, which unfolds the definition,
+i.e., $\aL\sust X{\abasiclrec}$ and substitutes the formal parameters
+$\seq x$ of the recursive definition by the actual parameters
+$\seq\aloc$, i.e., it applies the substitution
+$\sust {\seq x}{\seq \aloc}$.
  
 
 %\eMnote{nelle etichette delle conclusioni di Lin e LRd non dovrebbe essere $\atuple$ invece di $\atuple'$?} 
@@ -219,8 +223,8 @@ The semantics of a recursive term $\alrec$ is given by the rule
   \\[25pt]
   \multicolumn 2 c {
   \mathrule
-  {\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
-  {\envmv, \arole : \alrec \red[\alpha] \envmv'}
+  {\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \aloc} \red[\alpha] \envmv'}
+  {\envmv, \arole : \alrec[@][@][@][\seq \aloc] \red[\alpha] \envmv'}
   {LRec}
   }
 \end{array}
@@ -265,8 +269,7 @@ of process variables. Hence, $\proj[@][@][\ ]$ is defined in terms
 of $\proj$, where $\eta$ is a partial function that maps 
 process variables into sequences of locations, i.e., 
 $\eta X = \seq\alocvar$; and $\proj[@][@][\ ] = \proj[@][@][\emptyset]$.
-\todo{eM: portando fuori i casi 3,4,5 si risparmia il caso 2}
- \begin{figure}[t]
+\begin{figure}[t]
  \[
   \proj =\left\{
   \begin{array}{l@{\quad}l@{\ \ }l}

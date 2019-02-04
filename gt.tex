@@ -36,7 +36,8 @@ instances of processes all performing actions according to their role.
 
 %
 Let us first define the grammar for \emph{prefixes} used in global types:
-\todo{AC: localities are said to be ranged over by $\aloc$, but we use $\alocvar$ in the prefixes...}
+%
+% \todo{AC: localities are said to be ranged over by $\aloc$, but we use $\alocvar$ in the prefixes...}
 % \todo{RB: ``consuming output'' mi sembra fuorviante... ma non ho proposte migliori}
 %
 \[\begin{array}{lcl@{\qquad\qquad}l}
@@ -180,23 +181,34 @@ omitted prefixes are defined analogously.
 We remark that in $\aK_1 \seqop \aK_2$ the scope of names defined in $\aK_1$ does not include $\aK_2$.
 We write $\names \_$ for the set of sorted names of a term, i.e.,
 $\names \apref = \fn\apref \cup \dn\apref$ and similarly
-$\names \aK = \fn\aK \cup \dn\aK$. A set $S$ of sorted names is
-consistent, written $\consistent S$, if $x\mapsto \asort \in S$ and
-$x\mapsto \asort' \in S$ implies $\asort = \asort'$.
+$\names \aK = \fn\aK \cup \dn\aK$.
+%
+A set $S$ of sorted names is \emph{consistent} if
+$x\mapsto \asort \in S$ and $x\mapsto \asort' \in S$ implies
+$\asort = \asort'$.
  
 The sets of well-sorted prefixes and terms are defined inductively as
 follows:
-\todo{{eM: $\consistent \_$ e' usato solo qui; rimuovere la notazione? cosi' evitiamo confusione con $\eraseB{\_}$ avanti} RB: mi sembra una buona idea}
 \begin{itemize}
-\item $\apref$ is well-sorted if $\fn\apref\cap\dn\apref = \emptyset$ and  
-$\consistent{\names\apref}$, i.e., there are no clashes/inconsistencies in the sorts of 
-the names in the component $\atuple$ of $\pi$ and the locality $\alocvar$ mentioned in $\pi$;
+\item $\apref$ is well-sorted if $\fn\apref\cap\dn\apref = \emptyset$
+  and $\names\apref$ is consistent, i.e., there are no
+  clashes/inconsistencies in the sorts of the names in the component
+  $\atuple$ of $\pi$ and the locality $\alocvar$ mentioned in $\pi$;
 \item $\asum[@][@][][]$ is well-sorted if for all ${i\in I}$ both
   $\apref_i$ and ${\aK_i}$ are well-sorted and
-  $\consistent{\names {\apref_i.\aK_i}}$; \todo{AC: in the sum, consistency is required in each branch, but not globally: this looks reasonable. But with the present definition, I may have a $\aK_1$ well-sorted (a sum), 
-  $\aK_2$ well-sorted, $\names{\aK_1} \cap \names{\aK_2} = \emptyset$ and $\aK_1 \seqop \aK_2$ not well-sorted (by the requirement $\consistent{\names{\aK_1 \seqop \aK_2}}$). This does not look reasonable.}
+  $\names {\apref_i.\aK_i}$ is consistent;
+  %
+  \todo{AC: in the sum, consistency is required in each branch, but
+    not globally: this looks reasonable. But with the present
+    definition, I may have a $\aK_1$ well-sorted (a sum), $\aK_2$
+    well-sorted, $\names{\aK_1} \cap \names{\aK_2} = \emptyset$ and
+    $\aK_1 \seqop \aK_2$ not well-sorted (by the requirement
+    $\names{\aK_1 \seqop \aK_2}$ is consistent).
+    %
+    This does not look reasonable.}
+  \todo{eM \& HM: non capiamo il problema sollevato da Andrea}
   \item $\aK_1 \seqop \aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
-  well-sorted and $\consistent{\names{\aK_1 \seqop \aK_2}}$;
+  well-sorted and $\names{\aK_1 \seqop \aK_2}$ is consistent;
 \item $X$ is well-sorted and $\grec$ is well-sorted if $\aK$ is
   well-sorted.
 \end{itemize}
