@@ -35,9 +35,9 @@ a permutation $\ae_1 \cdots \ae_n$ of the events in $\aE$ is a
   $I(\ae) \cap \aE = \emptyset \iff I(\ae) = \emptyset$
 \item accesses in $\ae_1 \cdots \ae_n$ are preceded by a matching
   output, namely ($i$) for each $1 \leq i \leq n$ if $\ae_i$ accesses
-  $\atuple$ at $\aloc$ then there is $1 \leq j < i$ such that $\ae_j$
+  $\atuple$ at $\aloc$ then there is some $j$ with $1 \leq j < i$ such that $\ae_j$
   outputs $\atuple'$ at $\aloc$ with $\atuple' \matches \atuple$ and
-  ($ii$) for all $j < h < i$ if $\ae_h$ inputs $\atuple''$ at $\aloc$
+  ($ii$) for all $h$ such that $j < h < i$ if $\ae_h$ inputs $\atuple''$ at $\aloc$
   then $\neg (\atuple' \matches \atuple'')$.
 \end{itemize}
 
@@ -97,11 +97,12 @@ $n > 1$ and
 \]
 where $\atuple$ is the tuple in $\alabel[]$ and $\atuple'$ is the one in $\alpha_1$.
 
-Given a global type $\aK$, $\envmv$ is a \emph{$\aK$-specification} if
-whenever $\arole : \aL \in \envmv$ then $\arole \in \roles{\aK}$ and
+Given a global type $\aK$, $\envmv$ is a \emph{$\aK$-specification} if:
+(i)~it has no tuple, and 
+(ii)~$\arole : \aL \in \envmv$ iff $\arole \in \roles{\aK}$ and
 $\aL = \proj[@][@][\ ]$.
 %
-We can now state our correspondence results.
+We can now state our main results.
 %
 \begin{theorem}\label{thm:gt2local}
   Given a well-formed global type $\aK$, for all $\apom \in \ksem \aK$
