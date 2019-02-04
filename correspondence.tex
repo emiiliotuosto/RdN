@@ -89,11 +89,10 @@ Let $\alabel[] \vdash \alpha$ hold iff
 This definition extends to sequences \eqref{eq:gtrace} with $n \geq 1$
 as follows:
 $\gtrace \vdash \alpha_1 \cdots \alpha_n$ if
-$n = 1$  and $\alabel[]_1 \vdash \ae_1$ or
+$n = 1$  and $\alabel[]_1 \vdash \alpha_1$ or
 $n > 1$ and
-\todo{RB: qui e nella riga sotto dovrebbe essere $\alpha_1$ invece di $\ae_1$?}
 \[
-  \alabel[]_1 \vdash \ae_1 \land  \forall \sigma: \dn{\atuple} \to \fn{\atuple'} \qst \eraseB{\atuple}\sigma = \atuple'
+  \alabel[]_1 \vdash \alpha_1 \land  \forall \sigma: \dn{\atuple} \to \fn{\atuple'} \qst \eraseB{\atuple}\sigma = \atuple'
   \implies (\gtrace[2])\sigma \vdash \alpha_2 \cdots \alpha_n
 \]
 where $\atuple$ is the tuple in $\alabel[]$ and $\atuple'$ is the one in $\alpha_1$.
