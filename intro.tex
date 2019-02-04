@@ -33,8 +33,8 @@ Second, interactions are not point-to-point because each tuple can be read many 
 Third, all interactions involve a tuple space locality instead of a channel name.
 Fourth, klaimographies are data-driven.
 
-The main contribution of this paper is to set up the formal setting of klaimographies and prepare the ground for several interesting research directions: we fix the syntax of global and local type description and define the projection from global type to local types as typical of choreographic frameworks.
-Global types are equipped with a partial order semantics of events and local types with an ordinary operational semantics in the SOS style. Then the conditions under which the behaviour of projected local types are faithful to the semantics of global types are spelled out. 
+The main contribution of this paper is to set up the formal setting of klaimographies and to prepare the ground for several interesting research directions: we fix the syntax of global and local types and define the projection from global to local types, as typical of choreographic frameworks.
+Global types are equipped with a partial order semantics of events and local types with an ordinary operational semantics. Then, the conditions under which the behaviour of projected local types are faithful to the semantics of global types are spelled out. 
 
 Shifting the focus from control to data in choreographic framework has
 several implications.
@@ -57,7 +57,7 @@ events to occur.
 %
 Our work paves the way to the formal study of properties of data, like consumption, persistence and availability, in a choreographic setting.
 
-Another main innovation of klaimographies is that they allow us to easily
+Another main innovation of klaimographies is that they allow one to easily
 represent protocols where an arbitrary number of components can
 play a role in the choreography.
 %
@@ -67,12 +67,12 @@ Remarkably, those protocols can be specified in some existing
 choreographic frameworks~\cite{ydbh10,chjny19}, but in a less abstract way
 that requires the explicit quantification on components.
 
-\paragraph{Structure of the paper}
+\paragraph{Structure of the paper.}
 \todo{eM: revise}
 After some preliminaries in Section~\ref{sec:tuples}, we define klaimographies as global types in Section~\ref{sec:gt} and give some examples in Section~\ref{sec:examples}.
 In Section~\ref{sec:globsem} we define the semantics of global types and give the adequacy conditions for projecting global types to local types.
 In Section~\ref{sec:locsem} we define the syntax and operational semantics of local types and show how to project global types over local types in Section~\ref{sec:proj}.
-The formal semantic correspondence between global types and their projected local types in accounted for in Section~\ref{sec:corr}.
+The semantic correspondence between global types and local types in accounted for in Section~\ref{sec:corr}.
 Some concluding remarks together with the discussion of related and future work are in Section~\ref{sec:conc}.
 
 %%% Local Variables:

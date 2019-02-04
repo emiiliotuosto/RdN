@@ -138,7 +138,7 @@ Intuitively, e.g., a label $\alabel[@][][\arole][@][@][.]$
 $i^\mathit{th}$ instance of $\arole$ reads (resp. produces) a tuple of
 type $\atuple$.
 %
-Labels $\apref$ not prefixed with $[\_]$ simply specify that the event
+Labels $\apref$ not prefixed with $[\_]$ specify that the event
 can be performed by any instance of the role in $\apref$.
 % 
 Hereafter, we only deal with pomsets labelled  as  above.
@@ -158,9 +158,9 @@ Hereafter, we only deal with pomsets labelled  as  above.
 % The operation $\_^h$ extends element-wise to sets of pomsets.
 %
 %
-Also, we assign \emph{basic pomsets} $\bp$ to prefixes $\apref$, a
+Also, we assign \emph{basic pomsets} $\bp$ to prefixes $\apref$. A
 basic pomset yields the causal relations of $\apref$ imposed by the
-design principle described above.
+above design principle.
 % 
 For an autonomous prefix $\apref[@][@][][]$ we define
 $\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$.
@@ -261,7 +261,9 @@ We can now give the semantics of prefixes as follows
 \end{align*}
 
 As customary in other
-choreographic approaches~\cite{},  the semantics of (closed) global types
+choreographic approaches~\cite{},
+\todo{RB: missing ref}  
+the semantics of (closed) global types
 considers only  \emph{well-formed} global
 types, namely those enjoying \emph{well-sequencedness} and
 \emph{well-branchedness}.

@@ -35,8 +35,8 @@ instances of processes all performing actions according to their role.
 %\todo{eM: direi di no; in the long run vorremmo che un processo possa coprire piu' ruoli}
 
 %
-Let us first define the \emph{prefixes} used in global types
-with the following grammar:\todo{AC: localities are said to be ranged over by $\aloc$, but we use $\alocvar$ in the prefixes...}
+Let us first define the grammar for \emph{prefixes} used in global types:
+\todo{AC: localities are said to be ranged over by $\aloc$, but we use $\alocvar$ in the prefixes...}
 % \todo{RB: ``consuming output'' mi sembra fuorviante... ma non ho proposte migliori}
 %
 \[\begin{array}{lcl@{\qquad\qquad}l}
@@ -85,6 +85,7 @@ to be read-only.
 % and consuming (resp. read-only) interactions the interations
 % prescribing inputs (resp. reads).
 %
+
 \eMnote{Una variante interessante e' quella dove questo vincolo e' rilassato.}
 {
   We assume that tuple types used in read-only modalities do not
@@ -108,7 +109,7 @@ $\asum[@][@][][]$ when $I = \emptyset$ (we omit trailing occurrences
 of $\nil$) and $\apref_j.\aK_j$ instead of $\asum[@][@][][]$ when
 $I = \{j\}$.
 %
-The set $\roles \aK$ of roles of $\aK$ is the set of roles that are mentioned in $\aK$ and it is defined in the obvious way.
+The set $\roles \aK \subseteq \roleset$ of roles of $\aK$ is the set of roles that are mentioned in $\aK$ and it is defined in the obvious way.
 
 The syntax of global types features prefix guarded choices, sequential
 composition, and recursion.
@@ -161,6 +162,7 @@ omitted prefixes are defined analogously.
       \\
       \fn \grec & \fn {\aK}
     \end{array}
+    &
     \begin{array}{l@{\ =\ } ll}
       \dn{\asum[@][@][][]} & \displaystyle{\bigcup_{i\in I}} \dn{\apref_i} \cup \dn{\aK_i}
       \\
