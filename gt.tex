@@ -202,18 +202,7 @@ follows:
   $\atuple$ of $\pi$ and the locality $\alocvar$ mentioned in $\pi$;
 \item $\asum[@][@][][]$ is well-sorted if for all ${i\in I}$ both
   $\apref_i$ and ${\aK_i}$ are well-sorted and
-  $\names {\apref_i.\aK_i}$ is consistent;
-  %
-  \todo{AC: in the sum, consistency is required in each branch, but
-    not globally: this looks reasonable. But with the present
-    definition, I may have a $\aK_1$ well-sorted (a sum), $\aK_2$
-    well-sorted, $\names{\aK_1} \cap \names{\aK_2} = \emptyset$ and
-    $\aK_1 \seqop \aK_2$ not well-sorted (by the requirement
-    $\names{\aK_1 \seqop \aK_2}$ is consistent).
-    %
-    This does not look reasonable.}
-  \todo{eM \& HM: non capiamo il problema sollevato da Andrea}
-  \todo{RB: credo che AC si riferisca al fatto che nella regola per la somma viene permesso di usare lo stesso nome con tipi diversi in due rami diversi. Invece di richiedere ``$\names {\apref_i.\aK_i}$ is consistent'' si dovrebbe richiedere ``$\names {\asum[@][@][][]}$ is consistent''}
+  $\names {\asum[@][@][][]}$ is consistent;
   \item $\aK_1 \seqop \aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
   well-sorted and $\names{\aK_1 \seqop \aK_2}$ is consistent;
 \item $X$ is well-sorted and $\grec$ is well-sorted if $\aK$ is
