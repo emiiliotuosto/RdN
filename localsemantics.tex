@@ -54,7 +54,8 @@ are straightforwardly extended to local types; in $\alrec$,
 %\end{eqnarray*}
 %
 Substitution on local types is defined as follows. 
-   \todo{RB: ma nella somma la sostituzione non si applica al prefisso $\aLpref_{i}$? Oppure il termine nella sommatoria dovrebbe leggersi $({\aLpref_{i}.\aL_{i}})\sust x y$? (ma la sostituzione non \`e definita per il prefisso)}
+\todo{RB: ma nella somma la sostituzione non si applica al prefisso $\aLpref_{i}$? Oppure il termine nella sommatoria dovrebbe leggersi $({\aLpref_{i}.\aL_{i}})\sust x y$? (ma la sostituzione non \`e definita per il prefisso)}
+\todo{eM: check now; a me sembra che la sostituzione non \`e definita per il prefisso (prime 3 equaz.)}
 \[
 \begin{array}{rl@{\hspace{.3cm}}l}
   (\arout[]) \sust x y  = &  \arout[][\atuple\sust x y][(\alocvar\sust x y)] &  {\it if}\  x\not\in\dn\atuple
@@ -69,7 +70,7 @@ Substitution on local types is defined as follows.
 %  \\
 %  \fn {\ard[]}  = &
   \\
-   (\aLsum)\sust x y  = & \displaystyle{\sum_{i\in I} {{\aLpref_{i}.\aL_{i}}\sust x y}}
+   (\aLsum)\sust x y  = & \displaystyle{\sum_{i\in I} {(\aLpref_{i}\sust x y).(\aL_{i}\sust x y)}}
    &  {\it if}\  \forall i. x\not\in\dn{\aLpref_i}
   \\
   (\aL_1\seqop\aL_2)\sust x y  = &  \aL_1\sust x y\seqop  \aL_2\sust x y 
@@ -105,6 +106,7 @@ tuple space, called a {\em specification}.
                   \envmv, \artupleat                  
 \end{eqnarray*}
 %
+\todo{eM: $\alocvar$ non dovrebbe comparire nelle tuple locate delle specifiche}
 A specification is a multiset containing two kind of pairs:  $\arole :  \aL$   associates a 
 role with a local type; while $\artupleat$  indicates that a 
 tuple of type $\atuple$ is available at locality $\alocvar$. 
@@ -120,7 +122,7 @@ The definition of $\fn{\_}$ is straightforwardly  extended to specifications.
 We give an operational semantics to local types defined inductively by 
 the rules in \cref{fig:local-types-sem}, where labels $\alpha$ are of the form 
 $\arole : \aLpref$. Rule $\rulename{LOut}$ 
-accounts  for the behaviour of a role $\rho$ that  generates a tuple $\atuple$ at the 
+accounts  for the behaviour of a role $\rho$ that  generates a tuple type $\atuple$ at the 
 locality $\aloc$. The operational semantics for the generation of a tuple $\atuple$ that 
 contains binders ensures that  each defined name  is substituted by a fresh free variable 
  (i.e., a variable that does not occur free in $\envmv, \arole : \arout[][@][\aloc].\aL$).
@@ -204,11 +206,13 @@ The semantics of a recursive term $\alrec$ is given by the rule
 	 \red[\alpha]
 	 \envmv', \arole : \aL_2}
 	{LSeq_2} 
-\\[25pt]
-\mathrule
-	{\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
-	{\envmv, \arole : \alrec \red[\alpha] \envmv'}
-	{LRec}
+  \\[25pt]
+  \multicolumn 2 c {
+  \mathrule
+  {\envmv, \arole : \aL\sust X{\abasiclrec}\sust {\seq x}{\seq \alocvar} \red[\alpha] \envmv'}
+  {\envmv, \arole : \alrec \red[\alpha] \envmv'}
+  {LRec}
+  }
 \end{array}
 \]
 \caption{Semantics of local types}
@@ -222,22 +226,22 @@ The projection of a global type $\aK$ over a role $\arole$,
 written $\proj[@][@][\ ]$,  denotes the local type that specifies 
 the behaviour of  $\arole$ in $\aK$. 
 % 
-Projection in our setting is fairly standard but for the case of
-recursive types,  which coordinate their execution by communicating 
+Our projection operation is fairly standard but for the case of
+recursive types, which coordinate their execution by communicating
 over dedicated locations.
 %
-Note that  the semantics of recursive global types $\grec$ introduces  
-auxiliary interactions  
-    to coordinate their execution (see 
+%
+Note that the semantics of recursive global types $\grec$ introduces
+auxiliary interactions to coordinate their execution (see
 $\mathit{STOP}(\arole, \aK, \seq y)$ and
-$\mathit{LOOP}(\arole, \aK, \seq y, \seq y')$ in \cref{sec:globsem}). 
+$\mathit{LOOP}(\arole, \aK, \seq y, \seq y')$ in \cref{sec:globsem}).
 %
 However, there is not such an implicit mechanism in the 
 execution of local types, where recursion is standard. 
 %
-Consequently, those auxiliary interactions need to be    
-defined explicitly in local types; and consequently, they are 
-introduced by projection. 
+Consequently, those auxiliary interactions need to be defined
+explicitly in local types; and consequently, they are introduced by
+projection (similarly to the approach in~\cite{bmt14}).
 %
 Another subtle aspect of the semantics of a recursive global type is that 
 each iteration  is parametric with respect to the set of localities used 
@@ -250,7 +254,7 @@ of process variables. Hence, $\proj[@][@][\ ]$ is defined in terms
 of $\proj$, where $\eta$ is a partial function that maps 
 process variables into sequences of locations, i.e., 
 $\eta X = \seq\alocvar$; and $\proj[@][@][\ ] = \proj[@][@][\emptyset]$.
- 
+\todo{eM: portando fuori i casi 3,4,5 si risparmia il caso 2}
  \begin{figure}[t]
  \[
   \proj =\left\{

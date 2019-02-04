@@ -1,11 +1,85 @@
 % !TEX root =  main.tex
 
+
+This paper, a modest attempt to thank Rocco for his work and
+friendship, addresses the following question:
+%
+\begin{quote}
+  What notion of behavioural types corresponds to Linda-based
+  coordination mechanisms?
+\end{quote}
+%
+To answer such question we advocate Klaim-based global and local
+types, dubbed klaimographies.
+%
 Klaim has been designed to program distributed systems consisting of
 processes interacting via multiple distributed tuple spaces.
 %
 Klaim has been extended with several features designed on theoretical
-foundations~\cite{klaim} and implemented in a suite of prototypes.
+foundations and implemented in a suite of
+prototypes~\cite{klaim}.
+%
+On the one hand, klaimographies share similarities with standard
+behavioural types centred on point-to-point channel based
+communications, on the other hand they also have some peculiarities,
+some of which we highlighted here.
 
+
+
+The closest work to our is~\cite{chjny19} which, develops the initial
+proposal on parameterised choreographies in~\cite{ydbh10,dybh12}.
+%
+Notably,~\cite{chjny19} is the first work to support indexed roles and
+to statically infer the participants inhabiting them.
+%
+The main difference with the approach in~\cite{chjny19} is that
+klaimographies do not focus on processes rather on data.
+%
+We envisage behavioural types as specifications of to guarantee
+general properties of tuple spaces.
+%
+For instance, take the market place example (cf. \cref{ex:market} in
+\cref{sec:examples}),
+%
+One would like to check properties such as
+\begin{quote}
+  for each tuple type
+  $\atuple = {{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l :
+      \asort[loc]}}$ consumed from locality $\aloc[m]$ either a tuple type
+  $\asort[sold]$ is eventually generated at locality $l$ or $\atuple$
+  is eventually generated at $\aloc[m]$.
+\end{quote}
+%
+Remarkably, such property does not concern typical properties
+controlled by behavioural types (e.g., progress of processes, message
+orphanage, or unspecified reception).
+
+As scope for future work, we aim to characterise the (classes of)
+properties of interest klaimographies enforce.
+%
+We conjecture that the well-formedness conditions defined here
+are enough to guarantee the property above.
+%
+Another interesting line of research is to identify typing principles
+for klaim systems.
+%
+We believe that klaimographies can enable the possibility that a same
+process enacts different roles.
+%
+For instance, considering again the market place example, a process
+can act both as seller and as buyer.
+
+In this paper, we adopted a few simplifying assumptions.
+%
+Other variants appear to be rather interesting.
+%
+For instance, guards of sums could be autonomous inputs and not just
+consuming interactions, or even read-only access prefixes.
+%
+Relaxing the constraint that read-only tuples cannot generate, would
+lead to a sort of multi-cast mechanism of fresh localities.
+%
+We plan to study those variants in future work.
 
 
 %%% Local Variables:
