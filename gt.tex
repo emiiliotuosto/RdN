@@ -115,8 +115,9 @@ The set $\roles \aK \subseteq \roleset$ of roles of $\aK$ is the set of roles th
 The syntax of global types features prefix guarded choices, sequential
 composition, and recursion.
 %
-The semantics in \cref{sec:globsem} will make clear that sequential composition $\seqop$ allows for some concurrency between actions in the absence of role dependencies and communication dependencies.
-\todo{RB: aggiunta frase su $\seqop$}
+The semantics in \cref{sec:globsem} will make clear that sequential
+composition $\seqop$ allows for some concurrency between actions in
+the absence of role and communication dependencies.
 %
 To handle recursive behaviour, 
 %\todo{AC+RB: il comportamento della ricorsione si intuisce solo dopo aver visto la semantica. Forse bisognerebbe tentare di spiegarlo intuitivamente?}
@@ -200,9 +201,9 @@ follows:
   and $\names\apref$ is consistent, i.e., there are no
   clashes/inconsistencies in the sorts of the names in the component
   $\atuple$ of $\pi$ and the locality $\alocvar$ mentioned in $\pi$;
-\item $\asum[@][@][][]$ is well-sorted if for all ${i\in I}$ both
+\item $\aK = \asum[@][@][][]$ is well-sorted if for all ${i\in I}$ both
   $\apref_i$ and ${\aK_i}$ are well-sorted and
-  $\names {\asum[@][@][][]}$ is consistent;
+  $\names {\aK}$ is consistent;
   \item $\aK_1 \seqop \aK_2$ is well-sorted if $\aK_1$ and $\aK_2$ are
   well-sorted and $\names{\aK_1 \seqop \aK_2}$ is consistent;
 \item $X$ is well-sorted and $\grec$ is well-sorted if $\aK$ is
