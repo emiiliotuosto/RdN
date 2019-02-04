@@ -18,22 +18,22 @@ primitives for inserting a tuple on a tuple space, for reading
 (without consuming) a tuple from a tuple space or for retrieving a
 tuple from a tuple space. We call these interactions data-driven, as
 decisions will be taken on the basis of the type of the tuples that
-are manipulated. We coined the term Klaimographies in honour of the
+are manipulated. We coined the term klaimographies in honour of the
 process language Klaim~\cite{DBLP:journals/tse/NicolaFP98,klaim}, one
 of the main contributions of Rocco De Nicola in the fields of process
 algebras and distributed programming. Inspired by Klaim,
-Klaimographies exploit the notion of distributed tuple-space
+klaimographies exploit the notion of distributed tuple-space
 localities to separate the access to data on the basis of the
 interactions that are carried out. Localities can be communicated in
 tuples, allowing name mobility.
 
 There are several major advances w.r.t. to the literature on global types.
-First, Klaimographies can have an arbitrary number of participants, while in global types the number of participants is usually fixed a priori.
+First, klaimographies can have an arbitrary number of participants, while in global types the number of participants is usually fixed a priori.
 Second, interactions are not point-to-point because each tuple can be read many times, while messages have exactly one producer and one consumer, even when asynchronous communication is considered.
 Third, all interactions involve a tuple space locality instead of a channel name.
-Fourth, Klaimographies are data-driven.
+Fourth, klaimographies are data-driven.
 
-The main contribution of this paper is to set up the formal setting of Klaimographies and prepare the ground for several interesting research directions: we fix the syntax of global and local type description and define the projection from global type to local types as typical of choreographic frameworks.
+The main contribution of this paper is to set up the formal setting of klaimographies and prepare the ground for several interesting research directions: we fix the syntax of global and local type description and define the projection from global type to local types as typical of choreographic frameworks.
 Global types are equipped with a partial order semantics of events and local types with an ordinary operational semantics in the SOS style. Then the conditions under which the behaviour of projected local types are faithful to the semantics of global types are spelled out. 
 
 Shifting the focus from control to data in choreographic framework has
@@ -42,7 +42,7 @@ several implications.
 Firstly, the emphasis is no longer on properties related to
 computational actors.
 %
-For instance, Klaimographies admit computations where some processes
+For instance, klaimographies admit computations where some processes
 may not terminate and is left waiting for some data.
 %
 In standard choreographic framework those would be undesired behaviour
@@ -57,7 +57,7 @@ events to occur.
 %
 Our work paves the way to the formal study of properties of data, like consumption, persistence and availability, in a choreographic setting.
 
-Another main innovation of Klaimographies is that they allow us to easily
+Another main innovation of klaimographies is that they allow us to easily
 represent protocols where an arbitrary number of components can
 play a role in the choreography.
 %
@@ -69,9 +69,10 @@ that requires the explicit quantification on components.
 
 \paragraph{Structure of the paper}
 \todo{eM: revise}
-After some preliminaries in Section~\ref{sec:tuples}, we define Klaimographies as global types in Section~\ref{sec:gt} and give some examples in Section~\ref{sec:examples}.
+After some preliminaries in Section~\ref{sec:tuples}, we define klaimographies as global types in Section~\ref{sec:gt} and give some examples in Section~\ref{sec:examples}.
 In Section~\ref{sec:globsem} we define the semantics of global types and give the adequacy conditions for projecting global types to local types.
-In Section~\ref{sec:locsem} we define the operational semantics of local types and state its correspondence with the global semantics.
+In Section~\ref{sec:locsem} we define the syntax and operational semantics of local types and show how to project global types over local types in Section~\ref{sec:proj}.
+The formal semantic correspondence between global types and their projected local types in accounted for in Section~\ref{sec:corr}.
 Some concluding remarks together with the discussion of related and future work are in Section~\ref{sec:conc}.
 
 %%% Local Variables:

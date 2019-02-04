@@ -1,3 +1,5 @@
+% !TEX root =  main.tex
+
 This section establishes the correspondence between the denotational
 semantics of global types and the operational semantics of local
 types.
@@ -89,6 +91,7 @@ as follows:
 $\gtrace \vdash \alpha_1 \cdots \alpha_n$ if
 $n = 1$  and $\alabel[]_1 \vdash \ae_1$ or
 $n > 1$ and
+\todo{RB: qui e nella riga sotto dovrebbe essere $\alpha_1$ invece di $\ae_1$?}
 \[
   \alabel[]_1 \vdash \ae_1 \land  \forall \sigma: \dn{\atuple} \to \fn{\atuple'} \qst \eraseB{\atuple}\sigma = \atuple'
   \implies (\gtrace[2])\sigma \vdash \alpha_2 \cdots \alpha_n

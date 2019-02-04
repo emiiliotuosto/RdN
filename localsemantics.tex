@@ -56,6 +56,7 @@ are straightforwardly extended to local types; in $\alrec$,
 Substitution on local types is defined as follows. 
 \todo{RB: ma nella somma la sostituzione non si applica al prefisso $\aLpref_{i}$? Oppure il termine nella sommatoria dovrebbe leggersi $({\aLpref_{i}.\aL_{i}})\sust x y$? (ma la sostituzione non \`e definita per il prefisso)}
 \todo{eM: check now; a me sembra che la sostituzione non \`e definita per il prefisso (prime 3 equaz.)}
+\todo{RB: cos\`\i\ ok per me}
 \[
 \begin{array}{rl@{\hspace{.3cm}}l}
   (\arout[]) \sust x y  = &  \arout[][\atuple\sust x y][(\alocvar\sust x y)] &  {\it if}\  x\not\in\dn\atuple
@@ -107,6 +108,7 @@ tuple space, called a {\em specification}.
 \end{eqnarray*}
 %
 \todo{eM: $\alocvar$ non dovrebbe comparire nelle tuple locate delle specifiche}
+\todo{RB: credo che possa succedere: solo a livello delle etichette delle transizioni le variabili sono istanziate a locazioni}
 A specification is a multiset containing two kind of pairs:  $\arole :  \aL$   associates a 
 role with a local type; while $\artupleat$  indicates that a 
 tuple of type $\atuple$ is available at locality $\alocvar$. 
@@ -221,6 +223,7 @@ The semantics of a recursive term $\alrec$ is given by the rule
 
 
 \subsection{Obtaining local types out of global types}
+\label{sec:proj}
 
 The projection of a global type $\aK$ over a role $\arole$, 
 written $\proj[@][@][\ ]$,  denotes the local type that specifies 
