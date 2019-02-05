@@ -82,8 +82,9 @@ Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions (from names to
 for well-sorted tuples.
 
 A substitution of the free occurrences of a variable $x$ in a
-(well-sorted) tuple $\atuple$ such that $x\not\in \dn{\atuple}$ by a
-variable $y\not\in \dn{\atuple}$, written $\atuple \sust x y$, is
+(well-sorted) tuple $\atuple$ 
+%such that $x\not\in \dn{\atuple}$ 
+by a variable $y\not\in \dn{\atuple}$, written $\atuple \sust x y$, is
 defined by
 % \todo{AC: a substitution can make the tuple non-well-sorted. Is this a problem?}
 %
@@ -154,7 +155,10 @@ $\matches : \tupleset \times \tupleset \to \Sigma$ below
     \begin{cases}
      \emptyset
     & 
-    \text{if  } \atuple = \wildcard \vee \atuple' = \wildcard  \vee (\atuple = \atuple' \land \atuple\in\{\asort, x : \asort\})
+    \text{if  } \atuple = \wildcard \vee \atuple' = \wildcard  \vee 
+    %(\atuple = \atuple' \land 
+    \atuple,\atuple'\in\{\asort, x : \asort\}
+    %)
 %    \\
 %    \sigma_1\sigma_2
 %    &

@@ -255,13 +255,13 @@ We can now give the semantics of prefixes as follows
       \bp[1][{\apref[\arole][\arole']}]
       & \text{if } \arole \in \participants
       \\
-      \bigcup_{i \geq 1}\big(\bp[@][{\apref[\arole][\arole']}]\big)
+      \bigcup_{i \geq 1}\bp[@][{\apref[\arole][\arole']}]
       & \text{otherwise}
     \end{cases}
 \end{align*}
 
 As customary in other choreographic approaches (see
-\cite{DBLP:journals/csur/HuttelLVCCDMPRT16,dd09} and \cite{gt17} and
+\cite{DBLP:journals/csur/HuttelLVCCDMPRT16,dd09,gt17} and
 references therein), the semantics of (closed) global types considers
 only \emph{well-formed} global types, namely those enjoying
 \emph{well-sequencedness} and \emph{well-branchedness}.
@@ -400,7 +400,7 @@ singleton).
 We now consider well-branchedness, the other condition of
 well-formedness.
 %
-As usual, well-branchedness requires two conditions: single selector
+As usual~\cite{gt17}, well-branchedness requires two conditions: single selector
 and knowledge of choices.
 %
 This can be formalised by requiring that one process in the choice is
@@ -409,13 +409,9 @@ are \emph{passive}, namely they are informed of the chosen branch by
 inputting some information that unambiguously identifies each branch
 of the choice.
 %
-We syntactically\footnote{
-%
-  This is just for simplicity as we could adopt definitions similar to
+We syntactically\footnote{This is just for simplicity as we could adopt definitions similar to
   the ones in \cite{gt16,gt17} at the cost of higher technical
-  complexity.
-%
-} enforce uniqueness of selectors; a choice with several branches,
+  complexity.} enforce uniqueness of selectors; a choice with several branches,
 takes the form
 \begin{align}
   \asum\label{eq:ch}

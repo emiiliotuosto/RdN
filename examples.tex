@@ -123,10 +123,10 @@ For readability,  we use the notation
 $\grec[@][@][@][1]$ for a recursive protocol where the body $\aK$ is
 repeated at least once.
 %
-Formally,\footnote{The reader should not be confused by the fact that the meaning of $\grec$ is different from that of $\aK \sust{X}{\grec}$: this is because iteration and termination require some implicit interactions driven by $\arole$ towards the other roles in $\aK$.}
+Formally,\footnote{The reader should not be confused by the meaning of $\grec$ being different from that of $\aK \sust{X}{\grec}$: this is because iteration and termination require some implicit interactions driven by $\arole$ towards the other roles in $\aK$, as discussed in \cref{sec:globsem}.}
 \[
 \grec[@][@][@][1] =
-  \aK \sust{X}{\grec} 
+  \aK \sust{X}{\grec} .
 \]
 
 %For readability, given $h \geq 0$, we use the notation
@@ -229,6 +229,8 @@ $l$ between the instance of $\amulti{Seller}$ advertising the item and
 the instance of $\amulti{Buyer}$ interested in buying it.
 %
 Location $l$ is used to perform the bargaining phase.
+%
+See \cref{sec:globsem} and \cref{sec:locsem} for the exact semantics.
 
 The seller instance controls the recursion
 $\grec[\amulti{Seller}][W][\cdots][1]$; the body of the recursive type

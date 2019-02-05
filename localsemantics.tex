@@ -180,7 +180,7 @@ $\sust {\seq x}{\seq \aloc}$.
 %\\[25pt]
 \mathrule{\dn\atuple\ {\it fresh}}
 	{\envmv, \arole : \arout[][@][\aloc].\aL 
-	 \red[\arole : {\arout[][\eraseB\atuple][\aloc]}]
+	 \red[\arole : {\arout[][\eraseB\, \atuple][\aloc]}]
 	 \envmv, \arole : \aL , \artupleat[@][\eraseB\atuple][\aloc]}
 	{LOut}
 &
@@ -363,7 +363,7 @@ $\eta X = \seq\alocvar$; and $\proj[@][@][\ ] = \proj[@][@][\emptyset]$.
 \\
     &
     \multicolumn{2}{l}{
-    \text{if }\ \aK = \grec[\arole'][@][\aK'][\aphi], \dom{\aphi} = \{\rho_1, \ldots, \rho_n\}, \seq x = x_1\ldots x_n,
+    \text{if }\ \aK = \grec[\arole][@][\aK'][\aphi], \dom{\aphi} = \{\rho_1, \ldots, \rho_n\}, \seq x = x_1\ldots x_n,
     }
     \\
     & 
@@ -429,7 +429,7 @@ Note
  location $y$. 
 %
 The initial value of  $x$ is fixed  according to  
- by $\phi$  (i.e., $\phi\arole$). 
+$\phi$  (i.e., $\phi\arole$). 
 %
 Differently, when $\arole$ coordinates the recursion, the projection generates 
 a process variable that has several parameters, i.e., one location $x_i$ for 
