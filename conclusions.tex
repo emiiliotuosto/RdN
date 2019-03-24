@@ -14,7 +14,40 @@ types, dubbed klaimographies.
 %
 Klaim has been designed to program distributed systems consisting of
 processes interacting via multiple distributed tuple spaces.
+
+For simplicity, we have neglected code mobility, a distinctive feature
+of Klaim.
 %
+Accommodating the mobility mechanism of Klaim would require to control
+the multiplicity of running instances and to generalise the
+well-formedness conditions to dynamically spawned processes.
+%
+A further challenge, would be to include mobility of
+processes-as-values featured by Klaim, which shares many
+similarities with session delegation.
+%
+However, this can be associated to control-driven problems.
+%
+These challenges are scope for future work.
+
+We have also not considered parallel types.
+%
+A simple way to klaimographies in parallel would be to follow standard
+approaches restricting roles on single threads and disjoint tuple
+spaces.
+%
+We consider this not very interesting, and plan to explore more expressive
+settings for parallel types such as the one in~\cite{gt16,gt17}.
+%
+In particular, we conjecture that to add parallel composition
+$\aK \mid \aK'$ of klaimographies it is enough to require that
+$\neg(\atuple \matches \atuple')$ for all
+$(\atuple, \aloc) \in \aK, (\atuple', \aloc) \in \aK'$.
+%
+This condition is the counterpart of the \emph{well-forkedness}
+condition of~\cite{gt16,gt17}, that requires that different threads of
+a choregraphy have disjoing input actions.
+
 Klaim has been extended with several features designed on theoretical
 foundations and implemented in a suite of
 prototypes~\cite{klaim}.
@@ -23,8 +56,6 @@ On the one hand, klaimographies share similarities with standard
 behavioural types centred on point-to-point channel based
 communications, on the other hand they also have some peculiarities,
 some of which we highlighted here.
-
-
 
 The closest work to our is~\cite{chjny19}, which develops the initial
 proposal on parameterised choreographies in~\cite{ydbh10,dybh12}.
@@ -39,8 +70,7 @@ We envisage behavioural types as specifications of how to guarantee
 general properties of tuple spaces.
 %
 For instance, take the market place example (cf. \cref{ex:market}),
-%
-One would like to check properties such as
+one would like to check properties such as
 \begin{quote}
   for each tuple type
   $\atuple = {{i : \asort[str]} \cdot {p : \asort[int]} \cdot {\nu l :
@@ -49,7 +79,7 @@ One would like to check properties such as
   is eventually generated at $\aloc[m]$.
 \end{quote}
 %
-Remarkably, such property does not concern typical properties
+Such property does not concern typical properties
 controlled by behavioural types (e.g., progress of processes, message
 orphanage, or unspecified reception).
 
@@ -68,9 +98,9 @@ process enacts different roles.
 For instance, considering again the market place example, a process
 can act both as seller and as buyer.
 
-In this paper, we adopted a few simplifying assumptions.
+We have adopted a few simplifying assumptions.
 %
-Other variants appear to be rather interesting.
+Other variants seem rather interesting.
 %
 For instance, guards of sums could be autonomous inputs and not just
 consuming interactions, or even read-only access prefixes.

@@ -5,18 +5,16 @@ We give semantics to global types using \emph{partially-ordered
 %
 Following~\cite{gaifman1987partial}, a \emph{pomset} is an isomorphism
 class of labelled partially-ordered sets (lposet) where, fixed a set
-of labels $\lset$,
-\begin{itemize}
-\item an lposet is a triple $(\eset, \leq, \alf)$, with $\eset$ a set
-  of events, $\leq$ is a partial order on $\eset$, and
-  $\alf: \eset \rightarrow \lset$ a labelling function mapping events
-  in $\eset$ to labels in $\lset$;
-\item two lposets $(\eset, \leq, \alf)$ and $(\eset', \leq', \alf')$
-  are \emph{isomorphic} if there is a bijection
-  $\phi: \eset \rightarrow \eset'$ such that
-  $\ae \leq \ae' \iff \phi(\ae) \leq' \phi(\ae')$ and
-  $\alf = \alf' \circ \phi$.
-\end{itemize}
+of labels $\lset$, an lposet is a triple $(\eset, \leq, \alf)$, with
+$\eset$ a set of events, $\leq$ is a partial order on $\eset$, and
+$\alf: \eset \rightarrow \lset$ a labelling function mapping events in
+$\eset$ to labels in $\lset$.
+%
+Two lposets $(\eset, \leq, \alf)$ and $(\eset', \leq', \alf')$ are
+\emph{isomorphic} if there is a bijection
+$\phi: \eset \rightarrow \eset'$ such that
+$\ae \leq \ae' \iff \phi(\ae) \leq' \phi(\ae')$ and
+$\alf = \alf' \circ \phi$.
 %
 Intuitively, the partial order $\leq$ yields a causality relation
 among events; for $\ae \neq \ae'$, if $\ae \leq \ae'$ then $\ae'$ is
@@ -43,7 +41,7 @@ all $\ae'' \in \esetof \apom$ such that
 $\ae \leqof \apom \ae'' \leqof \apom \ae'$ either $\ae = \ae''$ or
 $\ae' = \ae''$.
 %
-We will represent pomsets as (a variant\footnote{Edges of Hasse
+We draw pomsets as (a variant\footnote{Edges of Hasse
   diagrams are usually not oriented; here we use arrows so to draw
   order relations between events also horizontally.} of) Hasse
 diagrams of the immediate predecessor relation; for instance, the
@@ -320,8 +318,8 @@ either of the following holds:
 % \todo{AC+RB: sintassi della ricorsione cambiata? A cosa serve $\aK'$?}
 \end{itemize}
 %
-Our notion of well-sequencedness requires that there are no races on
-tuple types: we say that $\aK_1$ and $\aK_2$ are \emph{well-sequenced}
+Our notion of well-sequencedness requires absence of races on tuple
+types: we say that $\aK_1$ and $\aK_2$ are \emph{well-sequenced}
 ($\ws[\aK_1][\aK_2]$ in symbols) if, for $i \neq j \in \{1,2\}$,
 %
 \begin{itemize}
@@ -337,7 +335,8 @@ tuple types: we say that $\aK_1$ and $\aK_2$ are \emph{well-sequenced}
 % such that $\atuple_i$ occurs in a prefix of $\aK_i$ both at a
 % locality $\aloc$, \eMnote{Problema: $\aloc$ vs $\alocvar$}
 %
-Finally,
+Finally, the semantics of the sequential composition
+$\aK_1 \seqop \aK_2$ is as follows:
 \begin{align*}
   \ksem{\aK_1 \seqop \aK_2} =
   &
@@ -349,7 +348,7 @@ Finally,
       \mathit{undef} & \text{otherwise}
     \end{cases}
 \end{align*}
-where the auxiliary operation $\rseq[][]$ that sequentially composes
+where the auxiliary operation $\rseq[][]$ sequentially composes
 pomsets $\apom$ and $\apom'$ so to make the actions of a role in
 $\apom$ to precede its actions in $\apom'$:
 \[
@@ -409,10 +408,10 @@ are \emph{passive}, namely they are informed of the chosen branch by
 inputting some information that unambiguously identifies each branch
 of the choice.
 %
-We syntactically\footnote{This is just for simplicity as we could adopt definitions similar to
-  the ones in \cite{gt16,gt17} at the cost of higher technical
-  complexity.} enforce uniqueness of selectors; a choice with several branches,
-takes the form
+We syntactically\footnote{This is just for simplicity as we could
+  adopt definitions similar to the ones in \cite{gt16,gt17} at the
+  cost of higher technical complexity.} enforce uniqueness of
+selectors; a choice with several branches, takes the form
 \begin{align}
   \asum\label{eq:ch}
 \end{align}
@@ -423,7 +422,7 @@ $\arole_i$) in \eqref{eq:ch} has to be able to ascertain which branch
 the selector decided when the choice was taken.
 %
 A simple way to ensure this is to require that the first input actions
-of each passive roles are pairwise \quo{disjoint} (\ie\ non matching
+of each passive role are pairwise \quo{disjoint} (\ie\ non matching
 tuples or different locations) among branches.
 %
 % This is just for simplicity as we could adopt more general
@@ -441,21 +440,21 @@ This may create confusion if different branches generate matching
 tuples on a locality as illustrated by next example.
 \begin{example}\label{ex:nonwb}
   Let
-  \begin{align*}
-    \aK_\mathrm{bad} = & \apref[\amulti A][\amulti B][{\asort[int]}][\aloc] \mkop{.} K_1 \chop \apref[\amulti A][\amulti B][{\asort[str]}][\aloc] \mkop{.} K_2
-    \\
-    \aK_1 = & \apref[\amulti B][\amulti C][{\asort[str]}][\aloc] \mkop{.} \apref[\amulti C][\amulti B][{\asort[bool]}][\aloc]
-    \\
-    \aK_2 = & \apref[\amulti B][\amulti C][{\asort[bool]}][\aloc]
-  \end{align*}
+  $\aK_\mathrm{bad} = \apref[\amulti A][\amulti B][{\asort[int]}][\aloc] \mkop{.} \aK_1 \chop \apref[\amulti A][\amulti B][{\asort[str]}][\aloc] \mkop{.} \aK_2$
+  where
+  \[
+    \aK_1 =  \apref[\amulti B][\amulti C][{\asort[str]}][\aloc] \mkop{.} \apref[\amulti C][\amulti B][{\asort[bool]}][\aloc]
+    \quad\text{and}\quad
+    \aK_2 = \apref[\amulti B][\amulti C][{\asort[bool]}][\aloc]
+  \]
   In $\aK_\mathrm{bad}$ confusion may arise that may alter the
-  intended data flow when two groups of instances of $\amulti A$,
-  $\amulti B$, and $\amulti C$ execute the choice so that each group
-  takes a different branch.
+  intended data flow.
   %
-  In fact, the instance of $\amulti C$ executing $K_2$ in the second
-  branch may receive the boolean that the instance of $\amulti C$ in
-  $K_1$ executing the first branch generates for $\amulti B$.
+  In fact, if two groups of participants execute the choice taking
+  different branches, the instance of $\amulti C$ executing $\aK_2$ in
+  the second branch may receive the boolean that the instance of
+  $\amulti C$ in $\aK_1$ executing the first branch generates for
+  $\amulti B$.
   %
   \eMnote{This type of confusion does not seem to introduce deadlocks}
   %
@@ -497,13 +496,7 @@ So we define
       \\
       \mathit{undef} & \text{otherwise}
     \end{cases}
-  \\
 \end{align*}
-
-\bigskip
-
-
-
   %
 % The notion of well formedness seems to guarantee a much weaker
 % notion of correctness than the usual ones.
@@ -526,11 +519,9 @@ Under the current interpretation of our semantics, probably the notion
 of correctness we can guarantee is that any set of instances taking a
 choice will fully execute a branch.
 }
-
-\bigskip
-
-Finally, the semantic equation for the recursive global type $\grec$
-require some auxiliary functions:
+%
+Finally, the semantic equation for $\grec$ requires some auxiliary
+functions:
 \begin{align*}
   \mathit{STOP}(\arole, \aK, \seq y) = & \apref[\arole][\arole_1][{\asort[stop]}][y_1] \seqop \ldots \seqop \apref[\arole][\arole_n][{\asort[stop]}][y_n]
   \\

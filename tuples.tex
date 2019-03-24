@@ -7,7 +7,7 @@ use $\alocvar$ to range over $\locset\cup\varset$) and we let $\asort$
 range over basic sorts which include $\asort[int]$, $\asort[bool]$,
 $\asort[str]$ and sort $\asort[loc]$ of \emph{localities}.
 %
-The set $\tupleset$ of \emph{(tuple) types} consists of the terms
+The set $\tupleset$ of \emph{tuple (types)} consists of the terms
 derived from the following grammar:
 \begin{eqnarray*}
   \atuple & \bnfdef & \asort \bnfmid
@@ -89,46 +89,10 @@ defined by
 % \todo{AC: a substitution can make the tuple non-well-sorted. Is this a problem?}
 %
 \[
-\begin{array}{r@{}l@{\ = \ } ll}
-%\asort
-%&
-%\sust x y  
-%&  
-%\asort
-%\\
-%(x : \asort)
-%& 
-%\sust x y  
-%& x : \asort
-%\\
-%z
-%&
-%\sust x y 
-%&  
-%z 
-%& 
-%{\it if} z\neq x
-%\\
-(x  : \asort)
-&
-\sust x y  
-&  
-y : \asort
-\\
-(\atuple_1 \cdot \atuple_2)
-&
-\sust x y  
-& 
+(x  : \asort) \sust x y  = y : \asort
+\quad\text{and}\quad
+(\atuple_1 \cdot \atuple_2) \sust x y  = 
 (\atuple_1\sust x y) \cdot (\atuple_2\sust x y) 
-%& 
-%{\it if} y\not\in\dn{\atuple_1 \cdot \atuple_2}
-%\\
-%\wildcard
-%&
-%\sust x y  
-%&  
-%\wildcard
-\end{array}
 \]
 %
 and it is the identity on the remaining cases. Let
@@ -142,11 +106,10 @@ $\sigma_1\sigma_2$ for the composition of partial functions with
 disjoint domain, and $\sigma_1[\sigma_2]$ for the update of $\sigma_1$
 with $\sigma_2$.
 
-
-Tuple types $\atuple$ and $\atuple'$ s.t.
+Tuple types $\atuple$ and $\atuple'$ such that
 $\dn{\atuple}\cap\dn{\atuple'} = \emptyset$
 % \todo{AC:aggiunto $=\emptyset$}
-can \emph{match} by producing a substitution; formally
+can \emph{match} by producing a substitution;
 this is realised by the partial function
 $\matches : \tupleset \times \tupleset \to \Sigma$ below
 %\eMnote{add typing env}
