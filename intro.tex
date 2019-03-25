@@ -28,7 +28,7 @@ checking. Roughly this means that properties are stated globally but
 checked locally. Global types have been inspired by session
 types~\cite{DBLP:conf/esop/HondaVK98} and by choreography languages in
 service oriented computing
-(WS-CDL\footnote{\url{http://www.w3.org/2002/ws/chor/}}), where
+(WS-CDL\footnote{\url{http://www.w3.org/2002/ws/chor.}}), where
 complex interactions are modelled from the point of view of the global
 sequence of events that must take place in order to successfully
 complete the computation.
@@ -36,8 +36,8 @@ complete the computation.
 In the literature, global/local types have been studied mostly in the
 context of point-to-point channel-based interactions. This means that
 the main action in a choreography is the sending of a message from one
-peer to another on a specific channel (of a given type). In this paper we
-explore a different setting, where interaction over tuple-spaces
+peer to another on a specific channel (of a given type). In this paper
+we explore a different setting, where interaction over tuple-spaces
 replaces message passing, in the style of Linda-like
 languages~\cite{DBLP:journals/toplas/Gelernter85}.  Instead of
 primitives for sending and receiving messages, here there are
@@ -45,17 +45,60 @@ primitives for inserting a tuple on a tuple space, for reading
 (without consuming) a tuple from a tuple space or for retrieving a
 tuple from a tuple space. We call these interactions data-driven, as
 decisions will be taken on the basis of the type of the tuples that
-are manipulated. We coined the term \emph{klaimographies} in honour of the
-process language Klaim~\cite{DBLP:journals/tse/NicolaFP98,klaim}, one
-of the main contributions of Rocco De Nicola in the fields of process
-algebras and distributed programming. Inspired by Klaim,
-klaimographies exploit the notion of distributed tuple-space
-localities to separate the access to data on the basis of the
-interactions that are carried out. Localities can be communicated in
-tuples, allowing name mobility.
+are manipulated.
+%
+We coined the term \emph{klaimographies} in honour of the process
+language Klaim~\cite{DBLP:journals/tse/NicolaFP98,klaim}, a main
+contribution of Rocco De Nicola in the fields of process algebras and
+distributed programming.
+%
+Inspired by Klaim, klaimographies exploit the notion of distributed
+tuple spaces to separate the access to data on the basis of the
+interactions that are carried out.
+
+% Localities can be communicated in tuples, allowing name mobility.
+\todo{finire}{
+  %
+  \paragraph{A market place scenario}
+  We illustrate this with a motivating example that we will formalise
+  later (cf. \cref{ex:market} on page~\pageref{ex:market}).
+  %
+  We consider scenario where sellers and buyers use a market place
+  provided by a broker.
+  % 
+  Sellers can put on sale (several) items and buyers can inspect them.
+  %
+  When an item of interest is found, the client can start a negotiation
+  with the seller.
+  %
+  The intended behaviour of this choreography is informally
+  represented by the following BPMN diagram (drawn with the nice tool
+  of BeePMN \url{https://www.beepmn.com}).
+  \begin{center}
+    \includegraphics[scale=.18]{marketplace}
+  \end{center}%
+  The BPMN diagram though does not specify the protocol in a precise
+  way.
+  %
+  In our scenario there is a single broker but an arbitrary number of
+  sellers or buyers.
+  %
+  This is not reflected in the diagram because the BMPN pools 'Seller'
+  and 'Buyer' represent participants, not roles that many enacted by
+  many participants.
+  %
+  Taking into account multiplicity of participants triggers other issues.
+  %
+  For instance, the bargaining subprocess should happen between two
+  specific instance of participants: the buyer interested in a
+  specific item and the seller advertising the item.
+  %
+  Moreover, the interactions among these specific instances must
+  happen without interference from other participants.
+}
 
 There are several distinguishing features of klaimographies w.r.t.
-the literature on global types.
+the literature on global types that tackle the issues described above.
 %
 First, klaimographies naturally support arbitrary number of
 participants.
