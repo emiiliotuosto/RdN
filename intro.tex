@@ -57,45 +57,47 @@ tuple spaces to separate the access to data on the basis of the
 interactions that are carried out.
 
 % Localities can be communicated in tuples, allowing name mobility.
-\todo{finire}{
-  %
-  \paragraph{A marketplace scenario}
-  We illustrate this with a motivating example that we will formalise
-  later (cf. \cref{ex:market} on page~\pageref{ex:market}).
-  %
-  We consider a scenario where sellers and buyers use a marketplace
-  provided by a broker.
-  % 
-  Sellers can put on sale (several) items and buyers can inspect them.
-  %
-  When an item of interest is found, the client can start a negotiation
-  with the seller.
-  %
-  The intended behaviour of this choreography is informally
-  represented by the following BPMN diagram (drawn with the nice tool
-  of BeePMN \url{https://www.beepmn.com}).
-  \begin{center}
-    \includegraphics[scale=.18]{marketplace}
-  \end{center}%
-  The BPMN diagram though does not specify the protocol in a precise
-  way.
-  %
-  In our scenario there is a single broker but an arbitrary number of
-  sellers or buyers.
-  %
-  This is not reflected in the diagram because the BMPN pools `Seller'
-  and `Buyer' represent participants, not roles that maybe enacted by
-  many participants.
-  %
-  Taking into account multiplicity of participants triggers interesting issues.
-  %
-  For instance, the bargaining subprocess should happen between two
-  specific instances of participants: the buyer interested in a
-  particular item and the seller that advertised such item.
-  %
-  Moreover, the interactions among these specific instances must
-  happen without interference from other participants.
-}
+% 
+\paragraph{A marketplace scenario}
+We illustrate this with a motivating example that we will formalise
+later (cf. \cref{ex:market} on page~\pageref{ex:market}).
+%
+We consider a scenario where sellers and buyers use a marketplace
+provided by a broker.
+%
+Sellers can put on sale (several) items and buyers can inspect them.
+%
+When an item of interest is found, the client can start a negotiation
+with the seller.
+%
+The intended behaviour of this choreography is informally represented
+by the BPMN diagram\footnote{The diagram has been drawn with the nice
+  BeePMN \url{https://www.beepmn.com}.} in \cref{fig:bpmn}.
+%
+\begin{figure}[t!]\centering
+  \includegraphics[scale=.18]{marketplace}
+  \caption{A marketplace scenario\label{fig:bpmn}}
+\end{figure}
+%
+The BPMN diagram though does not specify the protocol in a precise
+way.
+%
+In our scenario there is a single broker but an arbitrary number of
+sellers or buyers.
+%
+This is not reflected in the diagram because the BMPN pools `Seller'
+and `Buyer' represent participants, not roles that maybe enacted by
+many participants.
+% 
+Taking into account multiplicity of participants triggers interesting
+issues.
+% 
+For instance, the bargaining subprocess should happen between two
+specific instances of participants: the buyer interested in a
+particular item and the seller that advertised such item.
+% 
+Moreover, the interactions among these specific instances must happen
+without interference from other participants.
 
 There are several distinguishing features of klaimographies w.r.t.
 the literature on global types that tackle the issues described above.
