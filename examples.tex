@@ -1,7 +1,7 @@
 % !TEX root =  main.tex
 
 We give a few simple global types (\cref{ex:cs,ex:CS,ex:CSx,ex:CSl})
-to highlight some peculiarities of klaimographies as well as a
+to highlight some basic features of klaimographies as well as a
 more complex example (\cref{ex:market}) to illustrate the kind of
 protocols our global types can capture.
 
@@ -15,7 +15,7 @@ protocols our global types can capture.
     \apref[\ptp s][\ptp c][{\asort[str]}][{\aloc[l]}]
   \]
   The client $\ptp c$ produces an integer value on the locality
-  $\aloc$ meant be consumed by the server $\ptp s$, which in turn produces
+  $\aloc$ meant to be consumed by the server $\ptp s$, which in turn produces
   back the converted string for the client.
   %
   \finex
@@ -35,6 +35,8 @@ our setting.
   In this case, $\aK_\eqref{ex:CS}$ states that each integer produced by a client
   will be consumed by a server, which will in turn produce a string
   for one of the clients.
+  %
+  \finex
 \end{example}
 The type in \cref{ex:CS} does not ensure that clients consume the
 string conversion of the integer they produced, because all tuples are put at the same location $\aloc[l]$.
@@ -92,9 +94,9 @@ interaction.
   %
   As in \cref{ex:CSx}, client and server instances establish a common
   fresh identity $x$ in the first interaction; this time the identity
-  is a locality meant to share tuples in subsequent communication: the
+  is a locality meant to share tuples in subsequent communications: the
   second interaction can only take place between the two instances
-  sharing $x$ since such locality is known only to them.
+  sharing $x$, because such locality is known only to them.
   %
   \finex
 \end{example}
