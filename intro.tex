@@ -60,7 +60,7 @@ interactions that are carried out.
 % 
 \paragraph{A marketplace scenario}
 We illustrate this with a motivating example that we will formalise
-later (cf. \cref{ex:market} on page~\pageref{ex:market}).
+later on (cf. \cref{ex:market} on page~\pageref{ex:market}).
 %
 We consider a scenario where sellers and buyers use a marketplace
 provided by a broker.
@@ -71,15 +71,15 @@ When an item of interest is found, the client can start a negotiation
 with the seller.
 %
 The intended behaviour of this choreography is informally represented
-by the BPMN diagram\footnote{The diagram has been drawn with the tool
-  BeePMN \url{https://www.beepmn.com}.} in \cref{fig:bpmn}.
+by the BPMN diagram\footnote{The diagram has been drawn with the
+  BeePMN tool \url{https://www.beepmn.com}.} in \cref{fig:bpmn}.
 %
 \begin{figure}[t!]\centering
   \includegraphics[scale=.18]{marketplace}
   \caption{A marketplace scenario\label{fig:bpmn}}
 \end{figure}
 %
-The BPMN diagram though does not specify the protocol in a precise
+The diagram does not specify the protocol in a precise
 way.
 %
 In our scenario there is a single broker but an arbitrary number of
@@ -102,7 +102,7 @@ without interference from other participants.
 There are several distinguishing features of klaimographies w.r.t.
 the literature on global types that tackle the issues described above.
 %
-First, klaimographies naturally support arbitrary number of
+First, klaimographies naturally support an arbitrary number of
 participants.
 %
 This is uncommon in standard behavioural types approaches where the
@@ -114,9 +114,9 @@ Second, interactions of klaimographies are multiway because each tuple
 can be read many times.
 %
 Typically, session types specify point-to-point interactions where
-messages have exactly one producer and one consumer.
+messages have exactly one producer and one consumer:
 %
-For instance, see~\cite{cdp12} and the discussions on multiway
+see for instance~\cite{cdp12} and the discussions on multiway
 interactions therein.
 %
 Third, all interactions involve a tuple space locality instead of a
