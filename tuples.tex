@@ -5,7 +5,7 @@ We consider a set of variables $\varset$  ranged over by $x$
 and a set of localities $\locset$ ranged over by $\aloc$ (and
 use $\alocvar$ to range over $\locset\cup\varset$) and we let $\asort$
 range over basic sorts which include $\asort[int]$, $\asort[bool]$,
-$\asort[str]$ and sort $\asort[loc]$ of \emph{localities}.
+$\asort[str]$ and the sort $\asort[loc]$ of \emph{localities}.
 %
 The set $\tupleset$ of \emph{tuple (types)} consists of the terms
 derived from the following grammar:
@@ -70,7 +70,7 @@ conditions hold:
   defined names are disjoint; and
 \item
   $\atuple = \atuple_1 \cdot \atuple_2$ implies $\atuple_1$ and
-  $\atuple_2$ well-sorted and their names are disjoint, namely, 
+  $\atuple_2$ are well-sorted and their names are disjoint, namely, 
   $\supp{\dn{\atuple_1}} \cap \supp{\dn{\atuple_2}} =  \emptyset$
   and 
   $\supp{\fn{\atuple_1}} \cap \supp{\fn{\atuple_2}} =  \emptyset$.
