@@ -120,11 +120,11 @@
 
 \section{Klaimographies}
 \label{sec:klaimographies}
-Our type system hinges on the basic notions of Klaim which are based
+Our type system hinges on the basic notions of Klaim that are based
 on tuples, localities, and operations to generate and access tuple
 spaces.
 %
-We recall that Klaim features two kinds of accesses to tuples located
+We recall that Klaim features two kinds of access to tuples located
 on a tuple space dubbed \emph{input} and \emph{read} access and often
 denoted as $\textsf{in}\ t \at \aloc$ and
 $\textsf{read}\ t \at \aloc$ in Klaim's literature.
@@ -135,7 +135,7 @@ tuple at locality $\aloc$ and then removes such tuple from $\aloc$, while
 a read access $\textsf{read}\ t \at \aloc$ does not remove the
 tuple from $\aloc$ after instantiating the variables in $t$.
 %
-\cref{sec:tuples} introduces \emph{tuple types} which basically
+\cref{sec:tuples} introduces \emph{tuple types} that basically
 abstract away from values in Klaim's tuples.
 %
 \cref{sec:gt} introduces \emph{global types} meant to specify
@@ -145,7 +145,7 @@ protocol.
 %
 Clearly, the form of interactions featured in the global types are
 inspired by Klaim operations.\footnote{Klaim allows code mobility, which for
-  simplicity we disregard here. See the discussion in \cref{sec:conc}}
+  the sake of simplicity is disregarded here. See however the discussion in \cref{sec:conc}}
 %
 \cref{sec:examples} gives a taste of the expressiveness of our global
 types.
