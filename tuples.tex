@@ -32,7 +32,8 @@ tuples.
 %for each $x \in \varset$.
 %
 The functions $\fn{\_}$ and $\dn{\_}$ return sets of pairs
-$x \mapsto \asort$ assigning sort $\asort$ to $x \in \varset$.
+$x \mapsto \asort$ assigning sort $\asort$ to $x \in \varset$
+and are given according to the definition below
 \[
 \begin{array}{l@{\hspace{1cm}}l}
 \begin{array}{lcl}
@@ -61,7 +62,8 @@ $x \mapsto \asort$ assigning sort $\asort$ to $x \in \varset$.
 \end{array}
 \]
 We write $\supp{\_}$ to denote the projection of a set of pairs over its first component. 
-%
+
+\smallskip
 We say a tuple $\atuple$ is {\em well-sorted} if the following two
 conditions hold:
 \begin{itemize}
@@ -81,6 +83,7 @@ Hereafter, we assume all tuples to be well-sorted.
 Note that $\fn{\atuple}$ and $\dn{\atuple}$ are partial functions (from names to sorts)
 for well-sorted tuples.
 
+\smallskip
 A substitution of the free occurrences of a variable $x$ in a
 (well-sorted) tuple $\atuple$ 
 %such that $x\not\in \dn{\atuple}$ 
@@ -95,9 +98,10 @@ defined by
 (\atuple_1\sust x y) \cdot (\atuple_2\sust x y) 
 \]
 %
-and it is the identity on the remaining cases. Let
+while it is the identity on the remaining cases. Let
 $\sigma = \{y_1/x_1,\ldots,y_n/x_n\}$ such that $x_i\neq x_j$ for all
-$i\neq j$ (i.e., a partial endo-function on $\varset$), we write
+$i\neq j$ (i.e., $\sigma$ is a partial endo-function on $\varset$).
+We now write
 $\atuple\sigma$ for the simultaneous substitution of each $x_i$ by
 $y_i$.
 %
@@ -106,6 +110,7 @@ $\sigma_1\sigma_2$ for the composition of partial functions with
 disjoint domain, and $\sigma_1[\sigma_2]$ for the update of $\sigma_1$
 with $\sigma_2$.
 
+\smallskip
 Tuple types $\atuple$ and $\atuple'$ such that
 $\dn{\atuple}\cap\dn{\atuple'} = \emptyset$
 % \todo{AC:aggiunto $=\emptyset$}
@@ -169,7 +174,8 @@ $\sigma \in \Sigma$.
 %\]
 %%
 
-\noindent
+%\noindent
+\smallskip
 We say that $\atuple$ \emph{generates} when in one of its fields there
 is a $\nu x: \asort[loc]$ type. 
 %\todo{RB: meglio dire $\nu \aloc: \asort[loc]$}
