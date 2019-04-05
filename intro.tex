@@ -18,12 +18,12 @@ forward an abstract notion of global type of interaction that
 represents a sort of contract between the communicating peers. This is
 paired with the notion of local type that gives an abstract
 description of the behaviour of each peer, as taken in isolation.
-Interestingly, local types can be obtained for free by projection from
-global types, while the properties of interest can be studied and
-guaranteed just at the level of global types, without the need of
-studying the composition of local types. The conformance of peers
-implementation w.r.t. the global type can be studied instead at the
-level of local types, allowing a more efficient form of type
+Interestingly, local types can be obtained \quo{for free} by
+projection from global types, while the properties of interest can be
+studied and guaranteed just at the level of global types, without the
+need of studying the composition of local types. The conformance of
+peers implementation w.r.t. the global type can be studied instead at
+the level of local types, allowing a more efficient form of type
 checking. Roughly this means that properties are stated globally but
 checked locally. Global types have been inspired by session
 types~\cite{DBLP:conf/esop/HondaVK98} and by choreography languages in

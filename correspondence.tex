@@ -97,12 +97,16 @@ $n > 1$ and
 \]
 where $\atuple$ is the tuple in $\alabel[]$ and $\atuple'$ is the one in $\alpha_1$.
 
-Given a global type $\aK$, $\envmv$ is a \emph{$\aK$-specification} if:
-(i)~it has no tuple, and 
-(ii)~$\arole : \aL \in \envmv$ iff $\arole \in \roles{\aK}$ and
-$\aL = \proj[@][@][\ ]$.
+The \emph{$\aK$-specification} of a given a global type $\aK$ is a
+specification $\envmv$ made of the projections of $\aK$ only; formally
+\begin{itemize}
+\item[(ii)] $\arole : \aL \in \envmv$ iff $\arole \in \roles{\aK}$ and
+  $\aL = \proj[@][@][\ ]$, and
+\item[(i)] $\envmv$ has no tuple.
+\end{itemize}
 %
-We can now state our main results.
+Our main results give a correspondence between the pomset semantics of
+a global type $\aK$ and its $\aK$-specification.
 %
 \begin{theorem}\label{thm:gt2local}
   Given a well-formed global type $\aK$, for all $\apom \in \ksem \aK$
@@ -112,18 +116,54 @@ We can now state our main results.
   $\alfof \apom(\ae_1) \cdots \alfof \apom(\ae_n) \vdash \alpha_1
   \cdots \alpha_n$.
 \end{theorem}
+\begin{proof}[Sketch]
+  The proof shows that the specification
+  $\envmv = \big(\arole : \proj[@][@][\ ]\big)_{\arole \in \roles{\aK}}$
+  satisfies the property in the conclusion of the statement above.
+  %
+  By induction on the structure of $\aK$, one shows that
+  \begin{itemize}
+  \item each output event is matched by an application on $\envmv$ of the
+    $\rulename[LOut]$ rule in \cref{fig:local-types-sem},
+    which adds a tuple type to the specification
+  \item each input or read event has a correspondent transition in
+    $\envmv$ from the receiving role according to rules $\rulename[LIn]$
+    and $\rulename[LRd]$ respectively; note that (cf.
+    \cref{fig:local-types-sem}) in the former case the
+    tuple type is removed from the specification.
+  \end{itemize}
+  %
+  For input and read events, the existence of the substitution
+  required by the $\vdash$ relation is guaranteed by the hypothesis of
+  rules $\rulename[LIn]$ and $\rulename[LRd]$.  The above follows immediately
+  in the cases of prefixes.
+  %
+  And, in the case of sum the thesis follows by induction
+  because the semantics of a choice is the union of the semantics
+  of each branch.
+  \qed
+\end{proof}
 %
 \begin{theorem}\label{thm:local2gt}
   Let $\envmv$ be a $\aK$-specification with $\aK$ a well-formed
   global type.
   %
-  For all $\envmv \red[\alpha_1] \cdots \red[\alpha_n]$ there are a
-  $\apom \in \ksem \aK$ and a linearisation $\ae_1 \cdots \ae_n$ of
-  $\apom$ such that
+  For all $\envmv \red[\alpha_1] \cdots \red[\alpha_n]$ there is a
+  linearisation $\ae_1 \cdots \ae_n$ of a pomset $\apom \in \ksem \aK$
+  such that
   $\alfof \apom(\ae_1) \cdots \alfof \apom(\ae_n) \vdash \alpha_1
   \cdots \alpha_n$.
 \end{theorem}
-
+\begin{proof}[Sketch]
+  As for \cref{thm:gt2local}, the proof goes by induction on the
+  structure of $\aK$.
+  %
+  Guided by the structure of $\aK$, we can relate the application of
+  the rules of \cref{fig:local-types-sem} with the pomset semantics
+  of the projections.  
+  %
+  \qed
+\end{proof}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "main"
