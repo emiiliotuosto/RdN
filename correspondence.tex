@@ -124,18 +124,18 @@ a global type $\aK$ and its $\aK$-specification.
   By induction on the structure of $\aK$, one shows that
   \begin{itemize}
   \item each output event is matched by an application on $\envmv$ of the
-    \myrule[LOut] rule in \cref{fig:local-types-sem},
+    $\rulename[LOut]$ rule in \cref{fig:local-types-sem},
     which adds a tuple type to the specification
   \item each input or read event has a correspondent transition in
-    $\envmv$ from the receiving role according to rules \myrule[LIn]
-    and \myrule[LRd] respectively; note that (cf.
+    $\envmv$ from the receiving role according to rules $\rulename[LIn]$
+    and $\rulename[LRd]$ respectively; note that (cf.
     \cref{fig:local-types-sem}) in the former case the
     tuple type is removed from the specification.
   \end{itemize}
   %
   For input and read events, the existence of the substitution
   required by the $\vdash$ relation is guaranteed by the hypothesis of
-  rules \myrule[LIn] and \myrule[LRd].  The above follows immediately
+  rules $\rulename[LIn]$ and $\rulename[LRd]$.  The above follows immediately
   in the cases of prefixes.
   %
   And, in the case of sum the thesis follows by induction
