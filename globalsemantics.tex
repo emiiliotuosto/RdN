@@ -1,9 +1,9 @@
 % !TEX root =  main.tex
 
 We give semantics to global types using \emph{partially-ordered
-  multi-sets} (pomsets for short).
+  multi-sets} (\emph{pomsets} for short).
 %
-Following~\cite{gaifman1987partial}, a \emph{pomset} is an isomorphism
+Following~\cite{gaifman1987partial}, a pomset is an isomorphism
 class of labelled partially-ordered sets (lposet) where, fixed a set
 of labels $\lset$, an lposet is a triple $(\eset, \leq, \alf)$, with
 $\eset$ a set of events, $\leq$ is a partial order on $\eset$, and
@@ -27,15 +27,15 @@ $\ae \neq \ae' \in \eset$, $\alf(\ae) = \alf(\ae')$ means that $\ae$
 and $\ae'$ model different occurrences of the same action.
 %
 In the following, $[\eset, \leq, \alf]$ denotes the isomorphism class
-of $(\eset, \leq, \alf)$, symbols $\apom,\apom', \dots$ (resp.
-$\aR, \aR', \dots$) range over (resp. sets of) pomsets, and we assume
-that pomset $\apom$ contains at least one lposet which will possibly
+of $(\eset, \leq, \alf)$, symbols $\apom,\apom', \dots$
+($\aR, \aR', \dots$) range over (sets of, respectively) pomsets, and we assume
+that pomset $\apom$ contains at least one lposet, which will possibly
 be referred to as $(\esetof \apom$, $\leqof \apom, \alfof \apom)$.
 %
 The empty pomset is denoted as $\emptypom$.
 
 An event $\ae$ is an \emph{immediate predecessor} of an event $\ae'$
-(or equivalently $\ae'$ is an \emph{immediate successor} of $\ae$) in
+(or equivalently, $\ae'$ is an \emph{immediate successor} of $\ae$) in
 a pomset $\apom$ if $\ae \neq \ae'$, $\ae \leqof \apom \ae'$, and for
 all $\ae'' \in \esetof \apom$ such that
 $\ae \leqof \apom \ae'' \leqof \apom \ae'$ either $\ae = \ae''$ or
@@ -113,8 +113,8 @@ distinguishes the nature of autonomous and interaction prefixes.
   be accessed by any instance of \emph{any} other role.
   %
   However, there is no obligation to access the tuple $\atuple$, hence
-  our semantics has to contemplate the cases where no read or input of
-  $\atuple$ happens.
+  our semantics has to contemplate the cases where either no read or no
+  input of $\atuple$ happens.
 \item Interactions are slightly more subtle.
   %
   Firstly, a tuple type $\atuple$ in a read-only interaction is meant
@@ -132,11 +132,11 @@ To capture this semantics we label events with
 autonomous prefixes $\apref$, possibly decorated as $\alabel$.
 %
 Intuitively, e.g., a label $\alabel[@][][\arole][@][@][.]$
-(resp. $\alabel[@][\arole][][@][@][.]$) represents the fact that the
-$i^\mathit{th}$ instance of $\arole$ reads (resp. produces) a tuple of
+($\alabel[@][\arole][][@][@][.]$) represents the fact that the
+$i^\mathit{th}$ instance of $\arole$ reads (produces, respectively) a tuple of
 type $\atuple$.
 %
-Labels $\apref$ not prefixed with $[\_]$ specify that the event
+Labels $\apref$ that are not prefixed with $[\_]$ specify that the event
 can be performed by any instance of the role in $\apref$.
 % 
 Hereafter, we only deal with pomsets labelled  as  above.
@@ -161,9 +161,9 @@ basic pomset yields the causal relations of $\apref$ imposed by the
 above design principle.
 % 
 For an autonomous prefix $\apref[@][@][][]$ we define
-$\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$.
+$\bp = \left\{ \pomsetrep{\node {$\alabel$}}[] \right\}$,
 %
-For interaction prefixes we define
+and for interaction prefixes
 %
 \begin{align*}
   \bp[@][{\apref[\arole][\arole'][@][@][.]}] =
@@ -265,7 +265,7 @@ only \emph{well-formed} global types, namely those enjoying
 \emph{well-sequencedness} and \emph{well-branchedness}.
 %
 With respect to standard notions, however, these concepts have some
-peculiarities which we now discuss.
+peculiarities that are now going to discuss.
 
 %
 % 
@@ -320,7 +320,7 @@ either of the following holds:
 %
 Our notion of well-sequencedness requires absence of races on tuple
 types: we say that $\aK_1$ and $\aK_2$ are \emph{well-sequenced}
-($\ws[\aK_1][\aK_2]$ in symbols) if, for $i \neq j \in \{1,2\}$,
+($\ws[\aK_1][\aK_2]$ in symbols) if for $i \neq j \in \{1,2\}$
 %
 \begin{itemize}
 \item for all $(\atuple,\aloc)$ local to $\aK_i$ and for all
@@ -411,7 +411,7 @@ of the choice.
 We syntactically\footnote{This is just for simplicity as we could
   adopt definitions similar to the ones in \cite{gt16,gt17} at the
   cost of higher technical complexity.} enforce uniqueness of
-selectors; a choice with several branches, takes the form
+selectors: a choice with several branches takes the form
 \begin{align}
   \asum\label{eq:ch}
 \end{align}
@@ -437,7 +437,7 @@ For instance, even assuming unique selectors, many instances of a
 selector role could exercise choices concurrently.
 %
 This may create confusion if different branches generate matching
-tuples on a locality as illustrated by next example.
+tuples on a locality as illustrated by the next example.
 \begin{example}\label{ex:nonwb}
   Let
   $\aK_\mathrm{bad} = \apref[\amulti A][\amulti B][{\asort[int]}][\aloc] \mkop{.} \aK_1 \chop \apref[\amulti A][\amulti B][{\asort[str]}][\aloc] \mkop{.} \aK_2$
@@ -447,7 +447,7 @@ tuples on a locality as illustrated by next example.
     \quad\text{and}\quad
     \aK_2 = \apref[\amulti B][\amulti C][{\asort[bool]}][\aloc]
   \]
-  In $\aK_\mathrm{bad}$ confusion may arise that may alter the
+  In $\aK_\mathrm{bad}$ confusion may arise that could alter the
   intended data flow.
   %
   In fact, if two groups of participants execute the choice taking
@@ -466,7 +466,7 @@ choice do not match when they are at the same locality and that if a
 branch of a choice involves a unit role then none of the branches of
 the choice involves multiple roles.
 %
-This condition, dubbed \emph{confusion-free branching} ensures that
+This condition, dubbed \emph{confusion-free branching}, ensures that
 different \quo{groups} of instances involved in concurrent resolutions
 of a choice do not \quo{interfere} with each other. If a unit role is involved,
 only one group can resolve the choice. 
@@ -476,9 +476,9 @@ can pre-process branches of choices by adding an extra field in all
 tuples of the branch so to unequivocally identify on which branch the
 tuple type is used.
 
-To sum up, a choice as in~\eqref{eq:ch} is \emph{well-branched},
+Summing up, a choice as in~\eqref{eq:ch} is \emph{well-branched},
 written $\wb[{\big\{\bigcup_{i \in I}\apref_i\mkop{.}\aK_i\big\}}]$,
-when it is confusion-free, there is a unique active role, all other
+when it is confusion-free, there is a unique active role, and all the other
 roles are passive.
 %
 So we define
