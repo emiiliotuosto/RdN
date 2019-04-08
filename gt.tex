@@ -35,7 +35,7 @@ instances of processes all performing actions according to their role.
 %\todo{RB: forse \`e importante dire che tutti i multiruoli sono disgiunti, giusto?}
 %\todo{eM: direi di no; in the long run vorremmo che un processo possa coprire piu' ruoli}
 
-%
+\smallskip
 Let us first define the grammar for \emph{prefixes} used in global types:
 %
 % \todo{AC: localities are said to be ranged over by $\aloc$, but we use $\alocvar$ in the prefixes...}
@@ -95,6 +95,7 @@ to be read-only.
 }
 %
 
+\smallskip
 Global types $\aK$ have the following syntax
 % \eMnote{non e' chiaro se vogliamo $\aK \parop \aK $}
 \begin{eqnarray*}
@@ -106,18 +107,22 @@ Global types $\aK$ have the following syntax
                   \grec
 \end{eqnarray*}
 % \todo{RB: avendo $\seqop$ direi che il parallelo non \`e necessario}
-where $I$ is a finite set of indexes; we write $\nil$ for
-$\asum[@][@][][]$ when $I = \emptyset$ (we omit trailing occurrences
-of $\nil$) and $\apref_j.\aK_j$ instead of $\asum[@][@][][]$ when
-$I = \{j\}$.
+%where $I$ is a finite set of indexes; we write $\nil$ for
+%$\asum[@][@][][]$ when $I = \emptyset$ (we omit trailing occurrences
+%of $\nil$) and $\apref_j.\aK_j$ instead of $\asum[@][@][][]$ when
+%$I = \{j\}$.
+for $I$ a finite set of indexes, and we write either $\nil$ or $\apref_j.\aK_j$ for
+$\asum[@][@][][]$ whenever $I = \emptyset$ (we also omit trailing occurrences
+of $\nil$)  or $I = \{j\}$, respectively.
 %
-The set $\roles \aK \subseteq \roleset$ of roles of $\aK$ is the set of roles that are mentioned in $\aK$ and it is defined in the obvious way.
+The set $\roles \aK \subseteq \roleset$ of roles of $\aK$ is the set of roles that are mentioned in $\aK$ 
+and it is defined in the obvious way.
 
 The syntax of global types features prefix guarded choices, sequential
 composition, and recursion.
 %
-The semantics in \cref{sec:globsem} will make clear that sequential
-composition $\seqop$ allows for some concurrency between actions in
+The semantics in \cref{sec:globsem} will make clear that the sequential
+composition $\seqop$ allows for some degree of concurrency between actions in
 the absence of role and communication dependencies.
 %
 To handle recursive behaviour, 
@@ -195,6 +200,7 @@ A set $S$ of sorted names is \emph{consistent} if
 $x\mapsto \asort \in S$ and $x\mapsto \asort' \in S$ implies
 $\asort = \asort'$.
  
+\smallskip
 The sets of well-sorted prefixes and terms are defined inductively as
 follows:
 \begin{itemize}
